@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"slug": "afa-card",
+	"title": "Tarjeta",
+	"blockTypes": [ "core/group", "core/column" ],
+	"styles": {
+		"border": {
+			"color": "var(--wp--preset--color--outline)",
+			"radius": "var(--wp--preset--border-radius--medium)",
+			"style": "solid",
+			"width": "1px"
+		},
+		"color": {
+			"background": "var(--wp--preset--color--surface-container)",
+			"text": "var(--wp--preset--color--contrast)"
+		},
+		"spacing": {
+			"blockGap": "var(--wp--preset--spacing--40)",
+			"padding": {
+				"top": "clamp(20px, 5vw, 32px)",
+				"right": "clamp(20px, 5vw, 32px)",
+				"bottom": "clamp(20px, 5vw, 32px)",
+				"left": "clamp(20px, 5vw, 32px)"
+			}
+		}
+	}
+}

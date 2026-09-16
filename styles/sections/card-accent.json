@@ -1,0 +1,48 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"slug": "afa-card-accent",
+	"title": "Tarjeta destacada",
+	"blockTypes": [ "core/group", "core/column" ],
+	"styles": {
+		"border": {
+			"radius": "var(--wp--preset--border-radius--medium)"
+		},
+		"color": {
+			"background": "var(--wp--preset--color--accent)",
+			"text": "var(--wp--preset--color--base)"
+		},
+		"shadow": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+		"spacing": {
+			"blockGap": "var(--wp--preset--spacing--30)",
+			"padding": {
+				"top": "clamp(20px, 5vw, 32px)",
+				"right": "clamp(20px, 5vw, 32px)",
+				"bottom": "clamp(20px, 5vw, 32px)",
+				"left": "clamp(20px, 5vw, 32px)"
+			}
+		},
+		"elements": {
+			"heading": {
+				"color": { "text": "var(--wp--preset--color--base)" }
+			},
+			"link": {
+				"color": { "text": "var(--wp--preset--color--base)" }
+			},
+			"button": {
+				"color": {
+					"background": "var(--wp--preset--color--base)",
+					"text": "var(--wp--preset--color--primary)"
+				},
+				"border": { "radius": "var(--wp--preset--border-radius--small)" },
+				"typography": { "fontSize": "var(--wp--preset--font-size--medium)", "fontWeight": "700" },
+				":hover": {
+					"color": {
+						"background": "var(--wp--preset--color--primary-soft)",
+						"text": "var(--wp--preset--color--primary)"
+					}
+				}
+			}
+		}
+	}
+}
