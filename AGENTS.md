@@ -3,7 +3,7 @@
 Instrucciones para agentes (Claude Code, Cursor, Codex). Léelas antes de tocar nada.
 
 ## Qué es
-Block theme (FSE) a medida para la AFA del CEIP Padre Poveda. WordPress ≥ 6.9, PHP ≥ 7.4, theme.json v3.
+Block theme (FSE) a medida para la AFA del CEIP Padre Poveda. WordPress ≥ 7.1, PHP ≥ 7.4, theme.json v3.
 Diseño de referencia: Figma `https://www.figma.com/design/lS6WwjiFrPKd60cQTfXrKF/AFA`.
 
 ## Reglas

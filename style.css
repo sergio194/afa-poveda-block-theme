@@ -3,7 +3,7 @@ Theme Name: AFA Padre Poveda
 Theme URI: https://afapadrepoveda.org
 Author: Sergio Meyniel
 Description: Tema de bloques a medida para la Asociación de Familias del CEIP Padre Poveda. Sistema de diseño en theme.json, plantillas editables desde el Editor del sitio.
-Requires at least: 6.9
+Requires at least: 7.1
 Tested up to: 7.2
 Requires PHP: 7.4
 Version: 0.1.0
@@ -153,8 +153,475 @@ Tags: block-theme, full-site-editing, blog, education, accessibility-ready
 	border-radius: var(--wp--preset--border-radius--medium);
 }
 
+/* ---------- Portada (002) ---------- */
+/* theme.json no expresa overlay de Cover + CTA solo móvil, grid 2×2 de columnas,
+   layout 1+2 de avisos sticky ni variante CTA móvil. */
+
+.screen-reader-text {
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	word-wrap: normal !important;
+}
+
+.afa-home-hero {
+	overflow: hidden;
+}
+.afa-home-hero .afa-home-hero__content {
+	max-width: 36rem;
+}
+/* CTA «Descubre más»: solo móvil/tablet (Figma HOME-MOBILE) */
+.afa-home-hero__cta {
+	display: none;
+}
+@media (max-width: 781px) {
+	.afa-home-hero__cta {
+		display: flex;
+	}
+}
+
+.afa-home-access__item a {
+	color: inherit;
+	text-decoration: none;
+}
+.afa-home-access__item a:hover {
+	color: var(--wp--preset--color--primary);
+}
+.afa-home-access__item .wp-block-icon {
+	margin-left: auto;
+	margin-right: auto;
+}
+/* Columns core no hace 2×2 bajo el breakpoint de stack; forzamos rejilla */
+@media (max-width: 781px) {
+	.afa-home-access__grid {
+		display: grid !important;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--wp--preset--spacing--40);
+	}
+	.afa-home-access__grid > .wp-block-column {
+		width: auto !important;
+		flex-basis: auto !important;
+	}
+}
+
+.afa-home-section-head__link a {
+	text-decoration: none;
+}
+.afa-home-section-head__link a:hover {
+	text-decoration: underline;
+}
+
+/* Avisos (Figma): columnas — destacado+foto | laterales solo texto; 0 → ocultar */
+.afa-home-avisos:not(:has(.wp-block-post)) {
+	display: none !important;
+}
+.afa-home-avisos__cols {
+	align-items: stretch !important;
+}
+.afa-home-avisos__feature,
+.afa-home-avisos__side {
+	display: flex !important;
+	flex-direction: column;
+	min-width: 0;
+}
+.afa-home-avisos__feature .wp-block-query,
+.afa-home-avisos__feature .wp-block-post-template,
+.afa-home-avisos__feature .wp-block-post,
+.afa-home-avisos__side .wp-block-query,
+.afa-home-avisos__side .wp-block-post-template {
+	display: flex !important;
+	flex-direction: column;
+	flex: 1 1 auto;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	gap: var(--wp--preset--spacing--40);
+}
+.afa-home-avisos__side .wp-block-post {
+	display: flex !important;
+	flex: 1 1 0;
+	min-height: 0;
+	margin: 0;
+}
+.afa-home-aviso-card {
+	box-sizing: border-box;
+	flex: 1 1 auto;
+	width: 100%;
+	height: 100%;
+	display: flex !important;
+	flex-direction: column;
+}
+.afa-home-aviso-card .afa-home-aviso-card__more {
+	margin-top: auto;
+}
+.afa-home-aviso-card__media {
+	position: relative;
+	margin: 0;
+}
+.afa-home-aviso-card__media img {
+	width: 100%;
+	height: auto;
+	aspect-ratio: 16 / 9;
+	object-fit: cover;
+	border-radius: var(--wp--preset--border-radius--medium);
+}
+/* Badge «Destacado» sobre la imagen (Figma) */
+.afa-home-aviso-card--feature .afa-home-aviso-card__media::after {
+	content: "Destacado";
+	position: absolute;
+	top: 12px;
+	left: 12px;
+	padding: 4px 12px;
+	border-radius: 9999px;
+	background: #86f898;
+	color: #00722f;
+	font-size: var(--wp--preset--font-size--x-small);
+	font-weight: 600;
+	letter-spacing: var(--wp--custom--letter-spacing--label);
+	line-height: 1.4;
+	pointer-events: none;
+}
+/* Una sola categoría visible (chip), como en Figma */
+.afa-home-avisos .afa-home-aviso-card__chip a:not(:first-of-type),
+.afa-home-avisos .afa-home-aviso-card__chip .wp-block-post-terms__separator {
+	display: none !important;
+}
+.afa-home-avisos .afa-home-aviso-card__chip a {
+	display: inline-block;
+	padding: 4px 12px;
+	border-radius: 9999px;
+	background: var(--wp--preset--color--primary-soft);
+	color: var(--wp--preset--color--primary);
+	font-size: var(--wp--preset--font-size--x-small);
+	font-weight: 600;
+	text-decoration: none;
+	line-height: 1.4;
+}
+/* Lateral superior: superficie; inferior: acento */
+.afa-home-avisos__side .wp-block-post:first-child .afa-home-aviso-card--side {
+	background: var(--wp--preset--color--surface-container);
+}
+.afa-home-avisos__side .wp-block-post:last-child:not(:first-child) .afa-home-aviso-card--side {
+	background: var(--wp--preset--color--accent);
+	color: var(--wp--preset--color--base);
+	border-color: transparent;
+}
+.afa-home-avisos__side .wp-block-post:last-child:not(:first-child) .afa-home-aviso-card--side a,
+.afa-home-avisos__side .wp-block-post:last-child:not(:first-child) .afa-home-aviso-card--side .wp-block-post-title a,
+.afa-home-avisos__side .wp-block-post:last-child:not(:first-child) .afa-home-aviso-card--side .wp-block-post-excerpt,
+.afa-home-avisos__side .wp-block-post:last-child:not(:first-child) .afa-home-aviso-card--side .afa-home-aviso-card__more {
+	color: var(--wp--preset--color--base);
+}
+.afa-home-avisos__side .wp-block-post:last-child:not(:first-child) .afa-home-aviso-card--side .afa-home-aviso-card__chip a {
+	background: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--primary);
+}
+/* Sin laterales (solo 1 sticky): el destacado ocupa todo el ancho */
+.afa-home-avisos__cols:not(:has(.afa-home-avisos__side .wp-block-post)) .afa-home-avisos__side {
+	display: none !important;
+}
+.afa-home-avisos__cols:not(:has(.afa-home-avisos__side .wp-block-post)) .afa-home-avisos__feature {
+	flex-basis: 100% !important;
+	width: 100% !important;
+}
+@media (max-width: 781px) {
+	.afa-home-avisos__cols {
+		flex-direction: column !important;
+	}
+	.afa-home-avisos__feature,
+	.afa-home-avisos__side {
+		flex-basis: 100% !important;
+		width: 100% !important;
+	}
+	.afa-home-avisos__side .wp-block-post {
+		flex: 0 0 auto;
+	}
+}
+.afa-home-aviso-card__more,
+.afa-home-news-card__more {
+	display: inline-block;
+	margin-top: var(--wp--preset--spacing--20);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 700;
+	letter-spacing: var(--wp--custom--letter-spacing--label);
+	text-decoration: none;
+	color: var(--wp--preset--color--primary);
+}
+.afa-home-aviso-card__more:hover,
+.afa-home-news-card__more:hover {
+	text-decoration: underline;
+}
+
+/* Últimas noticias: tarjetas iguales (Figma — 3 con foto) */
+.afa-home-news__list {
+	align-items: stretch !important;
+}
+.afa-home-news__list > .wp-block-post {
+	display: flex !important;
+	height: 100%;
+	margin: 0;
+	min-width: 0;
+}
+.afa-home-news-card {
+	display: flex !important;
+	flex-direction: column;
+	flex: 1 1 auto;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+}
+.afa-home-news-card__media {
+	margin: 0;
+	overflow: hidden;
+	border-radius: var(--wp--preset--border-radius--medium);
+	aspect-ratio: 16 / 9;
+	flex: 0 0 auto;
+}
+.afa-home-news-card__media img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+.afa-home-news-card .wp-block-post-title {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+}
+.afa-home-news-card .wp-block-post-excerpt {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+	flex: 1 1 auto;
+}
+.afa-home-news-card .afa-home-news-card__more {
+	margin-top: auto;
+	align-self: flex-start;
+	padding: 8px 16px;
+	border: 1px solid var(--wp--preset--color--primary);
+	border-radius: var(--wp--preset--border-radius--small);
+	text-decoration: none;
+}
+.afa-home-news-card .afa-home-news-card__more:hover {
+	background: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--base);
+	text-decoration: none;
+}
+
+/* «Cargar más»: solo móvil (en escritorio basta «Ver noticias») */
+.afa-home-news .afa-home-news__more {
+	display: none !important;
+}
+@media (max-width: 781px) {
+	.afa-home-news .afa-home-news__more {
+		display: flex !important;
+		margin-top: var(--wp--preset--spacing--40);
+	}
+	.afa-home-news__list {
+		grid-template-columns: 1fr !important;
+	}
+}
+
+/* CTA comunidad: tratamiento móvil con acento (Figma HOME-MOBILE) */
+@media (max-width: 781px) {
+	.afa-home-cta {
+		background: var(--wp--preset--color--accent) !important;
+		color: var(--wp--preset--color--base);
+	}
+	.afa-home-cta .wp-block-heading,
+	.afa-home-cta p {
+		color: var(--wp--preset--color--base) !important;
+	}
+	.afa-home-cta .wp-block-button:not(.is-style-outline) .wp-block-button__link {
+		background: var(--wp--preset--color--base);
+		color: var(--wp--preset--color--primary);
+	}
+	.afa-home-cta .wp-block-button.is-style-outline .wp-block-button__link {
+		background: transparent;
+		color: var(--wp--preset--color--base);
+		border-color: var(--wp--preset--color--base);
+	}
+}
+
 /* Placeholder con contraste AA (el gris por defecto del navegador no llega) */
 ::placeholder {
 	color: var(--wp--preset--color--contrast-muted);
 	opacity: 1;
+}
+
+/* -------------------------------------------------------------------------
+   Sobre nosotros (003) — fidelidad Figma desktop/móvil
+   theme.json no expresa: grids de organigrama/vocales, pills de comisiones,
+   bullets con icono check, filas documento+PDF ni gaps del post-content.
+   ------------------------------------------------------------------------- */
+.afa-sobre .afa-sobre-hero,
+.afa-sobre .afa-sobre-quienes,
+.afa-sobre .afa-organigrama,
+.afa-sobre .afa-sobre-que-hace,
+.afa-sobre .afa-sobre-utilidad,
+.afa-sobre .afa-docs {
+	margin-block: var(--wp--preset--spacing--60);
+}
+
+.afa-sobre-hero .wp-block-cover__inner-container {
+	width: 100%;
+}
+
+.afa-sobre-heading__icon,
+.afa-organigrama__avatar,
+.afa-docs__icon {
+	margin: 0 !important;
+	flex-shrink: 0;
+}
+
+.afa-sobre-heading__icon img,
+.afa-organigrama__avatar img,
+.afa-docs__icon img {
+	display: block;
+	border-radius: 50%;
+}
+
+.afa-sobre-heading__icon img {
+	border-radius: 0;
+}
+
+.afa-organigrama__label {
+	margin-bottom: 0 !important;
+	color: var(--wp--preset--color--contrast-muted);
+}
+
+.afa-organigrama__liderazgo,
+.afa-organigrama__sec-tes,
+.afa-organigrama__vocales {
+	display: grid !important;
+	gap: var(--wp--preset--spacing--40);
+	width: 100%;
+}
+
+.afa-organigrama__liderazgo,
+.afa-organigrama__sec-tes {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.afa-organigrama__vocales {
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.afa-organigrama__card {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.afa-organigrama__card p {
+	margin: 0;
+	overflow-wrap: anywhere;
+}
+
+.afa-organigrama__card--vocal {
+	flex-direction: column !important;
+	align-items: center !important;
+	text-align: center;
+	padding: var(--wp--preset--spacing--40) !important;
+}
+
+.afa-organigrama__card--vocal .afa-organigrama__avatar img {
+	width: 40px !important;
+	height: 40px !important;
+}
+
+.afa-sobre-que-hace__list,
+.afa-sobre-utilidad__list {
+	list-style: none;
+	padding-left: 0;
+	margin: 0;
+}
+
+.afa-sobre-que-hace__list li,
+.afa-sobre-utilidad__list li {
+	display: flex;
+	align-items: flex-start;
+	gap: var(--wp--preset--spacing--30);
+	margin-bottom: var(--wp--preset--spacing--40);
+}
+
+.afa-sobre-que-hace__list li::before {
+	content: "";
+	flex: 0 0 20px;
+	width: 20px;
+	height: 20px;
+	margin-top: 2px;
+	background: url("./assets/icons/icon-check.svg") center / contain no-repeat;
+}
+
+.afa-sobre-utilidad__list li::before {
+	content: "";
+	flex: 0 0 8px;
+	width: 8px;
+	height: 8px;
+	margin-top: 0.55em;
+	border-radius: 50%;
+	background: var(--wp--preset--color--primary);
+}
+
+.afa-comisiones__pills {
+	gap: var(--wp--preset--spacing--30) !important;
+}
+
+.afa-comision-pill {
+	margin: 0 !important;
+	padding: 8px 16px !important;
+	border-radius: var(--wp--preset--border-radius--full);
+	background: var(--wp--preset--color--green) !important;
+	line-height: 1.2;
+}
+
+.afa-docs__grid .wp-block-column {
+	display: flex;
+	flex-direction: column;
+	gap: var(--wp--preset--spacing--40);
+}
+
+.afa-docs__item {
+	width: 100%;
+}
+
+.afa-docs__item a {
+	color: var(--wp--preset--color--contrast);
+	text-decoration: none;
+}
+
+.afa-docs__item a:hover {
+	color: var(--wp--preset--color--primary);
+	text-decoration: underline;
+}
+
+.afa-docs__filename {
+	display: block;
+	font-weight: 400;
+	font-size: var(--wp--preset--font-size--small);
+	color: var(--wp--preset--color--contrast-muted);
+}
+
+@media (max-width: 781px) {
+	.afa-organigrama__liderazgo,
+	.afa-organigrama__sec-tes {
+		grid-template-columns: 1fr;
+	}
+
+	.afa-organigrama__vocales {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.afa-sobre-que-hace .wp-block-columns {
+		flex-direction: column !important;
+	}
 }

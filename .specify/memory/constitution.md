@@ -5,7 +5,7 @@ Reglas no negociables. Toda spec, plan y tarea debe cumplirlas; si una tarea cho
 ## I. Block theme puro
 - Tema de bloques (FSE) sin framework padre ni page builders.
 - Plantillas en `templates/*.html`, partes en `parts/*.html` (sin subcarpetas), patterns en `patterns/*.php`.
-- Mínimo soportado: WordPress 6.9, PHP 7.4. `theme.json` versión 3.
+- Mínimo soportado: WordPress 7.1, PHP 7.4. `theme.json` versión 3.
 
 ## II. theme.json es la fuente de verdad del diseño
 - Colores, tipografías, tamaños, espaciados y radios se definen como presets en `theme.json`.
@@ -47,4 +47,5 @@ Reglas no negociables. Toda spec, plan y tarea debe cumplirlas; si una tarea cho
 - La fuente de diseño es el archivo de Figma "AFA". Si el tema se desvía de Figma, la desviación se documenta en la spec correspondiente con su motivo.
 - Modificar esta constitución requiere anotar el cambio y la fecha al final del archivo.
 
-**Versión**: 1.0.0 · **Ratificada**: 2026-09-16
+**Versión**: 1.1.0 · **Ratificada**: 2026-09-16  
+**Cambios**: 1.1.0 (2026-09-16) — mínimo WordPress 7.1 por API de iconos (`core/icon` + `wp_register_icon`).

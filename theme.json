@@ -19,6 +19,8 @@
 				{ "name": "Primario", "slug": "primary", "color": "#005bbf" },
 				{ "name": "Acento", "slug": "accent", "color": "#1967d2" },
 				{ "name": "Primario suave", "slug": "primary-soft", "color": "#d9e5f4" },
+				{ "name": "Verde suave", "slug": "soft-green", "color": "#e6f4ea" },
+				{ "name": "Verde", "slug": "green", "color": "#1b6b45" },
 				{ "name": "Blanco", "slug": "base", "color": "#ffffff" },
 				{ "name": "Superficie", "slug": "surface", "color": "#f7f9ff" },
 				{ "name": "Superficie tarjeta", "slug": "surface-container", "color": "#f1f4fa" },
@@ -232,6 +234,7 @@
 		{ "name": "sidebar", "title": "Barra lateral", "area": "uncategorized" }
 	],
 	"customTemplates": [
-		{ "name": "page-with-sidebar", "title": "Página con barra lateral", "postTypes": [ "page", "post" ] }
+		{ "name": "page-with-sidebar", "title": "Página con barra lateral", "postTypes": [ "page", "post" ] },
+		{ "name": "page-afa", "title": "AFA / Sobre nosotros", "postTypes": [ "page" ] }
 	]
 }
