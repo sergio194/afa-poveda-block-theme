@@ -14,11 +14,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Carga style.css en el front y en el editor.
+ * Tamaño afa-news-card: recorte duro 16:9 para fichas del archivo.
  */
 function afa_poveda_setup() {
 	add_editor_style( 'style.css' );
+	add_image_size( 'afa-news-card', 768, 432, true );
 }
 add_action( 'after_setup_theme', 'afa_poveda_setup' );
+
+/**
+ * Etiqueta legible del tamaño de ficha en el mediador.
+ *
+ * @param string[] $sizes Tamaños registrados.
+ * @return string[]
+ */
+function afa_poveda_image_size_names( $sizes ) {
+	$sizes['afa-news-card'] = __( 'Ficha de noticia (16:9)', 'afa-poveda' );
+	return $sizes;
+}
+add_filter( 'image_size_names_choose', 'afa_poveda_image_size_names' );
 
 function afa_poveda_enqueue_styles() {
 	wp_enqueue_style(
@@ -77,3 +91,165 @@ function afa_poveda_register_icons() {
 	}
 }
 add_action( 'init', 'afa_poveda_register_icons' );
+
+/**
+ * Query Loop «noticias relacionadas»: misma categoría, sin la entrada actual.
+ *
+ * El filtro recibe el bloque post-template (no el Query). La clase va en ambos.
+ * `excludeCurrent` (WP 7.1) refuerza la exclusión nativa.
+ *
+ * @param array    $query Query args del bloque.
+ * @param WP_Block $block Bloque (post-template).
+ * @return array
+ */
+function afa_poveda_related_news_query( $query, $block ) {
+	$class_name = '';
+	if ( ! empty( $block->attributes['className'] ) ) {
+		$class_name = $block->attributes['className'];
+	} elseif ( ! empty( $block->parsed_block['attrs']['className'] ) ) {
+		$class_name = $block->parsed_block['attrs']['className'];
+	}
+
+	if ( false === strpos( $class_name, 'afa-related-news' ) ) {
+		return $query;
+	}
+
+	if ( ! is_singular( 'post' ) ) {
+		return $query;
+	}
+
+	$post_id = get_queried_object_id();
+	if ( ! $post_id ) {
+		$post_id = get_the_ID();
+	}
+	if ( ! $post_id ) {
+		return $query;
+	}
+
+	$excluded = isset( $query['post__not_in'] ) ? (array) $query['post__not_in'] : array();
+	$query['post__not_in']        = array_values( array_unique( array_merge( $excluded, array( (int) $post_id ) ) ) );
+	$query['ignore_sticky_posts'] = true;
+
+	$categories = wp_get_post_categories( $post_id );
+	if ( ! empty( $categories ) ) {
+		$query['category__in'] = $categories;
+	}
+
+	return $query;
+}
+add_filter( 'query_loop_block_query_vars', 'afa_poveda_related_news_query', 10, 2 );
+
+/**
+ * Destinos de «Compartir noticia» (permalink actual). Sin JS.
+ *
+ * @param string $block_content HTML del bloque.
+ * @param array  $block         Bloque parseado.
+ * @return string
+ */
+function afa_poveda_news_share_urls( $block_content, $block ) {
+	if ( empty( $block['blockName'] ) || 'core/social-links' !== $block['blockName'] ) {
+		return $block_content;
+	}
+
+	$class_name = '';
+	if ( ! empty( $block['attrs']['className'] ) ) {
+		$class_name = $block['attrs']['className'];
+	}
+	if ( false === strpos( $class_name, 'afa-news-share__links' ) ) {
+		return $block_content;
+	}
+	if ( ! is_singular( 'post' ) ) {
+		return $block_content;
+	}
+
+	$url   = get_permalink();
+	$title = wp_strip_all_tags( get_the_title() );
+	if ( ! $url ) {
+		return $block_content;
+	}
+
+	$mail = 'mailto:?subject=' . rawurlencode( $title ) . '&body=' . rawurlencode( $url );
+	$wa   = 'https://wa.me/?text=' . rawurlencode( $title . ' ' . $url );
+	$fb   = 'https://www.facebook.com/sharer/sharer.php?u=' . rawurlencode( $url );
+
+	$block_content = preg_replace(
+		'#(<li[^>]*\bwp-social-link-mail\b[^>]*>\s*<a\b[^>]*href=")[^"]*#',
+		'$1' . esc_url( $mail ),
+		$block_content,
+		1
+	);
+	$block_content = preg_replace(
+		'#(<li[^>]*\bwp-social-link-whatsapp\b[^>]*>\s*<a\b[^>]*href=")[^"]*#',
+		'$1' . esc_url( $wa ),
+		$block_content,
+		1
+	);
+	$block_content = preg_replace(
+		'#(<li[^>]*\bwp-social-link-facebook\b[^>]*>\s*<a\b[^>]*href=")[^"]*#',
+		'$1' . esc_url( $fb ),
+		$block_content,
+		1
+	);
+
+	return $block_content;
+}
+add_filter( 'render_block', 'afa_poveda_news_share_urls', 10, 2 );
+
+/**
+ * Fondo difuminado tras la foto de ficha (misma imagen, sin JS).
+ *
+ * @param string $block_content HTML del bloque.
+ * @param array  $block         Bloque parseado.
+ * @return string
+ */
+function afa_poveda_news_card_media_blur( $block_content, $block ) {
+	if ( empty( $block['blockName'] ) || 'core/post-featured-image' !== $block['blockName'] ) {
+		return $block_content;
+	}
+
+	$class_name = '';
+	if ( ! empty( $block['attrs']['className'] ) ) {
+		$class_name = $block['attrs']['className'];
+	}
+	if ( false === strpos( $class_name, 'afa-news-card__media' ) ) {
+		return $block_content;
+	}
+	if ( ! $block_content || false === strpos( $block_content, '<img' ) ) {
+		return $block_content;
+	}
+	if ( false !== strpos( $block_content, 'afa-news-card__media-bg' ) ) {
+		return $block_content;
+	}
+
+	if ( ! preg_match( '/<img\b[^>]*>/i', $block_content, $matches ) ) {
+		return $block_content;
+	}
+
+	$bg = $matches[0];
+	$bg = preg_replace( '/\s(?:alt|aria-hidden|role)=("[^"]*"|\'[^\']*\')/i', '', $bg );
+	if ( preg_match( '/\sclass="/i', $bg ) ) {
+		$bg = preg_replace( '/\sclass="/i', ' class="afa-news-card__media-bg ', $bg, 1 );
+	} else {
+		$bg = preg_replace( '/^<img\b/i', '<img class="afa-news-card__media-bg"', $bg, 1 );
+	}
+	$bg = preg_replace( '/^<img\b/i', '<img alt="" aria-hidden="true"', $bg, 1 );
+
+	return preg_replace( '/(<figure\b[^>]*>)/i', '$1' . $bg, $block_content, 1 );
+}
+add_filter( 'render_block', 'afa_poveda_news_card_media_blur', 10, 2 );
+
+/**
+ * El archivo de noticias no antepone sticky (cuenta fija de 6).
+ *
+ * @param WP_Query $query Query principal.
+ */
+function afa_poveda_news_main_query( $query ) {
+	if ( is_admin() || ! $query->is_main_query() ) {
+		return;
+	}
+
+	if ( $query->is_home() || $query->is_category() || $query->is_tag() ) {
+		$query->set( 'ignore_sticky_posts', true );
+	}
+}
+add_action( 'pre_get_posts', 'afa_poveda_news_main_query' );

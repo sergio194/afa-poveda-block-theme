@@ -13,10 +13,13 @@ y el proyecto sigue [Versionado Semántico](https://semver.org/lang/es/).
 - Patterns `afa-poveda/home-hero`, `home-quick-access`, `home-avisos`, `home-latest-news`, `home-community-cta`
 - Iconos SVG de accesos en `assets/icons/`
 - Página AFA / Sobre nosotros: plantilla `page-afa.html` y patterns `sobre-hero`, `sobre-quienes-somos`, `sobre-organigrama`, `sobre-que-hace`, `sobre-utilidad-comisiones`, `sobre-documentos`, compuesto `sobre-nosotros`
+- Archivo Actualidad y Eventos: patterns `noticias-hero`, `noticias-toolbar` (buscar + desplegable; «Todas» solo fuera del archivo), `noticias-grid`; plantillas `home`, `archive`, `search` e `index` a una columna
+- Detalle de noticia (`single.html`) con migas, titular en primario, autor con avatar, relacionadas compactas y «Compartir noticia»
+- Tamaño de imagen `afa-news-card` (768×432, recorte 16:9) para fichas del archivo
 
 ### Cambiado
 
-- La URL de inicio usa la plantilla de portada; `home.html` queda como índice de entradas con sidebar
+- La URL de inicio usa la plantilla de portada; `home.html` es el archivo de noticias (página de entradas `/noticias/`), sin sidebar de blog
 - Accesos rápidos: iconos con bloque `Icono` (listado del editor + colección AFA), sin clases CSS
 - Sobre nosotros: organigrama en caja con avatares, comisiones en pills, documentos 2×2 con icono PDF e iconos de sección (fidelidad Figma)
 
@@ -24,3 +27,5 @@ y el proyecto sigue [Versionado Semántico](https://semver.org/lang/es/).
 
 - Bloque Actualidad y Avisos: se oculta sin sticky; layout 0/1/2/3
 - Últimas noticias: tarjetas a misma altura, imágenes 16:9 y «Leer más» al pie; «Cargar más» solo en móvil
+- Archivo de noticias en móvil: sin scroll horizontal (título del sitio, blur de fichas y toolbar a ancho completo)
+- Detalle de noticia: migas con el título real de la entrada (ya no «Detalle de noticia»)

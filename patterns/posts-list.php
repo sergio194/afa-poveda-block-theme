@@ -4,7 +4,7 @@
  * Slug: afa-poveda/posts-list
  * Categories: query, afa-poveda
  * Inserter: no
- * Description: Bucle de entradas usado en portada del blog, archivos y búsqueda.
+ * Description: Listado legado. El archivo de noticias usa afa-poveda/noticias-grid.
  *
  * @package afa-poveda
  */

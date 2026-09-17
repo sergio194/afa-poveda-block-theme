@@ -6,7 +6,7 @@ Description: Tema de bloques a medida para la Asociación de Familias del CEIP P
 Requires at least: 7.1
 Tested up to: 7.2
 Requires PHP: 7.4
-Version: 0.1.0
+Version: 0.2.2
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: afa-poveda
@@ -29,24 +29,57 @@ Tags: block-theme, full-site-editing, blog, education, accessibility-ready
 	outline-offset: 2px;
 }
 
+/* Evita scroll horizontal por hijos absolutos / texto largo (p. ej. título del sitio).
+   overflow-x:hidden en html/body: clip no basta en Safari iOS con filter:blur. */
+html,
+body {
+	max-width: 100%;
+	overflow-x: hidden;
+}
+.wp-site-blocks {
+	overflow-x: hidden;
+	max-width: 100%;
+}
+
 /* ---------- Cabecera ---------- */
 .afa-header {
 	position: relative;
 	z-index: 10;
+	overflow-x: hidden;
+	max-width: 100%;
 }
 .afa-header .wp-block-site-logo img {
 	width: 224px;
+	max-width: 100%;
 	height: auto;
 }
-/* Si hay logo, el título del sitio solo queda para lectores de pantalla */
-.afa-header .wp-block-site-logo:has(img) + .wp-block-site-title {
+/* Si hay logo, el título del sitio solo queda para lectores de pantalla.
+   Sin max-width en el <a>, el texto largo (~500px) ensancha el documento en móvil. */
+.afa-header__brand:has(.wp-block-site-logo) .wp-block-site-title {
 	position: absolute !important;
-	width: 1px; height: 1px; overflow: hidden;
-	clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+	width: 1px !important;
+	height: 1px !important;
+	max-width: 1px !important;
+	margin: -1px !important;
+	padding: 0 !important;
+	overflow: hidden !important;
+	clip: rect(0, 0, 0, 0) !important;
+	clip-path: inset(50%) !important;
+	white-space: nowrap !important;
+	border: 0 !important;
+}
+.afa-header__brand:has(.wp-block-site-logo) .wp-block-site-title a {
+	display: inline-block;
+	max-width: 1px !important;
+	overflow: hidden;
 }
 .afa-header .wp-block-site-title a {
 	color: var(--wp--preset--color--primary);
 	text-decoration: none;
+}
+.afa-header__brand {
+	min-width: 0;
+	max-width: 100%;
 }
 /* Enlace activo: subrayado de 2px como en Figma */
 .afa-header .wp-block-navigation-item.current-menu-item > .wp-block-navigation-item__content,
@@ -622,6 +655,677 @@ Tags: block-theme, full-site-editing, blog, education, accessibility-ready
 	}
 
 	.afa-sobre-que-hace .wp-block-columns {
+		flex-direction: column !important;
+	}
+}
+
+/* -------------------------------------------------------------------------
+   Actualidad y Eventos (004)
+   theme.json no expresa: píldora activa vs resto, scroll horizontal de chips,
+   placeholder 16:9 sin foto, paginación tipo Figma, migas ni relacionadas.
+   ------------------------------------------------------------------------- */
+
+.afa-news-hero__eyebrow {
+	display: inline-block;
+	width: fit-content;
+	max-width: 100%;
+	margin-bottom: 0;
+}
+
+/* Contención: sin min-content que ensanche; en móvil no superar el viewport. */
+.afa-news {
+	max-width: 100%;
+	overflow-x: hidden;
+	box-sizing: border-box;
+	width: 100%;
+}
+
+.afa-news .alignwide,
+.afa-news .wp-block-query,
+.afa-news-hero,
+.afa-news-toolbar,
+.afa-news-grid {
+	min-width: 0;
+	box-sizing: border-box;
+}
+
+.afa-news-hero .wp-block-heading,
+.afa-news-hero p {
+	max-width: 100%;
+	overflow-wrap: anywhere;
+}
+
+/* Ficha: foto a borde recortada 16:9; el estilo Tarjeta mete padding en todo
+   el grupo y no recorta banners anchos. Padding va solo en el cuerpo. */
+.afa-news-card {
+	display: flex !important;
+	flex-direction: column;
+	flex: 1 1 auto;
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+	height: 100%;
+	background: var(--wp--preset--color--base) !important;
+	overflow: hidden;
+	padding: 0 !important;
+	box-sizing: border-box;
+	border-radius: var(--wp--preset--border-radius--medium);
+}
+
+.afa-news-grid__list {
+	align-items: stretch !important;
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+	grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+.afa-news-grid__list > .wp-block-post {
+	display: flex !important;
+	height: 100%;
+	margin: 0;
+	min-width: 0;
+	max-width: 100%;
+}
+
+.afa-news-card__media {
+	position: relative;
+	width: 100%;
+	max-width: 100%;
+	aspect-ratio: 16 / 9 !important;
+	margin: 0 !important;
+	background: var(--wp--preset--color--surface-high);
+	overflow: hidden;
+	flex: 0 0 auto;
+	isolation: isolate;
+	contain: paint;
+}
+
+/* Copia decorativa: scale (no inset negativo) para no ensanchar el scroll. */
+.afa-news-card__media-bg {
+	position: absolute !important;
+	inset: 0 !important;
+	width: 100% !important;
+	height: 100% !important;
+	max-width: none !important;
+	object-fit: cover !important;
+	object-position: center center !important;
+	filter: blur(18px) saturate(1.15);
+	transform: scale(1.2);
+	transform-origin: center center;
+	pointer-events: none;
+	user-select: none;
+	z-index: 0;
+}
+
+.afa-news-card__media a {
+	position: absolute;
+	inset: 0;
+	display: block;
+	z-index: 1;
+}
+
+.afa-news-card__media a img,
+.afa-news-card__media > img:not(.afa-news-card__media-bg) {
+	position: absolute;
+	inset: 0;
+	width: 100% !important;
+	height: 100% !important;
+	max-width: none;
+	object-fit: contain !important;
+	object-position: center center;
+	display: block;
+	z-index: 1;
+}
+
+.afa-news-card__body {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+	width: 100%;
+	min-height: 0;
+	box-sizing: border-box;
+	padding: var(--wp--preset--spacing--50) !important;
+	gap: var(--wp--preset--spacing--30);
+}
+
+.afa-news-card .wp-block-post-title {
+	margin: 0;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+}
+
+.afa-news-card .wp-block-post-title a {
+	color: var(--wp--preset--color--contrast);
+	text-decoration: none;
+}
+
+.afa-news-card .wp-block-post-excerpt {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+	flex: 1 1 auto;
+	color: var(--wp--preset--color--contrast-muted);
+	font-size: var(--wp--preset--font-size--small);
+}
+
+.afa-news-card .wp-block-post-excerpt p {
+	margin: 0;
+}
+
+.afa-news-card__cat a {
+	display: inline-block;
+	padding: 4px 8px;
+	border-radius: var(--wp--preset--border-radius--small);
+	background: var(--wp--preset--color--primary-soft);
+	color: var(--wp--preset--color--primary);
+	font-size: var(--wp--preset--font-size--x-small);
+	font-weight: 700;
+	letter-spacing: var(--wp--custom--letter-spacing--label);
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+.afa-news-card__cat .wp-block-post-terms__separator,
+.afa-news-card__cat a:not(:first-of-type) {
+	display: none;
+}
+
+.afa-news-card__more {
+	display: inline-block;
+	margin-top: auto;
+	align-self: flex-start;
+	flex-shrink: 0;
+	padding: 8px 16px;
+	border: 1px solid var(--wp--preset--color--primary);
+	border-radius: var(--wp--preset--border-radius--small);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 700;
+	letter-spacing: var(--wp--custom--letter-spacing--label);
+	color: var(--wp--preset--color--primary);
+	text-decoration: none;
+}
+
+.afa-news-card__more::after {
+	content: " →";
+}
+
+.afa-news-card__more:hover {
+	background: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--base);
+	text-decoration: none;
+}
+
+/*
+ * Toolbar: fila ligera sin caja (buscar + select).
+ * «Todas» solo como enlace de texto fuera del archivo completo — evita la píldora azul redundante.
+ * Altura fija 44px en ambos controles (el wrapper del search sumaba padding y desalineaba el select).
+ */
+.afa-news-toolbar {
+	width: 100%;
+	align-items: center !important;
+	gap: var(--wp--preset--spacing--30) !important;
+}
+
+.afa-news-toolbar__search {
+	flex: 1 1 280px;
+	min-width: 0;
+	max-width: 100%;
+	margin: 0;
+}
+
+.afa-news-toolbar__search .wp-block-search__inside-wrapper {
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	height: 44px;
+	min-height: 44px;
+	border: 1px solid var(--wp--preset--color--outline);
+	border-radius: var(--wp--preset--border-radius--full);
+	padding: 0 4px 0 16px;
+	background: var(--wp--preset--color--base);
+}
+
+.afa-news-toolbar__search .wp-block-search__input {
+	box-sizing: border-box;
+	border: 0 !important;
+	background: transparent;
+	height: 100%;
+	min-height: 0 !important;
+	padding: 0;
+	font-size: var(--wp--preset--font-size--small);
+	line-height: 1.25;
+}
+
+.afa-news-toolbar__search .wp-block-search__button {
+	box-sizing: border-box;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	min-width: 36px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: var(--wp--preset--border-radius--full);
+	background: transparent;
+	color: var(--wp--preset--color--primary);
+}
+
+.afa-news-toolbar__filters {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	gap: var(--wp--preset--spacing--30);
+	flex: 0 1 auto;
+	min-width: 0;
+	margin: 0;
+}
+
+.afa-news-toolbar__all {
+	display: none !important;
+	margin: 0 !important;
+	flex-shrink: 0;
+}
+
+body.category .afa-news-toolbar__all,
+body.search .afa-news-toolbar__all,
+body.archive:not(.blog) .afa-news-toolbar__all {
+	display: block !important;
+}
+
+.afa-news-toolbar__all a {
+	display: inline-flex;
+	align-items: center;
+	height: 44px;
+	padding: 0;
+	color: var(--wp--preset--color--primary);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	line-height: 1.2;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	white-space: nowrap;
+}
+
+.afa-news-toolbar__all a:hover {
+	color: var(--wp--preset--color--accent);
+}
+
+.afa-news-cats {
+	margin: 0 !important;
+	min-width: 0;
+	flex: 0 1 240px;
+	line-height: 0;
+}
+
+.afa-news-cats .wp-block-categories__label {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+.afa-news-cats select {
+	appearance: none;
+	box-sizing: border-box;
+	display: block;
+	width: 100%;
+	min-width: 0;
+	max-width: 260px;
+	height: 44px;
+	min-height: 44px;
+	padding: 0 40px 0 16px;
+	border: 1px solid var(--wp--preset--color--outline);
+	border-radius: var(--wp--preset--border-radius--full);
+	background-color: var(--wp--preset--color--base);
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23414754' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 14px center;
+	background-size: 16px;
+	color: var(--wp--preset--color--contrast);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 500;
+	line-height: 42px;
+	cursor: pointer;
+}
+
+.afa-news-cats select:focus-visible {
+	outline: 2px solid var(--wp--preset--color--primary);
+	outline-offset: 2px;
+}
+
+.afa-news-pagination {
+	margin-top: var(--wp--preset--spacing--70);
+}
+
+.afa-news-pagination .page-numbers {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 40px;
+	height: 40px;
+	padding: 0 8px;
+	border: 1px solid var(--wp--preset--color--outline);
+	border-radius: var(--wp--preset--border-radius--small);
+	background: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--contrast-muted);
+	text-decoration: none;
+}
+
+.afa-news-pagination .page-numbers.current {
+	background: var(--wp--preset--color--primary);
+	border-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--base);
+	font-weight: 600;
+}
+
+.afa-news-pagination .page-numbers:hover:not(.current) {
+	border-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--primary);
+}
+
+.afa-news-empty a {
+	color: var(--wp--preset--color--primary);
+}
+
+/* Detalle: migas, byline con avatar, relacionadas compactas y compartir.
+   theme.json no expresa el layout horizontal de ficha relacionada ni los iconos de share. */
+.afa-news-crumbs {
+	width: 100%;
+	max-width: 100%;
+	row-gap: 0.25em;
+}
+
+.afa-news-crumbs > * {
+	margin: 0 !important;
+	font-size: inherit;
+	line-height: inherit;
+	color: inherit;
+}
+
+.afa-news-crumbs a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.afa-news-crumbs a:hover {
+	color: var(--wp--preset--color--primary);
+	text-decoration: underline;
+}
+
+.afa-news-crumbs > * + *::before {
+	content: "›";
+	display: inline-block;
+	margin: 0 0.5em;
+	color: var(--wp--preset--color--contrast-muted);
+	pointer-events: none;
+}
+
+.afa-news-crumbs__current {
+	max-width: min(100%, 36rem);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-weight: 500;
+}
+
+.afa-news-single__byline {
+	color: var(--wp--preset--color--contrast-muted);
+	font-size: var(--wp--preset--font-size--small);
+}
+
+.afa-news-single__author .wp-block-post-author-name {
+	color: var(--wp--preset--color--contrast);
+	font-weight: 700;
+	font-size: var(--wp--preset--font-size--medium);
+}
+
+.afa-news-single__meta .wp-block-post-author-biography {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	overflow: hidden;
+}
+
+.afa-news-single__meta .wp-block-post-author-biography:empty {
+	display: none;
+}
+
+.afa-news-single__cat a {
+	display: inline-block;
+	padding: 4px 8px;
+	border-radius: var(--wp--preset--border-radius--small);
+	background: var(--wp--preset--color--primary-soft);
+	color: var(--wp--preset--color--primary);
+	font-size: var(--wp--preset--font-size--x-small);
+	font-weight: 700;
+	letter-spacing: var(--wp--custom--letter-spacing--label);
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+.afa-news-single__cat .wp-block-post-terms__separator,
+.afa-news-single__cat a:not(:first-of-type) {
+	display: none;
+}
+
+.afa-news-single__article .wp-block-post-content .wp-block-quote {
+	background: var(--wp--preset--color--primary-soft);
+	border: 0;
+	border-radius: var(--wp--preset--border-radius--medium);
+	padding: var(--wp--preset--spacing--50);
+	color: var(--wp--preset--color--primary);
+}
+
+.afa-news-single__article .wp-block-post-content .wp-block-quote p {
+	font-family: var(--wp--preset--font-family--heading);
+	font-weight: 700;
+}
+
+.afa-news-single .sharedaddy,
+.afa-news-single .jp-relatedposts,
+.afa-news-single .sd-sharing,
+.afa-news-single #jp-post-flair {
+	display: none !important;
+}
+
+.afa-related-news:not(:has(.wp-block-post)),
+.afa-related-news-wrap:not(:has(.wp-block-post)) .afa-related-news__title {
+	display: none;
+}
+
+.afa-related-news__title {
+	margin-top: 0;
+	padding-left: var(--wp--preset--spacing--30);
+	border-left: 3px solid var(--wp--preset--color--primary);
+	line-height: 1.2;
+}
+
+.afa-related-card {
+	width: 100%;
+	padding: var(--wp--preset--spacing--40);
+	border: 1px solid var(--wp--preset--color--outline);
+	border-radius: var(--wp--preset--border-radius--medium);
+	background: var(--wp--preset--color--base);
+	box-sizing: border-box;
+}
+
+.afa-related-card__media {
+	flex: 0 0 80px !important;
+	width: 80px !important;
+	min-width: 80px;
+	height: 80px !important;
+	margin: 0 !important;
+	overflow: hidden;
+	border-radius: var(--wp--preset--border-radius--small);
+	background: var(--wp--preset--color--surface-high);
+}
+
+.afa-related-card__media img {
+	width: 80px !important;
+	height: 80px !important;
+	max-width: none;
+	object-fit: cover;
+	display: block;
+}
+
+.afa-news-share__links .wp-social-link {
+	width: 40px;
+	height: 40px;
+}
+
+.afa-news-share__links .wp-social-link a {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	background: var(--wp--preset--color--base);
+	border-radius: var(--wp--preset--border-radius--full);
+}
+
+.afa-related-card__body {
+	min-width: 0;
+	flex: 1 1 auto;
+}
+
+.afa-related-card .wp-block-post-title {
+	margin: 0;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+}
+
+.afa-related-card .wp-block-post-title a {
+	color: var(--wp--preset--color--contrast);
+	text-decoration: none;
+}
+
+.afa-related-card__cat a {
+	color: var(--wp--preset--color--primary);
+	font-size: var(--wp--preset--font-size--x-small);
+	font-weight: 700;
+	letter-spacing: var(--wp--custom--letter-spacing--label);
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+.afa-related-card__cat .wp-block-post-terms__separator,
+.afa-related-card__cat a:not(:first-of-type) {
+	display: none;
+}
+
+.afa-news-share h2 {
+	margin: 0;
+}
+
+.afa-news-share__links {
+	margin: 0;
+}
+
+/* Menú Noticias activo (el ítem apunta a /noticias sin barra final). */
+body.blog .afa-header .wp-block-navigation-item a[href*="/noticias"],
+body.archive .afa-header .wp-block-navigation-item a[href*="/noticias"],
+body.search .afa-header .wp-block-navigation-item a[href*="/noticias"],
+body.single-post .afa-header .wp-block-navigation-item a[href*="/noticias"] {
+	color: var(--wp--preset--color--primary);
+	font-weight: 600;
+	box-shadow: inset 0 -2px 0 currentColor;
+	padding-bottom: 6px;
+}
+
+body.blog .afa-header .wp-block-navigation-item.menu-item-home.current-menu-item > .wp-block-navigation-item__content,
+body.archive .afa-header .wp-block-navigation-item.menu-item-home.current-menu-item > .wp-block-navigation-item__content,
+body.search .afa-header .wp-block-navigation-item.menu-item-home.current-menu-item > .wp-block-navigation-item__content,
+body.single-post .afa-header .wp-block-navigation-item.menu-item-home.current-menu-item > .wp-block-navigation-item__content,
+body.blog .afa-header .menu-item-home > .wp-block-navigation-item__content[aria-current="page"],
+body.archive .afa-header .menu-item-home > .wp-block-navigation-item__content[aria-current="page"],
+body.search .afa-header .menu-item-home > .wp-block-navigation-item__content[aria-current="page"],
+body.single-post .afa-header .menu-item-home > .wp-block-navigation-item__content[aria-current="page"] {
+	color: inherit;
+	font-weight: inherit;
+	box-shadow: none;
+	padding-bottom: 0;
+}
+
+@media (max-width: 781px) {
+	.afa-news .alignwide,
+	.afa-news .wp-block-query,
+	.afa-news-hero,
+	.afa-news-toolbar,
+	.afa-news-grid {
+		max-width: 100% !important;
+		width: 100% !important;
+		min-width: 0 !important;
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+	}
+
+	.afa-news-grid__list {
+		grid-template-columns: minmax(0, 1fr) !important;
+	}
+
+	.afa-news-toolbar {
+		flex-direction: column !important;
+		align-items: stretch !important;
+		gap: var(--wp--preset--spacing--30) !important;
+	}
+
+	.afa-news-toolbar__search {
+		flex: 1 1 auto !important;
+		min-width: 0 !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		order: -1;
+	}
+
+	.afa-news-toolbar__search .wp-block-search__inside-wrapper {
+		width: 100%;
+		max-width: 100%;
+	}
+
+	.afa-news-toolbar__filters {
+		width: 100% !important;
+		flex: 1 1 auto !important;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		min-width: 0;
+	}
+
+	.afa-news-cats {
+		flex: 1 1 100% !important;
+		width: 100%;
+		max-width: 100%;
+	}
+
+	.afa-news-cats select {
+		width: 100% !important;
+		min-width: 0 !important;
+		max-width: 100% !important;
+	}
+
+	.afa-news-card__body {
+		min-width: 0;
+		max-width: 100%;
+	}
+
+	/* En móvil el blur + scale ensancha el scroll en Safari; color de superficie basta. */
+	.afa-news-card__media-bg {
+		display: none !important;
+	}
+
+	.afa-news-single__cols {
 		flex-direction: column !important;
 	}
 }
