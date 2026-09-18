@@ -52,11 +52,11 @@ Como familia con poco tiempo, quiero elegir Comunidad, Deportes, Cultura, Servic
 
 **Why this priority**: Es el control diferencial del diseño; reduce ruido frente al listado único.
 
-**Independent Test**: Con noticias en varias categorías, elegir una en el desplegable y volver con «Todas las noticias»; comprobar listado filtrado y categoría seleccionada en el select.
+**Independent Test**: Con noticias en varias categorías, elegir una píldora y volver con «Todas»; comprobar listado filtrado y píldora activa; abrir «Más categorías» para un término fuera de la lista.
 
 **Acceptance Scenarios**:
 
-1. **Given** el archivo en escritorio, **When** se muestra la toolbar, **Then** aparecen el campo «Buscar noticias…» y un desplegable de categorías (sin forzar solo las seis píldoras del mock).
+1. **Given** el archivo en escritorio, **When** se muestra la toolbar, **Then** aparecen píldoras de categorías (lista editable en la parte de plantilla) y un control «Más categorías» con el resto; la búsqueda se hace desde la cabecera del sitio.
 2. **Given** una visitante, **When** elige una categoría en el desplegable, **Then** solo ve noticias de esa categoría y puede volver al archivo completo con «Todas las noticias».
 3. **Given** una categoría sin noticias, **When** se elige, **Then** se muestra un mensaje claro de que no hay resultados (sin fichas rotas).
 4. **Given** la junta, **When** crea o renombra una categoría, **Then** aparece en el desplegable sin tocar código.
@@ -65,15 +65,15 @@ Como familia con poco tiempo, quiero elegir Comunidad, Deportes, Cultura, Servic
 
 ### User Story 4 - Buscar una noticia (Priority: P2)
 
-Como familia que recuerda un titular o un tema, quiero buscar por palabras («comedor», «fiesta», «carrera») desde el archivo, para encontrar esa novedad sin recorrer páginas.
+Como familia que recuerda un titular o un tema, quiero buscar por palabras («comedor», «fiesta», «carrera») desde la cabecera del sitio, para encontrar esa novedad sin recorrer páginas.
 
-**Why this priority**: El diseño lo incluye junto a los filtros; evita depender solo del buscador de la cabecera.
+**Why this priority**: Evita duplicar el buscador del archivo; la lupa de cabecera ya es el patrón global (spec 001).
 
-**Independent Test**: Escribir un término que coincida con un título o extracto y otro que no coincida; comprobar resultados y vacío.
+**Independent Test**: Escribir un término que coincida con un título o extracto y otro que no coincida; comprobar resultados y vacío en la piel de `search.html`.
 
 **Acceptance Scenarios**:
 
-1. **Given** el archivo, **When** se ve el campo «Buscar noticias…», **Then** es usable con teclado, tiene foco visible y el mismo propósito en escritorio (junto al desplegable) y en móvil (encima del select).
+1. **Given** cualquier página del sitio, **When** se usa el buscador de la cabecera, **Then** es usable con teclado, tiene foco visible y lleva a resultados en el mismo formato de ficha del archivo.
 2. **Given** un término con coincidencias, **When** se lanza la búsqueda, **Then** se muestran las noticias que coinciden, en el mismo tipo de ficha (imagen, categoría, fecha, título, extracto, «Leer más»).
 3. **Given** un término sin coincidencias, **When** se busca, **Then** aparece un mensaje de que no hay noticias para esa búsqueda, con opción de volver al archivo.
 
@@ -96,7 +96,7 @@ Como lectora que acaba un artículo, quiero ver otras noticias relacionadas, par
 
 ### Edge Cases
 
-- Sin noticias publicadas: el archivo muestra un mensaje claro; cabecera, filtros y buscador siguen visibles.
+- Sin noticias publicadas: el archivo muestra un mensaje claro; cabecera, filtros y (vía menú) buscador del sitio siguen visibles.
 - Noticia sin imagen destacada: ficha con marcador de posición coherente con el sistema de diseño (como las fichas AFA / Extraescolares de Figma), sin romper la rejilla.
 - Extractos o títulos muy largos: se recortan con ellipsis o se limitan de forma legible; no desbordan la ficha.
 - Una sola página de resultados: la paginación no muestra controles inútiles o se desactiva de forma discreta.
@@ -114,8 +114,8 @@ Como lectora que acaba un artículo, quiero ver otras noticias relacionadas, par
 - **FR-003**: MUST listar noticias en fichas con imagen (o marcador), categoría, fecha, título, extracto y control «Leer más».
 - **FR-004**: En escritorio MUST usar rejilla de tres columnas (hasta seis por página); en móvil MUST apilar a una columna. Sin barra lateral de blog en el archivo.
 - **FR-005**: MUST paginar cuando haya más noticias que las de una página; la página actual se distingue visualmente.
-- **FR-006**: MUST permitir filtrar por categoría nativa mediante un desplegable (`core/categories`) junto al buscador; el conjunto inicial de Figma (Comunidad, Deportes, Cultura, Servicios, AFA) es editorial, no un listado cerrado en código. En vistas de categoría o búsqueda MUST existir un enlace «Todas las noticias» hacia el archivo; en el archivo completo ese enlace puede ocultarse.
-- **FR-007**: MUST incluir un buscador con el texto guía «Buscar noticias…» que lleva a resultados de noticias en el mismo formato de ficha.
+- **FR-006**: MUST permitir filtrar por categoría nativa mediante píldoras editables (parte `noticias-toolbar`) más un desplegable «Más categorías» (`core/categories`); el conjunto visible es editorial (editable en el Editor del sitio), no un listado cerrado en código. La píldora «Todas» enlaza al archivo completo.
+- **FR-007**: MUST reutilizar el buscador de la cabecera del sitio (spec 001) para buscar noticias; los resultados usan el mismo formato de ficha del archivo (`search.html`). No se duplica un campo de búsqueda en la toolbar del archivo (R17).
 - **FR-008**: MUST existir la ficha de detalle de cada noticia: migas, titular, fecha (obligatoria) y autor opcional si el perfil lo tiene, imagen, cuerpo y bloque de relacionadas (omitible si no hay contenido).
 - **FR-009**: Cabecera y pie MUST reutilizar los del sistema de diseño (spec 001); el enlace «Noticias» del menú queda activo en archivo, categorías, búsqueda de noticias y detalle.
 - **FR-010**: En anchos 390, 900 y 1280 px la página MUST coincidir con Figma en estructura y jerarquía, sin desbordes horizontales.
@@ -125,7 +125,7 @@ Como lectora que acaba un artículo, quiero ver otras noticias relacionadas, par
 
 ### Key Entities
 
-- **Archivo de actualidad**: Página de listado enlazada como «Noticias»; agrupa cabecera, filtros, búsqueda, fichas y paginación.
+- **Archivo de actualidad**: Página de listado enlazada como «Noticias»; agrupa cabecera, filtros, fichas y paginación (búsqueda vía menú del sitio).
 - **Noticia**: Novedad o aviso publicado con título, fecha, extracto, cuerpo, imagen opcional y una o más categorías.
 - **Categoría**: Etiqueta temática (Comunidad, Deportes, Cultura, Servicios, AFA, Extraescolares, etc.) usada en el desplegable y en la ficha.
 - **Ficha de detalle**: Lectura completa de una noticia, con migas y relacionadas.
@@ -148,7 +148,7 @@ Como lectora que acaba un artículo, quiero ver otras noticias relacionadas, par
 - Las noticias son entradas estándar que la junta ya puede publicar; las categorías las crea el voluntariado. El tema no registra tipos ni taxonomías nuevas (constitución III).
 - Conjunto inicial de categorías de Figma: Comunidad, Deportes, Cultura, Servicios, AFA. Extraescolares aparece en fichas de ejemplo y se admite como categoría adicional.
 - Filtrar recarga un listado de esa categoría (no un filtrado instantáneo sin cambiar de página). Encaja con «sin scripts de terceros / lógica mínima en el tema».
-- El buscador del archivo y el de la cabecera pueden compartir el mismo destino de resultados; el del archivo usa el texto guía «Buscar noticias…».
+- El buscador del sitio (cabecera) es el único punto de búsqueda; los resultados reutilizan la piel del archivo (`search.html`).
 - Seis noticias por página en todos los anchos. El mock móvil muestra tres por altura de frame, no un recuento distinto.
 - Texto de apoyo canónico: el de escritorio. El de móvil en Figma («Mantente informado…») se unifica para no mantener dos copys.
 - En el detalle, el aside es «Noticias relacionadas», no el aside global de blog (buscar / suscríbete / lo más reciente) de la spec 001.
@@ -171,11 +171,13 @@ Como lectora que acaba un artículo, quiero ver otras noticias relacionadas, par
 | R9 | Relacionadas con etiquetas INSTITUCIONAL / SERVICIOS | Categoría real de cada noticia | No inventar taxonomía «Institucional» en el tema |
 | R10 | Categoría superpuesta a la foto en móvil | Categoría en la meta de la ficha (igual que escritorio) | Evita CSS de posicionamiento frágil; misma ficha en todos los anchos |
 | R11 | Ítem de menú activo solo con current-menu-item | También en categoría, búsqueda y detalle vía `href*=/noticias` | Los posts no son hijos de la página de entradas; el ítem del menú va a `/noticias` sin barra final |
-| R12 | Seis píldoras de categoría (Comunidad, Deportes…) | Desplegable nativo `core/categories` + buscar; «Todas» solo enlace de texto fuera del archivo | Decenas de términos; la píldora «Todas» activa era ruido en el archivo completo |
+| R12 | Seis píldoras de categoría (Comunidad, Deportes…) | Píldoras editables (defaults reales del sitio) + «Más categorías» con desplegable | Decenas de términos; la lista corta es editorial y editable en FSE |
 | R13 | Compartir con iconos nativos (share / copiar / mail) | `core/social-links` mail + WhatsApp + Facebook con URLs de la entrada en render | Sin JS a medida; copiar al portapapeles exigiría script |
 | R14 | Relacionadas con miniatura ancha 16:9 | Ficha compacta: miniatura 1:1 a la izquierda, categoría + título | Coincide con los frames de detalle 19:2503 / 20:2629 |
 | R15 | Foto de ficha a tamaño completo del adjunto | Tamaño `afa-news-card` + `object-fit: contain` sobre fondo difuminado de la misma imagen | Carteles anchos; color dominante exigiría JS o análisis PHP en cada render |
 | R16 | Toolbar en caja con borde/fondo | Fila sin contenedor card | Reduce carga visual junto al hero |
+| R17 | Buscador «Buscar noticias…» en la toolbar del archivo | Solo filtros; búsqueda vía lupa de cabecera | Evita duplicar el patrón global de búsqueda (spec 001) |
+| R18 | Pattern PHP `noticias-toolbar` | Template part `parts/noticias-toolbar.html` | La junta edita píldoras en Apariencia → Editor → Partes |
 
 ## Alcance fuera
 

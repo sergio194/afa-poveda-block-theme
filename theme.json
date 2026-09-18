@@ -231,7 +231,8 @@
 	"templateParts": [
 		{ "name": "header", "title": "Cabecera", "area": "header" },
 		{ "name": "footer", "title": "Pie", "area": "footer" },
-		{ "name": "sidebar", "title": "Barra lateral", "area": "uncategorized" }
+		{ "name": "sidebar", "title": "Barra lateral", "area": "uncategorized" },
+		{ "name": "noticias-toolbar", "title": "Noticias — Filtros", "area": "uncategorized" }
 	],
 	"customTemplates": [
 		{ "name": "page-with-sidebar", "title": "Página con barra lateral", "postTypes": [ "page", "post" ] },

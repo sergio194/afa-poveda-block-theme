@@ -11,7 +11,7 @@
 1. `header` (template part — spec 001)
 2. `main`
    1. Hero — `afa-poveda/noticias-hero`
-   2. Toolbar — `afa-poveda/noticias-toolbar` (buscar + Todas + desplegable)
+   2. Toolbar — template part `noticias-toolbar` (píldoras editables + Más categorías)
    3. Grid — `afa-poveda/noticias-grid` (query inherit)
 3. `footer` (template part — spec 001)
 
@@ -29,10 +29,11 @@ Sin `parts/sidebar`. Sin `query-title` como H1 del archivo.
 
 | Slot | Escritorio | Móvil |
 |------|------------|-------|
-| Layout | Fila ligera sin caja: buscar (flex) + desplegable; sin borde/fondo de contenedor | Columna: buscar primero, luego select a ancho completo |
-| Todas | Oculta en archivo completo (`body.blog`); enlace de texto «Todas las noticias» en categoría/búsqueda | Igual |
-| Categorías | `core/categories` `displayAsDropdown` | Select estilizado (misma altura que buscar); navegación nativa de core |
-| Buscar | `core/search` placeholder «Buscar noticias…» | Ancho completo |
+| Layout | Fila ligera sin caja: píldoras + «Más categorías»; sin borde/fondo de contenedor | Píldoras con scroll horizontal; «Más» a ancho completo |
+| Todas | Píldora «Todas» → `/noticias/` (activa en el archivo completo) | Igual |
+| Categorías destacadas | Párrafos `afa-news-pill` editables en la parte (defaults: AFA, Extraescolares, Campamentos, Fiestas, Planes en el barrio) | Igual |
+| Más | `core/details` + `core/categories` `displayAsDropdown` | Select estilizado al abrir |
+| Buscar | No en toolbar (R17); lupa de cabecera | Igual |
 
 ### Grid de fichas
 

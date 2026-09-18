@@ -6,7 +6,7 @@ Description: Tema de bloques a medida para la Asociación de Familias del CEIP P
 Requires at least: 7.1
 Tested up to: 7.2
 Requires PHP: 7.4
-Version: 0.2.4
+Version: 0.2.10
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: afa-poveda
@@ -888,106 +888,118 @@ body:not(.home) .afa-header .menu-item-home > .wp-block-navigation-item__content
 }
 
 /*
- * Toolbar: fila ligera sin caja (buscar + select).
- * «Todas» solo como enlace de texto fuera del archivo completo — evita la píldora azul redundante.
- * Altura fija 44px en ambos controles (el wrapper del search sumaba padding y desalineaba el select).
+ * Toolbar: píldoras sueltas (hermanas de «Más») para que quepan en la misma fila.
+ * Separación del hero con padding (el margin del pattern a veces no llega al HTML).
  */
 .afa-news-toolbar {
-	width: 100%;
+	display: flex !important;
+	flex-direction: row !important;
+	flex-wrap: wrap !important;
+	justify-content: flex-start !important;
 	align-items: center !important;
-	gap: var(--wp--preset--spacing--30) !important;
-}
-
-.afa-news-toolbar__search {
-	flex: 1 1 280px;
-	min-width: 0;
-	max-width: 100%;
-	margin: 0;
-}
-
-.afa-news-toolbar__search .wp-block-search__inside-wrapper {
+	align-content: flex-start !important;
+	width: 100%;
+	max-width: var(--wp--style--global--wide-size) !important;
+	gap: 12px !important;
+	padding-top: var(--wp--preset--spacing--40);
+	margin-bottom: var(--wp--preset--spacing--60) !important;
 	box-sizing: border-box;
-	display: flex;
+}
+
+/* La parte de plantilla a veces hereda solo contentSize (760); forzar wide como el hero. */
+.afa-news .wp-block-template-part:has(.afa-news-toolbar) {
+	width: 100%;
+	max-width: var(--wp--style--global--wide-size) !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+}
+
+.afa-news-toolbar > .afa-news-pill {
+	margin: 0 !important;
+	flex: 0 0 auto;
+	width: fit-content;
+	max-width: 100%;
+	line-height: 1;
+}
+
+.afa-news-toolbar > .afa-news-pill a {
+	box-sizing: border-box;
+	display: inline-flex;
 	align-items: center;
-	height: 44px;
-	min-height: 44px;
+	min-height: 40px;
+	padding: 8px 16px;
 	border: 1px solid var(--wp--preset--color--outline);
 	border-radius: var(--wp--preset--border-radius--full);
-	padding: 0 4px 0 16px;
 	background: var(--wp--preset--color--base);
-}
-
-.afa-news-toolbar__search .wp-block-search__input {
-	box-sizing: border-box;
-	border: 0 !important;
-	background: transparent;
-	height: 100%;
-	min-height: 0 !important;
-	padding: 0;
-	font-size: var(--wp--preset--font-size--small);
-	line-height: 1.25;
-}
-
-.afa-news-toolbar__search .wp-block-search__button {
-	box-sizing: border-box;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	width: 36px;
-	height: 36px;
-	min-width: 36px;
-	margin: 0;
-	padding: 0;
-	border: 0;
-	border-radius: var(--wp--preset--border-radius--full);
-	background: transparent;
-	color: var(--wp--preset--color--primary);
-}
-
-.afa-news-toolbar__filters {
-	display: flex;
-	flex-wrap: nowrap;
-	align-items: center;
-	gap: var(--wp--preset--spacing--30);
-	flex: 0 1 auto;
-	min-width: 0;
-	margin: 0;
-}
-
-.afa-news-toolbar__all {
-	display: none !important;
-	margin: 0 !important;
-	flex-shrink: 0;
-}
-
-body.category .afa-news-toolbar__all,
-body.search .afa-news-toolbar__all,
-body.archive:not(.blog) .afa-news-toolbar__all {
-	display: block !important;
-}
-
-.afa-news-toolbar__all a {
-	display: inline-flex;
-	align-items: center;
-	height: 44px;
-	padding: 0;
-	color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--contrast);
 	font-size: var(--wp--preset--font-size--small);
 	font-weight: 600;
 	line-height: 1.2;
-	text-decoration: underline;
-	text-underline-offset: 3px;
+	text-decoration: none;
 	white-space: nowrap;
 }
 
-.afa-news-toolbar__all a:hover {
-	color: var(--wp--preset--color--accent);
+.afa-news-toolbar > .afa-news-pill a:hover {
+	border-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--primary);
+}
+
+.afa-news-toolbar > .afa-news-pill.is-active a,
+.afa-news-toolbar > .afa-news-pill a[aria-current="page"] {
+	border-color: var(--wp--preset--color--primary);
+	background: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--base);
+}
+
+.afa-news-cats-more {
+	display: block;
+	margin: 0 !important;
+	flex: 0 0 auto !important;
+	width: fit-content !important;
+	max-width: 100%;
+	min-width: 0;
+	align-self: center;
+}
+
+.afa-news-cats-more[open] {
+	flex: 1 1 100% !important;
+	width: 100% !important;
+}
+
+.afa-news-cats-more > summary {
+	display: inline-flex;
+	align-items: center;
+	min-height: 40px;
+	padding: 8px 16px;
+	border: 1px dashed var(--wp--preset--color--outline);
+	border-radius: var(--wp--preset--border-radius--full);
+	color: var(--wp--preset--color--contrast-muted);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	line-height: 1.2;
+	cursor: pointer;
+	list-style: none;
+}
+
+.afa-news-cats-more > summary::-webkit-details-marker {
+	display: none;
+}
+
+.afa-news-cats-more > summary:hover {
+	border-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--primary);
+}
+
+.afa-news-cats-more[open] > summary {
+	margin-bottom: var(--wp--preset--spacing--30);
+	border-style: solid;
+	border-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--primary);
 }
 
 .afa-news-cats {
 	margin: 0 !important;
 	min-width: 0;
-	flex: 0 1 240px;
 	line-height: 0;
 }
 
@@ -1009,7 +1021,7 @@ body.archive:not(.blog) .afa-news-toolbar__all {
 	display: block;
 	width: 100%;
 	min-width: 0;
-	max-width: 260px;
+	max-width: 320px;
 	height: 44px;
 	min-height: 44px;
 	padding: 0 40px 0 16px;
@@ -1294,36 +1306,23 @@ body.single-post .afa-header .wp-block-navigation-item a[href*="/noticias"] {
 	}
 
 	.afa-news-toolbar {
-		flex-direction: column !important;
-		align-items: stretch !important;
-		gap: var(--wp--preset--spacing--30) !important;
+		flex-direction: row !important;
+		flex-wrap: nowrap !important;
+		align-items: center !important;
+		gap: 12px !important;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		padding-bottom: 4px;
 	}
 
-	.afa-news-toolbar__search {
-		flex: 1 1 auto !important;
-		min-width: 0 !important;
-		width: 100% !important;
-		max-width: 100% !important;
-		order: -1;
+	.afa-news-toolbar > .afa-news-pill,
+	.afa-news-cats-more {
+		flex: 0 0 auto !important;
 	}
 
-	.afa-news-toolbar__search .wp-block-search__inside-wrapper {
-		width: 100%;
-		max-width: 100%;
-	}
-
-	.afa-news-toolbar__filters {
-		width: 100% !important;
-		flex: 1 1 auto !important;
-		flex-wrap: wrap;
-		justify-content: flex-start;
-		min-width: 0;
-	}
-
-	.afa-news-cats {
+	.afa-news-cats-more[open] {
 		flex: 1 1 100% !important;
-		width: 100%;
-		max-width: 100%;
+		width: 100% !important;
 	}
 
 	.afa-news-cats select {

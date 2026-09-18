@@ -196,6 +196,75 @@ function afa_poveda_news_share_urls( $block_content, $block ) {
 add_filter( 'render_block', 'afa_poveda_news_share_urls', 10, 2 );
 
 /**
+ * Marca la píldora de filtro activa según la URL del enlace (lista editable).
+ *
+ * @param string $block_content HTML del bloque.
+ * @param array  $block         Bloque parseado.
+ * @return string
+ */
+function afa_poveda_news_pill_active( $block_content, $block ) {
+	if ( empty( $block['blockName'] ) || 'core/paragraph' !== $block['blockName'] ) {
+		return $block_content;
+	}
+
+	$class_name = isset( $block['attrs']['className'] ) ? $block['attrs']['className'] : '';
+	if ( false === strpos( $class_name, 'afa-news-pill' ) ) {
+		return $block_content;
+	}
+
+	if ( ! preg_match( '/href=("|\')([^"\']+)\1/', $block_content, $matches ) ) {
+		return $block_content;
+	}
+
+	$href      = $matches[2];
+	$href_path = wp_parse_url( $href, PHP_URL_PATH );
+	if ( ! is_string( $href_path ) || '' === $href_path ) {
+		$href_path = $href;
+	}
+	$href_path = untrailingslashit( $href_path );
+
+	$active = false;
+
+	if ( is_category() ) {
+		$cat_path = wp_parse_url( get_category_link( get_queried_object_id() ), PHP_URL_PATH );
+		$active   = is_string( $cat_path ) && untrailingslashit( $cat_path ) === $href_path;
+	} elseif ( is_home() && ! is_front_page() ) {
+		$posts_page = (int) get_option( 'page_for_posts' );
+		$home_path  = $posts_page ? wp_parse_url( get_permalink( $posts_page ), PHP_URL_PATH ) : '/noticias';
+		if ( ! is_string( $home_path ) || '' === $home_path ) {
+			$home_path = '/noticias';
+		}
+		$active = untrailingslashit( $home_path ) === $href_path
+			|| false !== strpos( $href_path, '/noticias' );
+	}
+
+	if ( ! $active ) {
+		return $block_content;
+	}
+
+	if ( false === strpos( $block_content, 'is-active' ) ) {
+		$block_content = preg_replace(
+			'/\bafa-news-pill\b/',
+			'afa-news-pill is-active',
+			$block_content,
+			1
+		);
+	}
+
+	if ( false === strpos( $block_content, 'aria-current=' ) ) {
+		$block_content = preg_replace(
+			'/<a\b/',
+			'<a aria-current="page"',
+			$block_content,
+			1
+		);
+	}
+
+	return $block_content;
+}
+add_filter( 'render_block', 'afa_poveda_news_pill_active', 10, 2 );
+
+/**
  * Fondo difuminado tras la foto de ficha (misma imagen, sin JS).
  *
  * @param string $block_content HTML del bloque.

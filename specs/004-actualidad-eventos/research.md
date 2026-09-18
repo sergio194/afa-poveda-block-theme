@@ -25,7 +25,7 @@
 
 ## R3 — Filtros: «Todas» + desplegable de categorías
 
-**Decision**: Pattern `noticias-toolbar`: buscador + enlace de texto «Todas las noticias» → `/noticias/` (oculto en el archivo completo) + bloque `core/categories` con `displayAsDropdown: true` (script de navegación de core, no JS del tema). El conjunto Figma (Comunidad, Deportes…) es editorial; el tema no registra taxonomías ni limita el listado en código.
+**Decision**: Template part `parts/noticias-toolbar.html` (editable en el Editor del sitio): píldoras `core/button` con clase `afa-news-pill` hacia categorías curadas + «Todas» → `/noticias/`; el resto en `core/details` «Más categorías» con `core/categories` `displayAsDropdown: true` (navegación nativa de core, sin JS del tema). Defaults iniciales según volumen real del sitio (AFA, Extraescolares, Campamentos, Fiestas, Planes en el barrio). Sin buscador en la toolbar (R17). El tema no registra taxonomías.
 
 **Rationale**: Constitución III y IV: la junta añade categorías y aparecen solas. Con decenas de términos migrados, las píldoras (aunque con scroll) no son usables ni fieles al mock de 5–6 chips.
 
