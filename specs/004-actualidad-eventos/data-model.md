@@ -38,7 +38,7 @@ Vive en `noticias-hero` (plantilla, editable en Editor del sitio).
 | extracto | excerpt | Recomendado; si vacío, recorte del cuerpo |
 | cuerpo | post_content | Obligatorio para el detalle |
 | imagen | featured image | Recomendada 16:9; si falta → marcador CSS |
-| categorías | `category` nativa | 0..n; primera se muestra como píldora en la ficha |
+| categorías | `category` nativa | 0..n; primera se muestra como etiqueta en la ficha |
 | estado | draft/publish | Solo `publish` en archivo |
 
 **Estados**: `publicado` visible; `borrador` no aparece; sticky no cambia el archivo (el sticky es de portada 002).
@@ -47,7 +47,7 @@ Vive en `noticias-hero` (plantilla, editable en Editor del sitio).
 
 | Campo | Tipo | Reglas |
 |-------|------|--------|
-| nombre | string | Visible en píldora y ficha |
+| nombre | string | Visible en desplegable y ficha |
 | slug | slug | URL `/category/{slug}/` |
 | conjunto inicial | editorial | Comunidad, Deportes, Cultura, Servicios, AFA (+ Extraescolares opcional) |
 
@@ -84,7 +84,7 @@ Portada 002 «Ver noticias» ──URL──► /noticias/
 | Situación | Comportamiento |
 |-----------|----------------|
 | 0 noticias publicadas | Hero + toolbar visibles; mensaje de vacío en el grid |
-| Categoría sin posts | Píldora activa + mensaje de vacío |
+| Categoría sin posts | Select en esa categoría + mensaje de vacío |
 | Búsqueda sin acierto | Mensaje de vacío + vía de vuelta a `/noticias/` |
 | Sin imagen destacada | Hueco 16:9 con fondo `surface-high` |
 | 1 sola página | Paginación oculta o inactiva (sin falsas páginas 2…12) |

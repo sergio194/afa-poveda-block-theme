@@ -41,7 +41,7 @@ Raíz del tema block: `templates/`, `patterns/`, `style.css`, `functions.php`, `
 
 - [x] T003 Reescribir `templates/home.html`: template-part `header` → `<main class="afa-news">` (Group constrained/wide) **sin** `parts/sidebar` y **sin** `core/query-title` como H1 → template-part `footer`; dejar `main` listo para patterns (contrato UI A)
 - [x] T004 Alinear `templates/index.html` al mismo cascarón de una columna que `templates/home.html` (fallback sin sidebar)
-- [x] T005 Añadir en `style.css` bloque comentado «Actualidad y Eventos (004)» con selectores base `.afa-news`, `.afa-news-card`, `.afa-news-toolbar`, `.afa-news-pagination` listos para extender por US; solo variables `--wp--preset--*`; justificar por qué hace falta CSS (píldoras activas, scroll, placeholder 16:9, paginación Figma)
+- [x] T005 Añadir en `style.css` bloque comentado «Actualidad y Eventos (004)» con selectores base `.afa-news`, `.afa-news-card`, `.afa-news-toolbar`, `.afa-news-pagination` listos para extender por US; solo variables `--wp--preset--*`; justificar por qué hace falta CSS (toolbar/select, placeholder 16:9, paginación Figma)
 - [x] T006 Anotar en `specs/004-actualidad-eventos/quickstart.md` (si falta): tras cambiar plantillas, restablecer personalizaciones de `home` / `archive` / `single` / `search` guardadas en BD
 
 **Checkpoint**: Foundation ready — se puede implementar US1–US5
@@ -86,17 +86,17 @@ Raíz del tema block: `templates/`, `patterns/`, `style.css`, `functions.php`, `
 
 ## Phase 5: User Story 3 - Filtrar por categoría (Priority: P2)
 
-**Goal**: Píldoras Todas + categorías nativas; listado filtrado al recargar el archivo de categoría, con la activa marcada
+**Goal**: Toolbar con buscar + desplegable de categorías nativas; listado filtrado al recargar el archivo de categoría
 
-**Independent Test**: Con noticias en ≥ 3 categorías (conjunto inicial editorial: Comunidad, Deportes, Cultura, Servicios, AFA), pulsar una píldora y «Todas»; categoría vacía muestra mensaje de vacío
+**Independent Test**: Con noticias en ≥ 3 categorías (conjunto inicial editorial: Comunidad, Deportes, Cultura, Servicios, AFA), elegir una en el select y «Todas las noticias»; categoría vacía muestra mensaje de vacío
 
 ### Implementation for User Story 3
 
-- [x] T017 [US3] Crear `patterns/noticias-toolbar.php` (slug `afa-poveda/noticias-toolbar`): píldora «Todas» → `/noticias/`; `core/categories` lista plana sin recuentos (la junta crea los términos; el tema **no** registra taxonomías); campo `core/search` placeholder «Buscar noticias…» (mismo destino nativo; piel de resultados en US4); clase `.afa-news-toolbar`; i18n `afa-poveda`
-- [x] T018 [US3] CSS en `style.css` para `.afa-news-toolbar`: escritorio fila (píldoras izq / buscar dcha); móvil columna y chips `overflow-x: auto`; activa (`body.blog` / `.current-cat`) fondo `primary` o `accent` + texto `base`; inactiva `surface-container`/`primary-soft` con contraste ≥ 4,5:1; comentario
+- [x] T017 [US3] Crear `patterns/noticias-toolbar.php` (slug `afa-poveda/noticias-toolbar`): enlace «Todas las noticias» → `/noticias/` (oculto en `body.blog`); `core/categories` con `displayAsDropdown: true` sin recuentos (la junta crea los términos; el tema **no** registra taxonomías); campo `core/search` placeholder «Buscar noticias…» (mismo destino nativo; piel de resultados en US4); clase `.afa-news-toolbar`; i18n `afa-poveda`
+- [x] T018 [US3] CSS en `style.css` para `.afa-news-toolbar`: escritorio fila (buscar + select); móvil columna; select misma altura que buscar; sin contenedor tipo card (R16); contraste ≥ 4,5:1; comentario
 - [x] T019 [US3] Reescribir `templates/archive.html` al mismo orden que el archivo (hero + toolbar + grid, sin sidebar, query inherit) e insertar `afa-poveda/noticias-toolbar` también en `templates/home.html` y `templates/index.html` entre hero y grid
 - [x] T020 [US3] Actualizar `CHANGELOG.md` `[Unreleased]` (filtros de categoría)
-- [x] T021 [US3] Validar: `php -l patterns/noticias-toolbar.php`; «Todas» y una categoría; `aria-current` o `.current-cat`; sin JS
+- [x] T021 [US3] Validar: `php -l patterns/noticias-toolbar.php`; select + «Todas las noticias» en archive; sin JS a medida
 
 **Checkpoint**: Filtrar recarga listado de categoría sin cambiar de piel
 
@@ -128,7 +128,7 @@ Raíz del tema block: `templates/`, `patterns/`, `style.css`, `functions.php`, `
 
 ### Implementation for User Story 5
 
-- [x] T027 [US5] Completar en `templates/single.html` el Query Loop `.afa-related-news`: `inherit: false`, `perPage: 3`, `postType: post`; ficha con categoría + título enlace (miniatura opcional); título de bloque «Noticias relacionadas»; `query-no-results` discreto
+- [x] T027 [US5] Completar en `templates/single.html` el Query Loop `.afa-related-news`: `inherit: false`, `perPage: 3`, `postType: post`; ficha compacta con miniatura 1:1 a la izquierda + categoría + título enlace (R14); título de bloque «Noticias relacionadas»; `query-no-results` discreto
 - [x] T028 [US5] Añadir en `functions.php` filtro `query_loop_block_query_vars` acotado a bloques con clase `afa-related-news` y `is_singular('post')`: `post__not_in` = ID actual; `category__in` = categorías de la entrada (si 0 categorías, solo excluir actual); **no** registrar CPT ni taxonomías
 - [x] T029 [US5] CSS en `style.css` para `.afa-related-news` (cards compactas, stack móvil); comentario
 - [x] T030 [US5] Actualizar `CHANGELOG.md` `[Unreleased]` (noticias relacionadas)
@@ -144,10 +144,13 @@ Raíz del tema block: `templates/`, `patterns/`, `style.css`, `functions.php`, `
 
 - [x] T032 Dejar de usar `patterns/posts-list.php` en `templates/home.html`, `templates/archive.html`, `templates/search.html` e `templates/index.html` (retirar del inserter o documentar deprecación en la cabecera del pattern)
 - [x] T033 Ejecutar los 14 escenarios de `specs/004-actualidad-eventos/quickstart.md` a 390 / 900 / 1280; confirmar que portada 002 «Ver noticias» sigue en `/noticias/` y que `templates/front-page.html` no se modificó
-- [x] T034 [P] Revisar contraste AA (≥ 4,5:1) y foco teclado en píldoras, paginación, buscar, migas y «Leer más» usando tokens de `theme.json` y reglas de `style.css` (sin hex sueltos)
+- [x] T034 [P] Revisar contraste AA (≥ 4,5:1) y foco teclado en toolbar (select/buscar), paginación, migas y «Leer más» usando tokens de `theme.json` y reglas de `style.css` (sin hex sueltos)
 - [x] T035 [P] Actualizar tabla de refinamientos en `specs/004-actualidad-eventos/spec.md` si hubo desviaciones nuevas (p. ej. menú activo en categoría/detalle); marcar status de la spec
 - [x] T036 Añadir bullet final en `CHANGELOG.md` `[Unreleased]` resumiendo plantillas `home`/`archive`/`search`/`single` + patterns `noticias-*`
 - [x] T037 Validación final: `php -l` en `patterns/noticias-*.php` y `functions.php`; `python3 -m json.tool theme.json > /dev/null` si se tocó `theme.json`
+- [x] T038 [US2] Extraer migas a `patterns/noticias-crumbs.php` e insertar en `templates/single.html`
+- [x] T039 [US2] Bloque «Compartir noticia» (`core/social-links` mail/WhatsApp/Facebook) + filtro `render_block` de URLs en `functions.php` (R13 / FR-013)
+- [x] T040 Registrar tamaño `afa-news-card` y filtro de media con fondo difuminado (R15)
 
 ---
 
@@ -216,10 +219,10 @@ Task: "Crear patterns/noticias-toolbar.php …"       # US3
 1. Setup + Foundational
 2. US1 → demo MVP archivo
 3. US2 detalle → se puede leer una noticia
-4. US3 filtros → píldoras
+4. US3 filtros → desplegable de categorías
 5. US4 búsqueda → resultados
 6. US5 relacionadas
-7. Polish: quickstart 14 escenarios + spec
+7. Polish: quickstart 14 escenarios + spec + crumbs/share/image size (T038–T040)
 
 ### Suggested MVP scope
 

@@ -6,7 +6,7 @@ Description: Tema de bloques a medida para la Asociación de Familias del CEIP P
 Requires at least: 7.1
 Tested up to: 7.2
 Requires PHP: 7.4
-Version: 0.2.2
+Version: 0.2.4
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: afa-poveda
@@ -30,23 +30,37 @@ Tags: block-theme, full-site-editing, blog, education, accessibility-ready
 }
 
 /* Evita scroll horizontal por hijos absolutos / texto largo (p. ej. título del sitio).
-   overflow-x:hidden en html/body: clip no basta en Safari iOS con filter:blur. */
+   overflow-x:hidden en html/body: clip no basta en Safari iOS con filter:blur.
+   En .wp-site-blocks usamos clip: no fuerza overflow-y:auto (así no recorta dropdowns). */
 html,
 body {
 	max-width: 100%;
 	overflow-x: hidden;
 }
 .wp-site-blocks {
-	overflow-x: hidden;
+	overflow-x: clip;
 	max-width: 100%;
 }
 
 /* ---------- Cabecera ---------- */
+/*
+ * overflow:visible: overflow-x:hidden implica overflow-y:auto y el submenú
+ * (absolute) ensancha la cabecera y queda bajo el contenido. Contención
+ * horizontal solo en brand / logo.
+ */
 .afa-header {
 	position: relative;
-	z-index: 10;
-	overflow-x: hidden;
+	z-index: 100;
+	overflow: visible;
 	max-width: 100%;
+}
+
+/* Submenú por encima del hero y sin empujar el layout. */
+.afa-header .wp-block-navigation .has-child {
+	position: relative;
+}
+.afa-header .wp-block-navigation .wp-block-navigation__submenu-container {
+	z-index: 101;
 }
 .afa-header .wp-block-site-logo img {
 	width: 224px;
@@ -81,13 +95,27 @@ body {
 	min-width: 0;
 	max-width: 100%;
 }
-/* Enlace activo: subrayado de 2px como en Figma */
+/* Enlace activo: subrayado de 2px como en Figma (ítem y ancestro de submenú). */
 .afa-header .wp-block-navigation-item.current-menu-item > .wp-block-navigation-item__content,
+.afa-header .wp-block-navigation-item.current-menu-ancestor > .wp-block-navigation-item__content,
 .afa-header .wp-block-navigation-item__content[aria-current="page"] {
 	color: var(--wp--preset--color--primary);
 	font-weight: 600;
 	box-shadow: inset 0 -2px 0 currentColor;
 	padding-bottom: 6px;
+}
+
+/*
+ * WP marca a menudo el ítem Inicio (custom + menu-item-home) como current
+ * fuera de la portada. Quitar el activo falso en cualquier vista que no sea home.
+ * theme.json no puede expresar :not(.home) ni anular current-menu-item.
+ */
+body:not(.home) .afa-header .wp-block-navigation-item.menu-item-home.current-menu-item > .wp-block-navigation-item__content,
+body:not(.home) .afa-header .menu-item-home > .wp-block-navigation-item__content[aria-current="page"] {
+	color: inherit;
+	font-weight: inherit;
+	box-shadow: none;
+	padding-bottom: 0;
 }
 .afa-header .wp-block-search__button {
 	background: transparent;
@@ -1234,7 +1262,10 @@ body.archive:not(.blog) .afa-news-toolbar__all {
 	margin: 0;
 }
 
-/* Menú Noticias activo (el ítem apunta a /noticias sin barra final). */
+/*
+ * Menú Noticias activo: el ítem apunta a /noticias sin barra final y WP no le
+ * pone current-menu-item en categoría / búsqueda / detalle.
+ */
 body.blog .afa-header .wp-block-navigation-item a[href*="/noticias"],
 body.archive .afa-header .wp-block-navigation-item a[href*="/noticias"],
 body.search .afa-header .wp-block-navigation-item a[href*="/noticias"],
@@ -1243,20 +1274,6 @@ body.single-post .afa-header .wp-block-navigation-item a[href*="/noticias"] {
 	font-weight: 600;
 	box-shadow: inset 0 -2px 0 currentColor;
 	padding-bottom: 6px;
-}
-
-body.blog .afa-header .wp-block-navigation-item.menu-item-home.current-menu-item > .wp-block-navigation-item__content,
-body.archive .afa-header .wp-block-navigation-item.menu-item-home.current-menu-item > .wp-block-navigation-item__content,
-body.search .afa-header .wp-block-navigation-item.menu-item-home.current-menu-item > .wp-block-navigation-item__content,
-body.single-post .afa-header .wp-block-navigation-item.menu-item-home.current-menu-item > .wp-block-navigation-item__content,
-body.blog .afa-header .menu-item-home > .wp-block-navigation-item__content[aria-current="page"],
-body.archive .afa-header .menu-item-home > .wp-block-navigation-item__content[aria-current="page"],
-body.search .afa-header .menu-item-home > .wp-block-navigation-item__content[aria-current="page"],
-body.single-post .afa-header .menu-item-home > .wp-block-navigation-item__content[aria-current="page"] {
-	color: inherit;
-	font-weight: inherit;
-	box-shadow: none;
-	padding-bottom: 0;
 }
 
 @media (max-width: 781px) {

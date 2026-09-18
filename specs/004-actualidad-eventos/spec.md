@@ -48,18 +48,18 @@ Como madre o padre, quiero abrir una noticia y leerla entera (título, fecha, im
 
 ### User Story 3 - Filtrar por categoría (Priority: P2)
 
-Como familia con poco tiempo, quiero pulsar Comunidad, Deportes, Cultura, Servicios o AFA, para ver solo las noticias de ese tema.
+Como familia con poco tiempo, quiero elegir Comunidad, Deportes, Cultura, Servicios o AFA (u otra categoría de la junta), para ver solo las noticias de ese tema.
 
 **Why this priority**: Es el control diferencial del diseño; reduce ruido frente al listado único.
 
-**Independent Test**: Con noticias en varias categorías, pulsar cada píldora y «Todas»; comprobar listado filtrado y píldora activa.
+**Independent Test**: Con noticias en varias categorías, elegir una en el desplegable y volver con «Todas las noticias»; comprobar listado filtrado y categoría seleccionada en el select.
 
 **Acceptance Scenarios**:
 
-1. **Given** el archivo en escritorio, **When** se muestra la barra de filtros, **Then** aparecen las píldoras «Todas» (activa por defecto), «Comunidad», «Deportes», «Cultura», «Servicios» y «AFA».
-2. **Given** una visitante, **When** elige una categoría, **Then** solo ve noticias de esa categoría, la píldora queda marcada y puede volver a «Todas» para el archivo completo.
+1. **Given** el archivo en escritorio, **When** se muestra la toolbar, **Then** aparecen el campo «Buscar noticias…» y un desplegable de categorías (sin forzar solo las seis píldoras del mock).
+2. **Given** una visitante, **When** elige una categoría en el desplegable, **Then** solo ve noticias de esa categoría y puede volver al archivo completo con «Todas las noticias».
 3. **Given** una categoría sin noticias, **When** se elige, **Then** se muestra un mensaje claro de que no hay resultados (sin fichas rotas).
-4. **Given** la junta, **When** crea o renombra una categoría, **Then** puede usarla en las noticias; las píldoras de Figma son el conjunto inicial recomendado, no un listado cerrado en código.
+4. **Given** la junta, **When** crea o renombra una categoría, **Then** aparece en el desplegable sin tocar código.
 
 ---
 
@@ -73,7 +73,7 @@ Como familia que recuerda un titular o un tema, quiero buscar por palabras («co
 
 **Acceptance Scenarios**:
 
-1. **Given** el archivo, **When** se ve el campo «Buscar noticias…», **Then** es usable con teclado, tiene foco visible y el mismo propósito en escritorio (junto a filtros) y en móvil (encima de las píldoras).
+1. **Given** el archivo, **When** se ve el campo «Buscar noticias…», **Then** es usable con teclado, tiene foco visible y el mismo propósito en escritorio (junto al desplegable) y en móvil (encima del select).
 2. **Given** un término con coincidencias, **When** se lanza la búsqueda, **Then** se muestran las noticias que coinciden, en el mismo tipo de ficha (imagen, categoría, fecha, título, extracto, «Leer más»).
 3. **Given** un término sin coincidencias, **When** se busca, **Then** aparece un mensaje de que no hay noticias para esa búsqueda, con opción de volver al archivo.
 
@@ -100,7 +100,7 @@ Como lectora que acaba un artículo, quiero ver otras noticias relacionadas, par
 - Noticia sin imagen destacada: ficha con marcador de posición coherente con el sistema de diseño (como las fichas AFA / Extraescolares de Figma), sin romper la rejilla.
 - Extractos o títulos muy largos: se recortan con ellipsis o se limitan de forma legible; no desbordan la ficha.
 - Una sola página de resultados: la paginación no muestra controles inútiles o se desactiva de forma discreta.
-- Categoría que aparece en una ficha pero no en las píldoras iniciales (p. ej. Extraescolares): se muestra en la ficha; al pulsarla se puede listar esa categoría.
+- Categoría que aparece en una ficha pero no en el conjunto editorial inicial (p. ej. Extraescolares): se muestra en la ficha y en el desplegable; al elegirla se puede listar esa categoría.
 - Búsqueda con caracteres especiales o muy corta: no produce error; o bien no busca, o muestra vacío amable.
 - Menú: el ítem activo es «Noticias» (no «Inicio», aunque el mock de Figma lo marque mal).
 - El calendario escolar y las fichas «detalle evento» no forman parte de este archivo.
@@ -114,19 +114,20 @@ Como lectora que acaba un artículo, quiero ver otras noticias relacionadas, par
 - **FR-003**: MUST listar noticias en fichas con imagen (o marcador), categoría, fecha, título, extracto y control «Leer más».
 - **FR-004**: En escritorio MUST usar rejilla de tres columnas (hasta seis por página); en móvil MUST apilar a una columna. Sin barra lateral de blog en el archivo.
 - **FR-005**: MUST paginar cuando haya más noticias que las de una página; la página actual se distingue visualmente.
-- **FR-006**: MUST permitir filtrar por las categorías iniciales de Figma (Todas, Comunidad, Deportes, Cultura, Servicios, AFA), con la activa marcada.
+- **FR-006**: MUST permitir filtrar por categoría nativa mediante un desplegable (`core/categories`) junto al buscador; el conjunto inicial de Figma (Comunidad, Deportes, Cultura, Servicios, AFA) es editorial, no un listado cerrado en código. En vistas de categoría o búsqueda MUST existir un enlace «Todas las noticias» hacia el archivo; en el archivo completo ese enlace puede ocultarse.
 - **FR-007**: MUST incluir un buscador con el texto guía «Buscar noticias…» que lleva a resultados de noticias en el mismo formato de ficha.
-- **FR-008**: MUST existir la ficha de detalle de cada noticia: migas, titular, autor o fecha, imagen, cuerpo y bloque de relacionadas (este último omitible si no hay contenido).
+- **FR-008**: MUST existir la ficha de detalle de cada noticia: migas, titular, fecha (obligatoria) y autor opcional si el perfil lo tiene, imagen, cuerpo y bloque de relacionadas (omitible si no hay contenido).
 - **FR-009**: Cabecera y pie MUST reutilizar los del sistema de diseño (spec 001); el enlace «Noticias» del menú queda activo en archivo, categorías, búsqueda de noticias y detalle.
 - **FR-010**: En anchos 390, 900 y 1280 px la página MUST coincidir con Figma en estructura y jerarquía, sin desbordes horizontales.
 - **FR-011**: Textos de interfaz MUST estar en español y ser traducibles; contraste de texto nuevo ≥ 4,5:1; controles usables con teclado y foco visible.
 - **FR-012**: Esta feature MUST usar el contenido de noticias ya publicable por la junta (entradas y categorías); no introduce tipos de contenido, cuotas ni formularios. El calendario y los extraescolares quedan fuera.
+- **FR-013**: En el detalle MUST ofrecer compartir la entrada (mail, WhatsApp, Facebook) con URLs de la noticia actual, sin JavaScript a medida (R13).
 
 ### Key Entities
 
 - **Archivo de actualidad**: Página de listado enlazada como «Noticias»; agrupa cabecera, filtros, búsqueda, fichas y paginación.
 - **Noticia**: Novedad o aviso publicado con título, fecha, extracto, cuerpo, imagen opcional y una o más categorías.
-- **Categoría**: Etiqueta temática (Comunidad, Deportes, Cultura, Servicios, AFA, Extraescolares, etc.) usada en píldoras y en la ficha.
+- **Categoría**: Etiqueta temática (Comunidad, Deportes, Cultura, Servicios, AFA, Extraescolares, etc.) usada en el desplegable y en la ficha.
 - **Ficha de detalle**: Lectura completa de una noticia, con migas y relacionadas.
 - **Noticia relacionada**: Otra noticia sugerida al final o al lado del detalle.
 
@@ -138,7 +139,7 @@ Como lectora que acaba un artículo, quiero ver otras noticias relacionadas, par
 - **SC-002**: Una visitante llega desde el menú «Noticias» a una noticia concreta y vuelve al archivo en ≤ 3 pulsaciones.
 - **SC-003**: Con contenido de ejemplo (al menos 8 noticias en 3 categorías), filtros, búsqueda con acierto y búsqueda vacía, paginación y detalle se pueden completar sin bloques rotos en escritorio y móvil.
 - **SC-004**: Una voluntaria publica una noticia nueva (título, categoría, imagen, extracto) y la ve en el archivo en ≤ 10 minutos sin ayuda técnica.
-- **SC-005**: Revisión visual a 390, 900 y 1280 px sin desbordes; contraste AA en textos y píldoras nuevas.
+- **SC-005**: Revisión visual a 390, 900 y 1280 px sin desbordes; contraste AA en textos y controles nuevos del toolbar (select/buscar).
 
 ## Assumptions
 

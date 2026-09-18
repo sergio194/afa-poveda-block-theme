@@ -26,7 +26,7 @@ Sustituir el listado blog + sidebar (`home.html` / `archive.html` / `search.html
 
 **Constraints**: Constitución (tokens; sin lógica de plugins en tema; WCAG AA; español + `afa-poveda`; editable por voluntarios)
 
-**Scale/Scope**: 4 plantillas tocadas (`home`, `archive`, `search`, `single`; `index` alineado), ~4–5 patterns, filtro de query relacionadas en `functions.php`, CSS de fichas / píldoras / paginación / migas
+**Scale/Scope**: 4 plantillas tocadas (`home`, `archive`, `search`, `single`; `index` alineado), ~4–5 patterns, filtro de query relacionadas + share/media en `functions.php`, CSS de fichas / toolbar / paginación / migas
 
 ## Constitution Check
 
@@ -35,10 +35,10 @@ Sustituir el listado blog + sidebar (`home.html` / `archive.html` / `search.html
 | Principio | ¿Cumple? | Cómo |
 |-----------|----------|------|
 | I. Block theme puro | Sí | Plantillas HTML + `patterns/*.php`; sin page builders |
-| II. theme.json fuente de verdad | Sí | Presets 001; CSS solo píldoras activas, scroll chips, placeholder, paginación Figma, migas, relacionadas |
+| II. theme.json fuente de verdad | Sí | Presets 001; CSS solo toolbar/select, placeholder, paginación Figma, migas, relacionadas, share |
 | III. Lógica en plugins | Sí | Sin CPT/taxonomías nuevas; entradas y categorías nativas; relacionadas = ajuste de Query Loop, no negocio |
 | IV. Editable sin código | Sí | Hero/copy en pattern de plantilla; noticias = entradas; categorías las crea la junta |
-| V. Accesibilidad AA | Sí | H1 único; `aria-current` / `.current-cat`; foco visible; contraste píldoras |
+| V. Accesibilidad AA | Sí | H1 único; select nativo + enlace «Todas»; foco visible; contraste toolbar |
 | VI. Privacidad / rendimiento | Sí | Fuentes locales; sin scripts terceros; `aspect-ratio` en fichas |
 | VII. Español primero | Sí | Cadenas `afa-poveda` |
 | VIII. Verificación | Sí | Checklist en quickstart |
@@ -57,7 +57,7 @@ specs/004-actualidad-eventos/
 ├── quickstart.md
 ├── contracts/
 │   └── ui-actualidad-eventos.md
-└── tasks.md                 # /speckit-tasks (aún no)
+└── tasks.md                 # /speckit-tasks (generado)
 ```
 
 ### Source Code (theme root)
@@ -72,13 +72,13 @@ templates/
 
 patterns/
 ├── noticias-hero.php        # NUEVO — eyebrow + H1 + texto de apoyo
-├── noticias-toolbar.php     # NUEVO — «Todas» + categorías + buscar
+├── noticias-toolbar.php     # NUEVO — buscar + desplegable; «Todas» fuera del archivo
 ├── noticias-grid.php        # NUEVO — Query inherit, grid 3×2, paginación, vacío
-├── noticias-ficha.php       # NUEVO — migas + artículo (o markup en single)
+├── noticias-crumbs.php      # NUEVO — migas del detalle
 └── posts-list.php           # SUSTITUIR o dejar de usar en estas plantillas
 
-functions.php                # Filtro Query Loop `.afa-related-news` (excluir actual + misma categoría)
-style.css                    # Reglas justificadas: chips, placeholder, paginación, detalle, relacionadas
+functions.php                # Relacionadas `.afa-related-news`; share URLs; tamaño `afa-news-card` + fondo media
+style.css                    # Reglas justificadas: toolbar, placeholder, paginación, detalle, relacionadas, share
 ```
 
 **Structure Decision**: `home.html` es el archivo cuando hay página de entradas `/noticias/` (ya enlazada desde la portada 002). `archive.html` reutiliza hero + toolbar + grid para que filtrar no cambie de «piel». `search.html` comparte el grid. `single.html` es dos columnas (artículo | relacionadas) en escritorio. No se usa `parts/sidebar.html` en estas vistas. `front-page.html` no se toca.

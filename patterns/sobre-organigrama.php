@@ -24,8 +24,8 @@ $afa_org_card = static function ( $name, $role, $avatar, $modifier = '' ) {
 	$extra = $modifier ? ' ' . $modifier : '';
 	?>
 <!-- wp:group {"className":"afa-organigrama__card<?php echo esc_attr( $extra ); ?>","style":{"border":{"radius":"12px","width":"1px","color":"var:preset|color|outline"},"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"var:preset|spacing|30"}},"backgroundColor":"base","layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
-<div class="wp-block-group afa-organigrama__card<?php echo esc_attr( $extra ); ?> has-border-color has-base-background-color has-background" style="border-color:var(--wp--preset--color--outline);border-width:1px;border-radius:12px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:image {"width":"48px","height":"48px","sizeSlug":"full","linkDestination":"none","className":"afa-organigrama__avatar"} -->
-<figure class="wp-block-image size-full is-resized afa-organigrama__avatar"><img src="<?php echo esc_url( $avatar ); ?>" alt="" style="width:48px;height:48px" width="48" height="48"/></figure>
+<div class="wp-block-group afa-organigrama__card<?php echo esc_attr( $extra ); ?> has-border-color has-base-background-color has-background" style="border-color:var(--wp--preset--color--outline);border-width:1px;border-radius:12px;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:image {"url":"<?php echo esc_url( $avatar ); ?>","width":"48px","height":"48px","sizeSlug":"full","linkDestination":"none","className":"afa-organigrama__avatar"} -->
+<figure class="wp-block-image size-full is-resized afa-organigrama__avatar"><img src="<?php echo esc_url( $avatar ); ?>" alt="" style="width:48px;height:48px"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:group {"style":{"spacing":{"blockGap":"4px"}},"layout":{"type":"constrained"}} -->
@@ -72,8 +72,8 @@ $vocales = array(
 ?>
 <!-- wp:group {"align":"wide","className":"afa-organigrama","style":{"border":{"radius":"16px"},"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60","left":"var:preset|spacing|50","right":"var:preset|spacing|50"},"blockGap":"var:preset|spacing|50"}},"backgroundColor":"surface-container","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignwide afa-organigrama has-surface-container-background-color has-background" style="border-radius:16px;padding-top:var(--wp--preset--spacing--60);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--60);padding-left:var(--wp--preset--spacing--50)"><!-- wp:group {"className":"afa-sobre-heading","style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
-<div class="wp-block-group afa-sobre-heading"><!-- wp:image {"width":"28px","height":"28px","sizeSlug":"full","linkDestination":"none","className":"afa-sobre-heading__icon"} -->
-<figure class="wp-block-image size-full is-resized afa-sobre-heading__icon"><img src="<?php echo $icon; ?>" alt="" style="width:28px;height:28px" width="28" height="28"/></figure>
+<div class="wp-block-group afa-sobre-heading"><!-- wp:image {"url":"<?php echo esc_url( $icon ); ?>","width":"28px","height":"28px","sizeSlug":"full","linkDestination":"none","className":"afa-sobre-heading__icon"} -->
+<figure class="wp-block-image size-full is-resized afa-sobre-heading__icon"><img src="<?php echo esc_url( $icon ); ?>" alt="" style="width:28px;height:28px"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:heading {"fontSize":"xx-large","fontFamily":"heading"} -->
@@ -89,7 +89,7 @@ $vocales = array(
 <p class="afa-organigrama__label has-small-font-size" style="font-weight:700;letter-spacing:0.04em;text-transform:uppercase"><?php esc_html_e( 'Presidencia / Vicepresidencia', 'afa-poveda' ); ?></p>
 <!-- /wp:paragraph -->
 
-<!-- wp:group {"className":"afa-organigrama__liderazgo","layout":{"type":"grid","columnCount":2,"minimumColumnWidth":null}} -->
+<!-- wp:group {"className":"afa-organigrama__liderazgo","layout":{"type":"grid","columnCount":2}} -->
 <div class="wp-block-group afa-organigrama__liderazgo">
 <?php foreach ( $presidencia as $persona ) : ?>
 	<?php $afa_org_card( $persona[0], $persona[1], $avatar ); ?>

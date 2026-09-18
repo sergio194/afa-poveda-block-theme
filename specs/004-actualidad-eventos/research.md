@@ -25,7 +25,7 @@
 
 ## R3 — Filtros: «Todas» + desplegable de categorías
 
-**Decision**: Pattern `noticias-toolbar`: buscador + píldora «Todas» → `/noticias/` + bloque `core/categories` con `displayAsDropdown: true` (script de navegación de core, no JS del tema). El conjunto Figma (Comunidad, Deportes…) es editorial; el tema no registra taxonomías ni limita el listado en código.
+**Decision**: Pattern `noticias-toolbar`: buscador + enlace de texto «Todas las noticias» → `/noticias/` (oculto en el archivo completo) + bloque `core/categories` con `displayAsDropdown: true` (script de navegación de core, no JS del tema). El conjunto Figma (Comunidad, Deportes…) es editorial; el tema no registra taxonomías ni limita el listado en código.
 
 **Rationale**: Constitución III y IV: la junta añade categorías y aparecen solas. Con decenas de términos migrados, las píldoras (aunque con scroll) no son usables ni fieles al mock de 5–6 chips.
 

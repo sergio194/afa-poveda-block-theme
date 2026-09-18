@@ -41,7 +41,7 @@ Sin `parts/sidebar`. Sin `query-title` como H1 del archivo.
 | Query | `inherit: true`; 6 por página (ajuste Lectura) |
 | Layout | Grid 3 columnas ≥ ~782 px; 1 columna bajo ese ancho |
 | Card | `is-style-afa-card` + `.afa-news-card`; altura igualada |
-| Media | 16:9, enlace al permalink; tamaño `afa-news-card` (recorte duro); placeholder si no hay foto |
+| Media | 16:9, enlace al permalink; tamaño `afa-news-card`; imagen con `object-fit: contain` sobre fondo difuminado de la misma foto (R15); placeholder `surface-high` si no hay foto |
 | Meta | Categoría (píldora pequeña) + fecha |
 | Título | H3 enlace; clamp 2 líneas |
 | Extracto | Clamp ~3 líneas |
@@ -90,7 +90,7 @@ Mismo orden A, más contexto de resultados:
 |------|----------|
 | Título | H2/H3 «Noticias relacionadas» |
 | Query | Clase `afa-related-news`; hasta 3; ver research R8 |
-| Item | Miniatura opcional + categoría + título enlace |
+| Item | Miniatura 1:1 a la izquierda + categoría + título enlace (R14) |
 | Vacío | Ocultar sección o no-results |
 
 ## Tokens obligatorios (001)

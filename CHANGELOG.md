@@ -25,6 +25,9 @@ y el proyecto sigue [Versionado Semántico](https://semver.org/lang/es/).
 
 ### Corregido
 
+- Menú: Inicio ya no queda activo fuera de la portada; AFA/Servicios se marcan activos como ancestros en páginas hijas
+- Submenús de la cabecera: ya no empujan el layout ni quedan bajo el contenido (`overflow` / z-index)
+- Patterns Sobre nosotros: imágenes sin `width`/`height` HTML (validación WP 7.1) y `url` en atributos del bloque
 - Bloque Actualidad y Avisos: se oculta sin sticky; layout 0/1/2/3
 - Últimas noticias: tarjetas a misma altura, imágenes 16:9 y «Leer más» al pie; «Cargar más» solo en móvil
 - Archivo de noticias en móvil: sin scroll horizontal (título del sitio, blur de fichas y toolbar a ancho completo)

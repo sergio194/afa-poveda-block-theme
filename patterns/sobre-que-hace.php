@@ -37,8 +37,8 @@ $render_col = static function ( $items ) {
 ?>
 <!-- wp:group {"align":"wide","className":"afa-sobre-que-hace","style":{"spacing":{"blockGap":"var:preset|spacing|40"}},"layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignwide afa-sobre-que-hace"><!-- wp:group {"className":"afa-sobre-heading","style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
-<div class="wp-block-group afa-sobre-heading"><!-- wp:image {"width":"28px","height":"28px","sizeSlug":"full","linkDestination":"none","className":"afa-sobre-heading__icon"} -->
-<figure class="wp-block-image size-full is-resized afa-sobre-heading__icon"><img src="<?php echo $icon; ?>" alt="" style="width:28px;height:28px" width="28" height="28"/></figure>
+<div class="wp-block-group afa-sobre-heading"><!-- wp:image {"url":"<?php echo esc_url( $icon ); ?>","width":"28px","height":"28px","sizeSlug":"full","linkDestination":"none","className":"afa-sobre-heading__icon"} -->
+<figure class="wp-block-image size-full is-resized afa-sobre-heading__icon"><img src="<?php echo esc_url( $icon ); ?>" alt="" style="width:28px;height:28px"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:heading {"fontSize":"xx-large","fontFamily":"heading"} -->

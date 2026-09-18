@@ -32,21 +32,22 @@ Contrato UI: [ui-actualidad-eventos.md](./contracts/ui-actualidad-eventos.md).
 php -l patterns/noticias-hero.php
 php -l patterns/noticias-toolbar.php
 php -l patterns/noticias-grid.php
+php -l patterns/noticias-crumbs.php
 php -l functions.php
 python3 -m json.tool theme.json > /dev/null
 python3 -m json.tool styles/sections/afa-card.json > /dev/null
 ```
 
-(`noticias-ficha.php` y `posts-list.php` si se tocan: `php -l` también.)
+(`noticias-crumbs.php` y `posts-list.php` si se tocan: `php -l` también.)
 
 ## Escenarios de aceptación (manual)
 
 | # | Escenario | Esperado |
 |---|-----------|----------|
-| 1 | Abrir `/noticias/` a 1280 px | Hero (eyebrow + H1 + apoyo) → toolbar (píldoras + buscar) → 6 fichas 3×2 → paginación; **sin sidebar**; menú «Noticias» activo |
-| 2 | Abrir `/noticias/` a 390 px | Mismo orden; buscar encima; chips en scroll; fichas a 1 columna; sin desborde |
+| 1 | Abrir `/noticias/` a 1280 px | Hero (eyebrow + H1 + apoyo) → toolbar (**buscar + desplegable**; sin caja) → 6 fichas 3×2 → paginación; **sin sidebar**; menú «Noticias» activo |
+| 2 | Abrir `/noticias/` a 390 px | Mismo orden; buscar encima; select a ancho completo; fichas a 1 columna; sin desborde |
 | 3 | Portada «Ver noticias» | Llega a este archivo |
-| 4 | Píldora Comunidad | Listado solo de esa categoría; píldora activa; «Todas» vuelve al archivo |
+| 4 | Elegir Comunidad en el desplegable | Listado solo de esa categoría; en archive, enlace «Todas las noticias» vuelve al archivo |
 | 5 | Categoría vacía | Mensaje de vacío; layout intacto |
 | 6 | Buscar término con acierto | Fichas del mismo tipo; se puede abrir «Leer más» |
 | 7 | Buscar término inexistente | Vacío amable; no error |
@@ -56,7 +57,7 @@ python3 -m json.tool styles/sections/afa-card.json > /dev/null
 | 11 | Relacionada | Abre otra noticia |
 | 12 | Publicar una entrada nueva | Aparece en el archivo sin código |
 | 13 | Editor: abrir home / single / archive | Ningún bloque «no válido» |
-| 14 | Teclado + contraste | Tab con foco; píldoras y texto ≥ 4,5:1 |
+| 14 | Teclado + contraste | Tab con foco; toolbar (select/buscar), paginación, migas y texto ≥ 4,5:1 |
 
 ## Comparación Figma
 
