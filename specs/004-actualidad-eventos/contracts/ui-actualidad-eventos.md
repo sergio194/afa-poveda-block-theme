@@ -32,7 +32,7 @@ Sin `parts/sidebar`. Sin `query-title` como H1 del archivo.
 | Layout | Fila ligera sin caja: píldoras + «Más categorías»; sin borde/fondo de contenedor | Píldoras con scroll horizontal; «Más» a ancho completo |
 | Todas | Píldora «Todas» → `/noticias/` (activa en el archivo completo) | Igual |
 | Categorías destacadas | Párrafos `afa-news-pill` editables en la parte (defaults: AFA, Extraescolares, Campamentos, Fiestas, Planes en el barrio) | Igual |
-| Más | `core/details` + `core/categories` `displayAsDropdown` | Select estilizado al abrir |
+| Más | `core/categories` `displayAsDropdown` con label «Más categorías» (el select *es* la píldora) | Igual |
 | Buscar | No en toolbar (R17); lupa de cabecera | Igual |
 
 ### Grid de fichas

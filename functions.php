@@ -265,6 +265,40 @@ function afa_poveda_news_pill_active( $block_content, $block ) {
 add_filter( 'render_block', 'afa_poveda_news_pill_active', 10, 2 );
 
 /**
+ * Texto de la opción vacía del desplegable «Más categorías».
+ *
+ * @param string $block_content HTML del bloque.
+ * @param array  $block         Bloque parseado.
+ * @return string
+ */
+function afa_poveda_news_cats_more_label( $block_content, $block ) {
+	if ( empty( $block['blockName'] ) || 'core/categories' !== $block['blockName'] ) {
+		return $block_content;
+	}
+
+	$class_name = isset( $block['attrs']['className'] ) ? $block['attrs']['className'] : '';
+	if ( false === strpos( $class_name, 'afa-news-cats' ) ) {
+		return $block_content;
+	}
+
+	$label = isset( $block['attrs']['label'] ) && $block['attrs']['label']
+		? $block['attrs']['label']
+		: __( 'Más categorías', 'afa-poveda' );
+
+	$block_content = str_replace(
+		array(
+			'>Seleccionar Categoría<',
+			'>Select Category<',
+		),
+		'>' . esc_html( $label ) . '<',
+		$block_content
+	);
+
+	return $block_content;
+}
+add_filter( 'render_block', 'afa_poveda_news_cats_more_label', 10, 2 );
+
+/**
  * Fondo difuminado tras la foto de ficha (misma imagen, sin JS).
  *
  * @param string $block_content HTML del bloque.

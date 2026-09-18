@@ -6,7 +6,7 @@ Description: Tema de bloques a medida para la Asociación de Familias del CEIP P
 Requires at least: 7.1
 Tested up to: 7.2
 Requires PHP: 7.4
-Version: 0.2.10
+Version: 0.2.11
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: afa-poveda
@@ -951,56 +951,14 @@ body:not(.home) .afa-header .menu-item-home > .wp-block-navigation-item__content
 	color: var(--wp--preset--color--base);
 }
 
-.afa-news-cats-more {
-	display: block;
-	margin: 0 !important;
-	flex: 0 0 auto !important;
-	width: fit-content !important;
-	max-width: 100%;
-	min-width: 0;
-	align-self: center;
-}
-
-.afa-news-cats-more[open] {
-	flex: 1 1 100% !important;
-	width: 100% !important;
-}
-
-.afa-news-cats-more > summary {
-	display: inline-flex;
-	align-items: center;
-	min-height: 40px;
-	padding: 8px 16px;
-	border: 1px dashed var(--wp--preset--color--outline);
-	border-radius: var(--wp--preset--border-radius--full);
-	color: var(--wp--preset--color--contrast-muted);
-	font-size: var(--wp--preset--font-size--small);
-	font-weight: 600;
-	line-height: 1.2;
-	cursor: pointer;
-	list-style: none;
-}
-
-.afa-news-cats-more > summary::-webkit-details-marker {
-	display: none;
-}
-
-.afa-news-cats-more > summary:hover {
-	border-color: var(--wp--preset--color--primary);
-	color: var(--wp--preset--color--primary);
-}
-
-.afa-news-cats-more[open] > summary {
-	margin-bottom: var(--wp--preset--spacing--30);
-	border-style: solid;
-	border-color: var(--wp--preset--color--primary);
-	color: var(--wp--preset--color--primary);
-}
-
 .afa-news-cats {
 	margin: 0 !important;
+	flex: 0 0 auto !important;
+	width: fit-content;
+	max-width: min(280px, 100%);
 	min-width: 0;
 	line-height: 0;
+	align-self: center;
 }
 
 .afa-news-cats .wp-block-categories__label {
@@ -1015,33 +973,45 @@ body:not(.home) .afa-header .menu-item-home > .wp-block-navigation-item__content
 	border: 0;
 }
 
+/* El select es la propia píldora «Más categorías»: un clic abre el menú nativo. */
 .afa-news-cats select {
 	appearance: none;
 	box-sizing: border-box;
 	display: block;
-	width: 100%;
-	min-width: 0;
-	max-width: 320px;
-	height: 44px;
-	min-height: 44px;
-	padding: 0 40px 0 16px;
-	border: 1px solid var(--wp--preset--color--outline);
+	width: auto;
+	min-width: 10.5rem;
+	max-width: 100%;
+	height: 40px;
+	min-height: 40px;
+	padding: 0 36px 0 16px;
+	border: 1px dashed var(--wp--preset--color--outline);
 	border-radius: var(--wp--preset--border-radius--full);
 	background-color: var(--wp--preset--color--base);
 	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23414754' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
 	background-repeat: no-repeat;
-	background-position: right 14px center;
+	background-position: right 12px center;
 	background-size: 16px;
-	color: var(--wp--preset--color--contrast);
+	color: var(--wp--preset--color--contrast-muted);
 	font-size: var(--wp--preset--font-size--small);
-	font-weight: 500;
-	line-height: 42px;
+	font-weight: 600;
+	line-height: 38px;
 	cursor: pointer;
+}
+
+.afa-news-cats select:hover {
+	border-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--primary);
 }
 
 .afa-news-cats select:focus-visible {
 	outline: 2px solid var(--wp--preset--color--primary);
 	outline-offset: 2px;
+}
+
+body.category .afa-news-toolbar:not(:has(.afa-news-pill.is-active)) .afa-news-cats select {
+	border-style: solid;
+	border-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--primary);
 }
 
 .afa-news-pagination {
@@ -1316,18 +1286,12 @@ body.single-post .afa-header .wp-block-navigation-item a[href*="/noticias"] {
 	}
 
 	.afa-news-toolbar > .afa-news-pill,
-	.afa-news-cats-more {
+	.afa-news-cats {
 		flex: 0 0 auto !important;
 	}
 
-	.afa-news-cats-more[open] {
-		flex: 1 1 100% !important;
-		width: 100% !important;
-	}
-
 	.afa-news-cats select {
-		width: 100% !important;
-		min-width: 0 !important;
+		width: auto !important;
 		max-width: 100% !important;
 	}
 

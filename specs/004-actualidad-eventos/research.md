@@ -25,7 +25,7 @@
 
 ## R3 — Filtros: «Todas» + desplegable de categorías
 
-**Decision**: Template part `parts/noticias-toolbar.html` (editable en el Editor del sitio): píldoras `core/button` con clase `afa-news-pill` hacia categorías curadas + «Todas» → `/noticias/`; el resto en `core/details` «Más categorías» con `core/categories` `displayAsDropdown: true` (navegación nativa de core, sin JS del tema). Defaults iniciales según volumen real del sitio (AFA, Extraescolares, Campamentos, Fiestas, Planes en el barrio). Sin buscador en la toolbar (R17). El tema no registra taxonomías.
+**Decision**: Template part `parts/noticias-toolbar.html` (editable en el Editor del sitio): píldoras `afa-news-pill` hacia categorías curadas + «Todas» → `/noticias/`; el resto en un `core/categories` `displayAsDropdown` estilizado como píldora «Más categorías» (un clic abre el menú nativo; sin `details` intermedio). Defaults iniciales según volumen real del sitio (AFA, Extraescolares, Campamentos, Fiestas, Planes en el barrio). Sin buscador en la toolbar (R17). El tema no registra taxonomías.
 
 **Rationale**: Constitución III y IV: la junta añade categorías y aparecen solas. Con decenas de términos migrados, las píldoras (aunque con scroll) no son usables ni fieles al mock de 5–6 chips.
 
