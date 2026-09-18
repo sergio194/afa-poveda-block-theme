@@ -1309,3 +1309,230 @@ body.single-post .afa-header .wp-block-navigation-item a[href*="/noticias"] {
 		flex-direction: column !important;
 	}
 }
+
+/*
+ * Servicios (005) — rejilla de fichas, hero cover, FAQ details, stats e inscripción.
+ * theme.json no expresa: aspect-ratio de media, píldoras por categoría, grid stats,
+ * outline CTA sobre primary, ni tipografía summary de details.
+ */
+.afa-servicios,
+.afa-servicio-detalle {
+	min-width: 0;
+}
+
+.afa-servicio-card {
+	overflow: hidden;
+	height: 100%;
+	box-shadow: 0 1px 3px rgba(24, 28, 32, 0.08);
+}
+
+.afa-servicio-card__media {
+	position: relative;
+	aspect-ratio: 16 / 10;
+	background-color: var(--wp--preset--color--surface-high);
+	background-image:
+		linear-gradient(135deg, var(--wp--preset--color--primary-soft) 0%, var(--wp--preset--color--surface-high) 100%);
+	min-height: 140px;
+}
+
+.afa-servicio-card__tag {
+	position: absolute !important;
+	top: var(--wp--preset--spacing--30);
+	left: var(--wp--preset--spacing--30);
+	z-index: 1;
+	margin: 0 !important;
+	line-height: 1.2;
+}
+
+.afa-servicio-card__tag--nutricion { background-color: var(--wp--preset--color--green) !important; color: var(--wp--preset--color--base) !important; }
+.afa-servicio-card__tag--aprendizaje { background-color: var(--wp--preset--color--primary) !important; color: var(--wp--preset--color--base) !important; }
+.afa-servicio-card__tag--conciliacion { background-color: var(--wp--preset--color--contrast-muted) !important; color: var(--wp--preset--color--base) !important; }
+.afa-servicio-card__tag--extra { background-color: var(--wp--preset--color--green) !important; color: var(--wp--preset--color--base) !important; }
+.afa-servicio-card__tag--deporte { background-color: var(--wp--preset--color--accent) !important; color: var(--wp--preset--color--base) !important; }
+.afa-servicio-card__tag--familia { background-color: var(--wp--preset--color--contrast) !important; color: var(--wp--preset--color--base) !important; }
+
+.afa-servicio-card__body {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.afa-servicio-card__body > p {
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.afa-servicio-card__footer {
+	margin-top: auto;
+	width: 100%;
+}
+
+.afa-servicio-card__meta-icon img {
+	display: block;
+}
+
+.afa-servicio-card__more a {
+	text-decoration: none;
+}
+
+.afa-servicio-card__more a:hover {
+	text-decoration: underline;
+}
+
+.afa-servicio-card__more a::after {
+	content: " →";
+}
+
+.afa-servicios-cta__btn-outline .wp-block-button__link {
+	border-color: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--base);
+}
+
+.afa-servicios-cta__btn-outline .wp-block-button__link:hover {
+	background-color: transparent;
+	color: var(--wp--preset--color--base);
+}
+
+.afa-servicio-hero {
+	margin-block-start: 0 !important;
+}
+
+.afa-servicio-feature__icon img {
+	filter: invert(32%) sepia(42%) saturate(700%) hue-rotate(105deg) brightness(90%);
+}
+
+.afa-servicio-faq__item {
+	border-bottom: 1px solid var(--wp--preset--color--outline);
+	padding-bottom: var(--wp--preset--spacing--30);
+	margin: 0;
+}
+
+.afa-servicio-faq__item:last-child {
+	border-bottom: none;
+	padding-bottom: 0;
+}
+
+.afa-servicio-faq__item summary {
+	cursor: pointer;
+	font-weight: 600;
+	color: var(--wp--preset--color--contrast);
+	padding: var(--wp--preset--spacing--30) 0;
+	list-style: none;
+}
+
+.afa-servicio-faq__item summary::-webkit-details-marker {
+	display: none;
+}
+
+.afa-servicio-faq__item summary::after {
+	content: "▾";
+	float: right;
+	color: var(--wp--preset--color--primary);
+}
+
+.afa-servicio-faq__item[open] summary::after {
+	content: "▴";
+}
+
+.afa-servicio-inscripcion__clock img {
+	filter: brightness(0) invert(1);
+}
+
+.afa-servicio-inscripcion__cta {
+	width: 100%;
+}
+
+.afa-servicio-inscripcion__cta .wp-block-button {
+	width: 100%;
+}
+
+.afa-servicio-inscripcion__note {
+	opacity: 0.92;
+}
+
+/* Hex solo aquí: Figma pide ámbar/rojo para stats y no hay presets equivalentes. */
+.afa-servicio-stat--kcal .afa-servicio-stat__value { color: #9a6700; } /* contraste ≥ 4,5:1 sobre surface-container */
+.afa-servicio-stat--protein .afa-servicio-stat__value { color: var(--wp--preset--color--primary); }
+.afa-servicio-stat--hc .afa-servicio-stat__value { color: var(--wp--preset--color--green); }
+.afa-servicio-stat--fat .afa-servicio-stat__value { color: #b3261e; }
+
+.afa-servicio-docs__item a {
+	text-decoration: none;
+	color: var(--wp--preset--color--contrast);
+}
+
+.afa-servicio-docs__item a:hover {
+	color: var(--wp--preset--color--primary);
+	text-decoration: underline;
+}
+
+.afa-servicio-download a {
+	text-decoration: none;
+}
+
+.afa-servicio-download a:hover {
+	text-decoration: underline;
+}
+
+/*
+ * Menú Servicios activo en listado y páginas hijas (detalle).
+ * WP suele marcar ancestro; refuerzo por href por si el ítem no tiene barra final.
+ */
+body.page-template-page-servicios .afa-header .wp-block-navigation-item a[href*="/servicios"],
+body.page-template-page-servicio-detalle .afa-header .wp-block-navigation-item a[href*="/servicios"],
+body.page .afa-header .wp-block-navigation-item.current-page-ancestor a[href*="/servicios"],
+body.page .afa-header .wp-block-navigation-item.current-menu-item a[href*="/servicios"] {
+	color: var(--wp--preset--color--primary);
+	font-weight: 600;
+	box-shadow: inset 0 -2px 0 currentColor;
+	padding-bottom: 6px;
+}
+
+@media (max-width: 781px) {
+	.afa-servicios .alignwide,
+	.afa-servicio-detalle .alignwide,
+	.afa-servicios-grid,
+	.afa-servicio-layout {
+		max-width: 100% !important;
+		width: 100% !important;
+		min-width: 0 !important;
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+	}
+
+	.afa-servicios-grid__row {
+		flex-direction: column !important;
+	}
+
+	.afa-servicios-cta__buttons {
+		flex-direction: column !important;
+		align-items: stretch !important;
+	}
+
+	.afa-servicios-cta__buttons .wp-block-button {
+		width: 100%;
+	}
+
+	.afa-servicios-cta__buttons .wp-block-button__link {
+		width: 100%;
+		justify-content: center;
+	}
+
+	.afa-servicio-layout__cols {
+		flex-direction: column !important;
+	}
+
+	.afa-servicio-stats {
+		flex-wrap: wrap !important;
+	}
+
+	.afa-servicio-stats > .wp-block-column {
+		flex-basis: calc(50% - var(--wp--preset--spacing--30)) !important;
+	}
+
+	.afa-servicio-download {
+		flex-wrap: wrap !important;
+		gap: var(--wp--preset--spacing--30);
+	}
+}

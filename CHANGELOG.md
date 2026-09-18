@@ -16,6 +16,8 @@ y el proyecto sigue [Versionado Semántico](https://semver.org/lang/es/).
 - Archivo Actualidad y Eventos: patterns `noticias-hero`, `noticias-grid`; parte `noticias-toolbar` (píldoras editables + «Más categorías»); plantillas `home`, `archive`, `search` e `index` a una columna
 - Detalle de noticia (`single.html`) con migas, titular en primario, autor con avatar, relacionadas compactas y «Compartir noticia»
 - Tamaño de imagen `afa-news-card` (768×432, recorte 16:9) para fichas del archivo
+- Servicios (005): plantillas `page-servicios` / `page-servicio-detalle`; patterns `servicios-hero`, `servicios-grid`, `servicios-cta`, `servicios-page`; detalle Comedor (`servicio-hero`, `servicio-alimentacion`, `servicio-menus-valores`, `servicio-faq`, `servicio-inscripcion`, `servicio-documentacion`, compuesto `servicio-comedor`)
+- Iconos SVG `icon-leaf`, `icon-clock`, `icon-folder` para detalle de servicio
 
 ### Cambiado
 

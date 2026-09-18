@@ -236,6 +236,8 @@
 	],
 	"customTemplates": [
 		{ "name": "page-with-sidebar", "title": "Página con barra lateral", "postTypes": [ "page", "post" ] },
-		{ "name": "page-afa", "title": "AFA / Sobre nosotros", "postTypes": [ "page" ] }
+		{ "name": "page-afa", "title": "AFA / Sobre nosotros", "postTypes": [ "page" ] },
+		{ "name": "page-servicios", "title": "Servicios — Listado", "postTypes": [ "page" ] },
+		{ "name": "page-servicio-detalle", "title": "Servicio — Detalle", "postTypes": [ "page" ] }
 	]
 }
