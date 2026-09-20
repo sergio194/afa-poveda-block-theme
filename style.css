@@ -1536,3 +1536,190 @@ body.page .afa-header .wp-block-navigation-item.current-menu-item a[href*="/serv
 		gap: var(--wp--preset--spacing--30);
 	}
 }
+
+/*
+ * Hazte Socio (006) — hero columns, grid de fichas, bloque cuota|form,
+ * cards de ayuda e inputs genéricos del plugin de formularios.
+ * theme.json no expresa: aspect-ratio de ilustración, stack de columns,
+ * ni estilos de formularios de terceros.
+ */
+.afa-hazte {
+	min-width: 0;
+}
+
+.afa-hazte-hero__media {
+	aspect-ratio: 4 / 3;
+	margin: 0;
+}
+
+.afa-hazte-hero__media img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	display: block;
+}
+
+.afa-hazte-actividad {
+	height: 100%;
+	box-shadow: 0 1px 3px rgba(24, 28, 32, 0.08);
+}
+
+.afa-hazte-pertenecer {
+	overflow: hidden;
+}
+
+.afa-hazte-pertenecer__cuota {
+	border-radius: 16px 0 0 16px;
+}
+
+.afa-hazte-form {
+	border-radius: 0 16px 16px 0;
+}
+
+.afa-hazte-pertenecer__check {
+	flex-shrink: 0;
+}
+
+/* Estilos genéricos para el bloque/shortcode del plugin de formularios. */
+.afa-hazte-form label {
+	display: block;
+	font-weight: 600;
+	margin-bottom: 0.35rem;
+	color: var(--wp--preset--color--contrast);
+}
+
+.afa-hazte-form input[type="text"],
+.afa-hazte-form input[type="email"],
+.afa-hazte-form input[type="tel"],
+.afa-hazte-form input[type="number"],
+.afa-hazte-form textarea,
+.afa-hazte-form select {
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+	padding: 0.65rem 0.85rem;
+	border: 1px solid var(--wp--preset--color--outline);
+	border-radius: var(--wp--preset--border-radius--small, 8px);
+	background: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--contrast);
+	font: inherit;
+}
+
+.afa-hazte-form input:focus,
+.afa-hazte-form textarea:focus,
+.afa-hazte-form select:focus {
+	outline: 2px solid var(--wp--preset--color--primary);
+	outline-offset: 2px;
+}
+
+.afa-hazte-form input[type="submit"],
+.afa-hazte-form button[type="submit"],
+.afa-hazte-form .wpcf7-submit,
+.afa-hazte-form .wpforms-submit {
+	display: inline-block;
+	width: 100%;
+	padding: 0.75rem 1.25rem;
+	border: none;
+	border-radius: var(--wp--preset--border-radius--small, 8px);
+	background: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--base);
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.afa-hazte-form input[type="submit"]:hover,
+.afa-hazte-form button[type="submit"]:hover {
+	background: var(--wp--preset--color--accent);
+}
+
+.afa-hazte-ayuda {
+	height: 100%;
+	box-shadow: 0 1px 3px rgba(24, 28, 32, 0.08);
+}
+
+.afa-hazte-ayuda__icon-wrap {
+	width: 64px;
+	height: 64px;
+	border-radius: 9999px;
+	align-items: center;
+	justify-content: center;
+}
+
+.afa-hazte-ayuda__icon-wrap--primary {
+	background: var(--wp--preset--color--primary-soft);
+}
+
+.afa-hazte-ayuda__icon-wrap--green {
+	background: var(--wp--preset--color--soft-green);
+}
+
+.afa-hazte-ayuda__icon-wrap--muted {
+	background: var(--wp--preset--color--surface-high);
+}
+
+.afa-hazte-dudas a {
+	text-decoration: none;
+}
+
+.afa-hazte-dudas a:hover {
+	text-decoration: underline;
+}
+
+/*
+ * CTA cabecera activo en la landing Hazte Socio.
+ */
+body.page-template-page-hazte-socio .afa-header .wp-block-button__link[href*="/hazte-socio"] {
+	box-shadow: inset 0 0 0 2px var(--wp--preset--color--base);
+}
+
+@media (max-width: 781px) {
+	.afa-hazte .alignwide,
+	.afa-hazte-hero,
+	.afa-hazte-que-hacemos,
+	.afa-hazte-pertenecer,
+	.afa-hazte-ayudar,
+	.afa-hazte-dudas {
+		max-width: 100% !important;
+		width: 100% !important;
+		min-width: 0 !important;
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+	}
+
+	.afa-hazte-hero {
+		flex-direction: column-reverse !important;
+	}
+
+	.afa-hazte-que-hacemos__row,
+	.afa-hazte-ayudar__row,
+	.afa-hazte-pertenecer__cols {
+		flex-direction: column !important;
+	}
+
+	.afa-hazte-pertenecer__cuota,
+	.afa-hazte-form {
+		border-radius: 0 !important;
+	}
+
+	.afa-hazte-pertenecer {
+		border-radius: 16px;
+	}
+
+	.afa-hazte-pertenecer__cuota {
+		border-radius: 16px 16px 0 0 !important;
+	}
+
+	.afa-hazte-form {
+		border-radius: 0 0 16px 16px !important;
+	}
+
+	.afa-hazte-hero .wp-block-buttons {
+		flex-direction: column !important;
+		align-items: stretch !important;
+	}
+
+	.afa-hazte-hero .wp-block-button,
+	.afa-hazte-hero .wp-block-button__link {
+		width: 100%;
+	}
+}

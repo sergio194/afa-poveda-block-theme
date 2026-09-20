@@ -18,12 +18,15 @@ y el proyecto sigue [Versionado Semántico](https://semver.org/lang/es/).
 - Tamaño de imagen `afa-news-card` (768×432, recorte 16:9) para fichas del archivo
 - Servicios (005): plantillas `page-servicios` / `page-servicio-detalle`; patterns `servicios-hero`, `servicios-grid`, `servicios-cta`, `servicios-page`; detalle Comedor (`servicio-hero`, `servicio-alimentacion`, `servicio-menus-valores`, `servicio-faq`, `servicio-inscripcion`, `servicio-documentacion`, compuesto `servicio-comedor`)
 - Iconos SVG `icon-leaf`, `icon-clock`, `icon-folder` para detalle de servicio
+- Hazte Socio (006): plantilla `page-hazte-socio`; patterns `hazte-hero`, `hazte-que-hacemos`, `hazte-pertenecer` (hueco form plugin), `hazte-ayudar`, `hazte-dudas`, compuesto `hazte-socio-page`
+- Iconos SVG para Hazte Socio (`icon-carrera`, `icon-libro`, `icon-ludoteca`, `icon-voz`, `icon-mail`, `icon-habilidades`, `icon-colaboracion`, `icon-check-line`, ilustración hero)
 
 ### Cambiado
 
 - Toolbar de Actualidad: píldoras de categoría editables en el Editor del sitio + «Más categorías» (desplegable); sin buscador duplicado (la búsqueda queda en la cabecera)
 - La URL de inicio usa la plantilla de portada; `home.html` es el archivo de noticias (página de entradas `/noticias/`), sin sidebar de blog
 - Accesos rápidos: iconos con bloque `Icono` (listado del editor + colección AFA), sin clases CSS
+- Hazte Socio: iconos decorativos con bloque `Icono` (`afa-poveda/*`), igual que la home; sin filtros CSS sobre `<img>`
 - Sobre nosotros: organigrama en caja con avatares, comisiones en pills, documentos 2×2 con icono PDF e iconos de sección (fidelidad Figma)
 
 ### Corregido

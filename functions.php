@@ -78,6 +78,14 @@ function afa_poveda_register_icons() {
 		'extraescolares' => __( 'Extraescolares', 'afa-poveda' ),
 		'calendario'     => __( 'Calendario', 'afa-poveda' ),
 		'voluntarios'    => __( 'Voluntarios', 'afa-poveda' ),
+		'carrera'        => __( 'Carrera solidaria', 'afa-poveda' ),
+		'libro'          => __( 'Libro / lectura', 'afa-poveda' ),
+		'ludoteca'       => __( 'Ludoteca', 'afa-poveda' ),
+		'voz'            => __( 'Voz y participación', 'afa-poveda' ),
+		'mail'           => __( 'Correo', 'afa-poveda' ),
+		'habilidades'    => __( 'Habilidades', 'afa-poveda' ),
+		'colaboracion'   => __( 'Colaboración', 'afa-poveda' ),
+		'check-line'     => __( 'Check', 'afa-poveda' ),
 	);
 
 	foreach ( $icons as $slug => $label ) {
