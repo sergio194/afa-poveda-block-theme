@@ -364,3 +364,41 @@ function afa_poveda_news_main_query( $query ) {
 	}
 }
 add_action( 'pre_get_posts', 'afa_poveda_news_main_query' );
+
+/**
+ * Nombre accesible distinto en «Leer más» / «Más información» del query loop (AA).
+ *
+ * @param string $block_content HTML del bloque.
+ * @param array  $block         Bloque parseado.
+ * @return string
+ */
+function afa_poveda_read_more_accessible_name( $block_content, $block ) {
+	if ( empty( $block['blockName'] ) || 'core/read-more' !== $block['blockName'] ) {
+		return $block_content;
+	}
+	if ( ! $block_content || false === strpos( $block_content, '<a' ) ) {
+		return $block_content;
+	}
+	if ( false !== strpos( $block_content, 'aria-label=' ) ) {
+		return $block_content;
+	}
+
+	$title = get_the_title();
+	if ( ! $title ) {
+		return $block_content;
+	}
+
+	$label = sprintf(
+		/* translators: %s: post title */
+		__( 'Leer más: %s', 'afa-poveda' ),
+		wp_strip_all_tags( $title )
+	);
+
+	return preg_replace(
+		'/<a\b/i',
+		'<a aria-label="' . esc_attr( $label ) . '"',
+		$block_content,
+		1
+	);
+}
+add_filter( 'render_block', 'afa_poveda_read_more_accessible_name', 10, 2 );

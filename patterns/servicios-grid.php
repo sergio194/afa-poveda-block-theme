@@ -103,7 +103,7 @@ $render_card = static function ( $card ) {
 <!-- /wp:group -->
 
 <!-- wp:paragraph {"className":"afa-servicio-card__more","textColor":"primary","fontSize":"small","style":{"typography":{"fontWeight":"600"}}} -->
-<p class="afa-servicio-card__more has-primary-color has-text-color has-small-font-size" style="font-weight:600"><a href="<?php echo esc_url( $card['href'] ); ?>"><?php esc_html_e( 'Ver más', 'afa-poveda' ); ?></a></p>
+<p class="afa-servicio-card__more has-primary-color has-text-color has-small-font-size" style="font-weight:600"><a href="<?php echo esc_url( $card['href'] ); ?>" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: service title */ __( 'Ver más: %s', 'afa-poveda' ), $card['title'] ) ); ?>"><?php esc_html_e( 'Ver más', 'afa-poveda' ); ?></a></p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div>

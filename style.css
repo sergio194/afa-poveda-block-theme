@@ -24,9 +24,57 @@ Tags: block-theme, full-site-editing, blog, education, accessibility-ready
 }
 
 /* Accesibilidad: foco visible en todos los controles */
-:where(a, button, input, select, textarea, .wp-block-navigation-item__content):focus-visible {
+:where(
+	a,
+	button,
+	input,
+	select,
+	textarea,
+	summary,
+	.wp-block-navigation-item__content,
+	.wp-block-search__button,
+	.wp-block-page-list a,
+	.page-numbers
+):focus-visible {
 	outline: 2px solid var(--wp--preset--color--primary);
 	outline-offset: 2px;
+}
+
+/*
+ * Accesibilidad AA (007): skip link y reduced-motion.
+ * theme.json no expresa enlace fuera del flujo ni prefers-reduced-motion.
+ */
+.afa-skip-link.screen-reader-text:focus,
+.afa-skip-link.screen-reader-text:focus-visible {
+	clip: auto !important;
+	clip-path: none;
+	height: auto;
+	width: auto;
+	margin: 0;
+	padding: 0.75rem 1.25rem;
+	position: fixed;
+	top: var(--wp--preset--spacing--40);
+	left: var(--wp--preset--spacing--40);
+	z-index: 100000;
+	overflow: visible;
+	background: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--primary);
+	border: 2px solid var(--wp--preset--color--primary);
+	border-radius: var(--wp--preset--border-radius--small, 8px);
+	font-weight: 600;
+	text-decoration: none;
+	box-shadow: 0 4px 16px rgba(24, 28, 32, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
 }
 
 /* Evita scroll horizontal por hijos absolutos / texto largo (p. ej. título del sitio).
@@ -1421,6 +1469,11 @@ body.single-post .afa-header .wp-block-navigation-item a[href*="/noticias"] {
 	list-style: none;
 }
 
+.afa-servicio-faq__item summary:focus-visible {
+	outline: 2px solid var(--wp--preset--color--primary);
+	outline-offset: 2px;
+}
+
 .afa-servicio-faq__item summary::-webkit-details-marker {
 	display: none;
 }
@@ -1607,7 +1660,11 @@ body.page .afa-header .wp-block-navigation-item.current-menu-item a[href*="/serv
 
 .afa-hazte-form input:focus,
 .afa-hazte-form textarea:focus,
-.afa-hazte-form select:focus {
+.afa-hazte-form select:focus,
+.afa-hazte-form input:focus-visible,
+.afa-hazte-form textarea:focus-visible,
+.afa-hazte-form select:focus-visible,
+.afa-hazte-form button:focus-visible {
 	outline: 2px solid var(--wp--preset--color--primary);
 	outline-offset: 2px;
 }

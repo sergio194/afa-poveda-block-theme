@@ -31,7 +31,7 @@ $illu = esc_url( get_theme_file_uri( 'assets/icons/hazte-hero-illustration.svg' 
 <!-- /wp:button -->
 
 <!-- wp:button {"className":"is-style-outline"} -->
-<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#que-hacemos"><?php esc_html_e( 'Saber más', 'afa-poveda' ); ?></a></div>
+<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#que-hacemos" aria-label="<?php esc_attr_e( 'Saber más sobre qué hace la AFA', 'afa-poveda' ); ?>"><?php esc_html_e( 'Saber más', 'afa-poveda' ); ?></a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
 <!-- /wp:column -->

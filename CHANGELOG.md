@@ -9,6 +9,8 @@ y el proyecto sigue [Versionado Semántico](https://semver.org/lang/es/).
 
 ### Añadido
 
+- Accesibilidad AA (007): enlace «Saltar al contenido» en cabecera → `#contenido` en todas las plantillas públicas
+- Guía editorial breve de accesibilidad en `specs/007-accesibilidad-aa/contracts/guia-editorial-a11y.md`
 - Portada (`front-page.html`) según Figma HOME: hero, accesos rápidos, actualidad y avisos, últimas noticias y CTA de comunidad
 - Patterns `afa-poveda/home-hero`, `home-quick-access`, `home-avisos`, `home-latest-news`, `home-community-cta`
 - Iconos SVG de accesos en `assets/icons/`
@@ -23,6 +25,8 @@ y el proyecto sigue [Versionado Semántico](https://semver.org/lang/es/).
 
 ### Cambiado
 
+- Accesibilidad AA (007): overlays de heroes (portada/sobre 85 % primary; servicio 65 % contrast) para contraste de texto blanco en peor caso sobre imagen clara
+- Accesibilidad AA (007): foco visible ampliado (`summary`, buscador, paginación); `prefers-reduced-motion`; nombres accesibles en «Ver más» / «Leer más»
 - Toolbar de Actualidad: píldoras de categoría editables en el Editor del sitio + «Más categorías» (desplegable); sin buscador duplicado (la búsqueda queda en la cabecera)
 - La URL de inicio usa la plantilla de portada; `home.html` es el archivo de noticias (página de entradas `/noticias/`), sin sidebar de blog
 - Accesos rápidos: iconos con bloque `Icono` (listado del editor + colección AFA), sin clases CSS
