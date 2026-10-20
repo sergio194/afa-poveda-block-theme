@@ -9,6 +9,7 @@ Diseño de referencia: Figma `https://www.figma.com/design/lS6WwjiFrPKd60cQTfXrK
 ## Reglas
 - Cumple `.specify/memory/constitution.md`. Si una petición la contradice, avisa antes de implementar.
 - Flujo SDD: spec → plan → tareas → implementación. Las specs viven en `specs/NNN-nombre/`. Toda desviación de Figma se anota en la spec.
+- Spec Kit instalado (skills en `.claude/skills/speckit-*`): `/speckit-specify` → `/speckit-clarify` (opcional) → `/speckit-plan` → `/speckit-tasks` → `/speckit-analyze` (opcional) → `/speckit-implement`. Documentos en español. No crea ramas: se trabaja en la rama actual.
 - Tokens solo en `theme.json`. `style.css` solo para lo que theme.json no puede expresar, con comentario del porqué.
 - Variables CSS en forma normalizada: `--wp--preset--font-size--x-large`, `--wp--preset--spacing--50`.
 - Partes en `parts/` sin subcarpetas. Contenido con PHP (año, cadenas traducibles) va en `patterns/*.php` y se referencia con `<!-- wp:pattern {"slug":"afa-poveda/..."} /-->`.
