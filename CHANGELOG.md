@@ -8,6 +8,9 @@ y el proyecto sigue [Versionado Semántico](https://semver.org/lang/es/).
 ## [Unreleased]
 
 ### Añadido
+- Configurador visual (spec 013, ampliación): estilos del panel de actividades del plugin v1.11.0 (tarjetas, filtros, días como botones y pestañas en móvil, colores por categoría y hueco de soltado) y del aviso de actividades quitadas por el filtro de curso. Botón «Configura tu semana» en el archivo de extraescolares.
+
+### Añadido
 
 - Configurador de semana (013): plantilla `page-configurador`, pattern `configurador-aviso` y estilos de `afa-core-configurador*` (tabla de franjas, resumen, errores y bloqueos)
 - Calendario escolar (008): plantilla `page-calendario`, patterns `calendario-mes`, `calendario-lateral` y `evento-contenido`; estilos de los bloques de eventos del plugin y de la ficha nativa de The Events Calendar

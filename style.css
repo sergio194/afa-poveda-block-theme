@@ -3060,8 +3060,8 @@ textarea.afa-core-form__control {
 /*
  * Configurador de semana (013) — vestido del formulario del plugin (clases afa-core-configurador*,
  * contrato §15): tabla de franjas con selectores, resumen oscuro y estados de error/bloqueo.
- * theme.json no expresa tablas ni estados. Desviación de Figma: el plugin usa selectores por
- * celda (accesibles) en lugar de arrastrar y soltar.
+ * theme.json no expresa tablas ni estados. El panel de arrastrar y soltar se viste en
+ * «Configurador visual (014)».
  */
 .afa-configurador__intro h1,
 .afa-configurador .wp-block-post-title {
@@ -3283,6 +3283,267 @@ textarea.afa-core-form__control {
 	.afa-core-configurador__botones {
 		grid-column: 1;
 		grid-row: auto;
+	}
+}
+
+/*
+ * Configurador visual (014) — panel de actividades que se arrastran o se añaden (contrato §15, v1.11.0).
+ * Maquetación en dos columnas, tarjetas, días como botones/pestañas y colores por categoría
+ * (data-categoria) solo con presets. theme.json no expresa estados (is-elegida, is-ocupada,
+ * is-destino) ni selectores de atributo. Los selectores por celda siguen visibles y operables:
+ * son la alternativa sin arrastre (WCAG 2.2 · 2.5.7). Desviación de Figma: sin amarillo (no hay preset),
+ * y el bloque de 90 min no ocupa las dos franjas (la franja B se bloquea y se rotula).
+ */
+.afa-core-configurador__quitadas {
+	grid-column: 1 / -1;
+	margin: 0;
+	padding: var(--wp--preset--spacing--30) var(--wp--preset--spacing--40);
+	border-radius: 8px;
+	background-color: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--contrast);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+}
+.afa-core-configurador__quitadas[hidden] {
+	display: none;
+}
+.afa-core-configurador__panel:not([hidden]) {
+	display: grid;
+	gap: var(--wp--preset--spacing--40);
+	align-content: start;
+	padding: var(--wp--preset--spacing--40);
+	border: 1px solid var(--wp--preset--color--outline);
+	border-radius: 12px;
+	background-color: var(--wp--preset--color--base);
+}
+.afa-core-configurador__panel-titulo {
+	margin: 0;
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--xx-large);
+	color: var(--wp--preset--color--primary);
+}
+.afa-core-configurador__filtros {
+	display: grid;
+	gap: var(--wp--preset--spacing--30);
+}
+.afa-core-configurador__filtros p {
+	margin: 0;
+	display: grid;
+	gap: var(--wp--preset--spacing--10);
+}
+.afa-core-configurador__filtros label,
+.afa-core-configurador__dias legend {
+	font-size: var(--wp--preset--font-size--x-small);
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+.afa-core-configurador__filtros select {
+	width: 100%;
+}
+.afa-core-configurador__dias {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--wp--preset--spacing--20);
+}
+.afa-core-configurador__dias legend {
+	width: 100%;
+	padding: 0;
+	margin-bottom: var(--wp--preset--spacing--10);
+}
+.afa-core-configurador__dia {
+	min-width: 2.75rem;
+	min-height: 2.75rem;
+	padding: 0;
+	border: 1px solid var(--wp--preset--color--outline);
+	border-radius: 8px;
+	background-color: var(--wp--preset--color--surface-container);
+	color: var(--wp--preset--color--contrast);
+	font: inherit;
+	font-weight: 700;
+	cursor: pointer;
+}
+.afa-core-configurador__dia abbr {
+	text-decoration: none;
+}
+.afa-core-configurador__dia[aria-pressed="true"] {
+	border-color: var(--wp--preset--color--primary);
+	background-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--base);
+}
+.afa-core-configurador__dia-resumen {
+	margin: 0;
+	padding-top: var(--wp--preset--spacing--30);
+	border-top: 1px solid var(--wp--preset--color--outline);
+	font-size: var(--wp--preset--font-size--small);
+}
+.afa-core-configurador__actividades {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: grid;
+	gap: var(--wp--preset--spacing--30);
+	max-height: 32rem;
+	overflow-y: auto;
+}
+.afa-core-configurador__actividad {
+	display: grid;
+	gap: var(--wp--preset--spacing--10) var(--wp--preset--spacing--30);
+	padding: var(--wp--preset--spacing--30);
+	border: 1px solid var(--wp--preset--color--outline);
+	border-radius: 8px;
+	background-color: var(--wp--preset--color--base);
+	cursor: grab;
+}
+.afa-core-configurador__actividad[hidden] {
+	display: none;
+}
+.afa-core-configurador__actividad:has(> img) {
+	grid-template-columns: 4rem minmax(0, 1fr);
+}
+.afa-core-configurador__actividad > img {
+	grid-row: 1 / span 4;
+	width: 4rem;
+	height: 4rem;
+	object-fit: cover;
+	border-radius: 6px;
+}
+.afa-core-configurador__actividad > :not(img) {
+	grid-column: -2;
+	margin: 0;
+}
+.afa-core-configurador__actividad:not(:has(> img)) > :not(img) {
+	grid-column: 1;
+}
+.afa-core-configurador__actividad.is-elegida {
+	border-color: var(--wp--preset--color--primary);
+	background-color: var(--wp--preset--color--primary-soft);
+}
+.afa-core-configurador__actividad-titulo {
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--medium);
+}
+.afa-core-configurador__actividad-datos {
+	font-size: var(--wp--preset--font-size--x-small);
+	color: var(--wp--preset--color--contrast-muted);
+}
+.afa-core-configurador__actividad-precio {
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 700;
+	color: var(--wp--preset--color--primary);
+}
+.afa-core-configurador__actividad-categoria {
+	justify-self: start;
+	padding: 0 var(--wp--preset--spacing--20);
+	border-radius: 4px;
+	background-color: var(--wp--preset--color--primary-soft);
+	color: var(--wp--preset--color--primary);
+	font-size: var(--wp--preset--font-size--x-small);
+	font-weight: 700;
+	text-transform: uppercase;
+}
+.afa-core-configurador__actividad[data-categoria="deportes"] .afa-core-configurador__actividad-categoria,
+.afa-core-configurador__actividad[data-categoria="bienestar"] .afa-core-configurador__actividad-categoria {
+	background-color: var(--wp--preset--color--soft-green);
+	color: var(--wp--preset--color--green);
+}
+.afa-core-configurador__anadir {
+	justify-self: start;
+	min-height: 2.75rem;
+	padding: 0 var(--wp--preset--spacing--40);
+	border: 1px solid var(--wp--preset--color--primary);
+	border-radius: 9999px;
+	background-color: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--primary);
+	font: inherit;
+	font-weight: 700;
+	cursor: pointer;
+}
+.afa-core-configurador__sin-resultados {
+	margin: 0;
+	color: var(--wp--preset--color--contrast-muted);
+}
+.afa-core-configurador__sin-resultados[hidden] {
+	display: none;
+}
+
+/* Casillas de la semana: color por categoría, hueco de soltado y selector discreto. */
+.afa-core-configurador__celda.is-ocupada {
+	background-color: var(--wp--preset--color--primary-soft);
+}
+.afa-core-configurador__celda.is-ocupada[data-categoria="deportes"],
+.afa-core-configurador__celda.is-ocupada[data-categoria="bienestar"] {
+	background-color: var(--wp--preset--color--soft-green);
+}
+.afa-core-configurador__celda.is-ocupada select {
+	padding-inline: var(--wp--preset--spacing--10);
+	border-color: transparent;
+	background-color: transparent;
+	font-size: var(--wp--preset--font-size--x-small);
+	font-weight: 700;
+	text-overflow: ellipsis;
+}
+.afa-core-configurador__celda.is-destino {
+	outline: 2px dashed var(--wp--preset--color--primary);
+	outline-offset: -4px;
+	background-color: var(--wp--preset--color--primary-soft);
+}
+.afa-core-configurador.is-visual .afa-core-configurador__celda {
+	height: 6rem;
+}
+
+@media (min-width: 900px) {
+	.afa-core-configurador.is-visual {
+		grid-template-columns: 20rem minmax(0, 1fr);
+		align-items: start;
+	}
+	.afa-core-configurador.is-visual > .afa-core-configurador__filtro {
+		grid-column: 1 / -1;
+	}
+	.afa-core-configurador.is-visual > .afa-core-configurador__panel {
+		grid-column: 1;
+		grid-row: 2 / span 5;
+	}
+	.afa-core-configurador.is-visual > .afa-core-configurador__semana,
+	.afa-core-configurador.is-visual > .afa-core-configurador__nota,
+	.afa-core-configurador.is-visual > .afa-core-configurador__acciones,
+	.afa-core-configurador.is-visual > .afa-core-configurador__resumen {
+		grid-column: 2;
+	}
+}
+
+/* Móvil: los días del panel funcionan como pestañas; solo se ve la columna del día activo. */
+@media (max-width: 781px) {
+	.afa-core-configurador.is-visual .afa-core-configurador__semana {
+		display: table;
+		overflow: visible;
+	}
+	.afa-core-configurador.is-visual .afa-core-configurador__semana thead,
+	.afa-core-configurador.is-visual .afa-core-configurador__semana tbody {
+		min-width: 0;
+	}
+	.afa-core-configurador.is-visual .afa-core-configurador__semana tbody th {
+		width: 5.5rem;
+	}
+	.afa-core-configurador.is-visual .afa-core-configurador__celda:not([data-dia]) {
+		display: none;
+	}
+	.afa-core-configurador.is-visual[data-dia-activo="L"] .afa-core-configurador__semana [data-dia]:not([data-dia="L"]),
+	.afa-core-configurador.is-visual[data-dia-activo="M"] .afa-core-configurador__semana [data-dia]:not([data-dia="M"]),
+	.afa-core-configurador.is-visual[data-dia-activo="X"] .afa-core-configurador__semana [data-dia]:not([data-dia="X"]),
+	.afa-core-configurador.is-visual[data-dia-activo="J"] .afa-core-configurador__semana [data-dia]:not([data-dia="J"]),
+	.afa-core-configurador.is-visual[data-dia-activo="V"] .afa-core-configurador__semana [data-dia]:not([data-dia="V"]) {
+		display: none;
+	}
+	.afa-core-configurador.is-visual[data-dia-activo="L"] thead th:not(:nth-child(2)),
+	.afa-core-configurador.is-visual[data-dia-activo="M"] thead th:not(:nth-child(3)),
+	.afa-core-configurador.is-visual[data-dia-activo="X"] thead th:not(:nth-child(4)),
+	.afa-core-configurador.is-visual[data-dia-activo="J"] thead th:not(:nth-child(5)),
+	.afa-core-configurador.is-visual[data-dia-activo="V"] thead th:not(:nth-child(6)) {
+		display: none;
 	}
 }
 

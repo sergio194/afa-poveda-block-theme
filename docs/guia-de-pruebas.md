@@ -78,6 +78,10 @@ Después, a mano:
 - [ ] Página con plantilla **«Configurador de semana»** y el bloque `configurador-semana` → filtro, tabla de franjas, nota, «Calcular», resumen oscuro, aviso de cuotas.
 - [ ] Elige actividades en varias celdas → resumen con lista y cuota; prueba un error (celda con borde y mensaje) y la franja B bloqueada.
 - [ ] «Continuar a la inscripción» lleva a la inscripción con las actividades.
+- [ ] Panel «Actividades» (plugin ≥ 1.11.0): a la izquierda en escritorio, arriba en móvil; filtros de duración, día (L–V) y horario; arrastra una tarjeta a una casilla o pulsa «Añadir»; la casilla toma color por categoría.
+- [ ] A 390 px solo se ve la columna del día activo y los botones L–V funcionan como pestañas.
+- [ ] Con un curso elegido, las actividades de otros cursos desaparecen de las casillas y aparece el aviso de las quitadas.
+- [ ] Los selectores por celda siguen funcionando sin arrastrar (teclado).
 - [ ] A 390 px la tabla hace scroll dentro de su caja, sin desbordar la página.
 
 **Decisiones sin ti:** se viste el marcado del plugin (selectores por celda), no el arrastrar y soltar del Figma; **sin barra de resumen fija en móvil** (accesibilidad); el aviso de cuotas es texto editable.
