@@ -241,6 +241,7 @@
 		{ "name": "page-servicio-detalle", "title": "Servicio — Detalle", "postTypes": [ "page" ] },
 		{ "name": "page-hazte-socio", "title": "Hazte Socio", "postTypes": [ "page" ] },
 		{ "name": "page-formulario", "title": "Formulario (inscripción, alta…)", "postTypes": [ "page" ] },
-		{ "name": "page-contacto", "title": "Contacto", "postTypes": [ "page" ] }
+		{ "name": "page-contacto", "title": "Contacto", "postTypes": [ "page" ] },
+		{ "name": "page-calendario", "title": "Calendario escolar", "postTypes": [ "page" ] }
 	]
 }

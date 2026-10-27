@@ -9,6 +9,7 @@ y el proyecto sigue [Versionado Semántico](https://semver.org/lang/es/).
 
 ### Añadido
 
+- Calendario escolar (008): plantilla `page-calendario`, patterns `calendario-mes`, `calendario-lateral` y `evento-contenido`; estilos de los bloques de eventos del plugin y de la ficha nativa de The Events Calendar
 - Contacto (010): plantilla `page-contacto`, patterns `contacto-formulario` (bloque del plugin o texto provisional) y `contacto-info`; plantillas `Contacto` y `Formulario` seleccionables en el editor
 - Estilos de formularios (011): CSS de `afa-core-form*` (tracker, campos, errores, éxito, newsletter) y `.mailpoet_form`; plantilla `page-formulario`; pattern `newsletter-formulario`
 - Extraescolares (009): plantillas `archive-afa_extraescolar` y `single-afa_extraescolar`; patterns `extraescolares-dudas` y `extraescolar-socio`; estilos de los bloques `afa-core-extraescolar*` del plugin

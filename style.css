@@ -2724,6 +2724,340 @@ textarea.afa-core-form__control {
 }
 
 /*
+ * Calendario y eventos (008) — bloques del plugin (clases afa-core-calendario*, afa-core-eventos*,
+ * afa-core-evento-*, contrato §13) y estilo básico de las plantillas nativas de The Events
+ * Calendar (el plugin impone su propia plantilla de evento). theme.json no expresa tablas de
+ * calendario, <dl> de detalles ni variables de TEC.
+ */
+.afa-calendario__titulo,
+.afa-calendario .wp-block-post-title {
+	margin: 0;
+}
+.afa-core-calendario {
+	background-color: var(--wp--preset--color--base);
+	border: 1px solid var(--wp--preset--color--outline);
+	border-radius: 12px;
+	overflow: hidden;
+}
+.afa-core-calendario__cabecera {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--wp--preset--spacing--40);
+	padding: var(--wp--preset--spacing--40);
+	background-color: var(--wp--preset--color--surface-container);
+}
+.afa-core-calendario__mes {
+	margin: 0;
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--x-large);
+	color: var(--wp--preset--color--primary);
+	text-transform: capitalize;
+}
+.afa-core-calendario__navegacion {
+	display: flex;
+	gap: var(--wp--preset--spacing--20);
+}
+.afa-core-calendario__anterior,
+.afa-core-calendario__siguiente {
+	display: inline-grid;
+	place-items: center;
+	min-width: 2.75rem;
+	min-height: 2.75rem; /* objetivo táctil ≥ 44 px */
+	border-radius: 8px;
+	background-color: var(--wp--preset--color--base);
+	border: 1px solid var(--wp--preset--color--outline);
+	color: var(--wp--preset--color--primary);
+	text-decoration: none;
+	font-size: var(--wp--preset--font-size--large);
+}
+.afa-core-calendario__anterior:focus-visible,
+.afa-core-calendario__siguiente:focus-visible,
+.afa-core-calendario__evento:focus-visible,
+.afa-core-eventos a:focus-visible,
+.afa-core-eventos-pdf__enlace:focus-visible {
+	outline: 2px solid var(--wp--preset--color--primary);
+	outline-offset: 2px;
+}
+.afa-core-calendario__leyenda {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--wp--preset--spacing--20);
+}
+.afa-core-calendario__categoria {
+	padding: 0 var(--wp--preset--spacing--30);
+	border-radius: 9999px;
+	border-left: 6px solid var(--afa-core-evento-color, var(--wp--preset--color--primary));
+	background-color: var(--wp--preset--color--base);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+}
+.afa-core-calendario__tabla {
+	width: 100%;
+	table-layout: fixed;
+	border-collapse: collapse;
+}
+.afa-core-calendario__tabla th {
+	padding: var(--wp--preset--spacing--30);
+	background-color: var(--wp--preset--color--surface-high);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	text-align: center;
+}
+.afa-core-calendario__tabla abbr {
+	text-decoration: none;
+}
+.afa-core-calendario__dia {
+	overflow: hidden; /* el nombre largo de un evento no invade la celda vecina */
+	height: 5.5rem;
+	padding: var(--wp--preset--spacing--20);
+	border: 1px solid var(--wp--preset--color--outline);
+	vertical-align: top;
+	font-size: var(--wp--preset--font-size--small);
+}
+.afa-core-calendario__dia.is-outside {
+	background-color: var(--wp--preset--color--surface-container);
+	color: var(--wp--preset--color--contrast-muted);
+}
+.afa-core-calendario__dia.is-weekend .afa-core-calendario__numero {
+	color: #b3261e; /* contraste ≥ 4,5:1 sobre base */
+}
+.afa-core-calendario__dia.is-today {
+	outline: 2px solid var(--wp--preset--color--primary);
+	outline-offset: -2px;
+	background-color: var(--wp--preset--color--primary-soft);
+}
+.afa-core-calendario__hoy {
+	display: block;
+	font-size: var(--wp--preset--font-size--x-small);
+	font-weight: 700;
+	color: var(--wp--preset--color--primary);
+	text-transform: uppercase;
+}
+.afa-core-calendario__eventos {
+	min-width: 0;
+	list-style: none;
+	margin: var(--wp--preset--spacing--20) 0 0;
+	padding: 0;
+	display: grid;
+	gap: 2px;
+}
+.afa-core-calendario__evento {
+	display: block;
+	overflow: hidden;
+	padding: 0 var(--wp--preset--spacing--20);
+	border-left: 4px solid var(--afa-core-evento-color, var(--wp--preset--color--primary));
+	background-color: var(--wp--preset--color--surface-container);
+	color: var(--wp--preset--color--contrast);
+	font-size: var(--wp--preset--font-size--x-small);
+	font-weight: 600;
+	line-height: 1.4;
+	text-decoration: none;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* Próximos eventos. */
+.afa-calendario__proximos {
+	padding: var(--wp--preset--spacing--40);
+	background-color: var(--wp--preset--color--surface-container);
+	border: 1px solid var(--wp--preset--color--outline);
+	border-radius: 12px;
+}
+.afa-core-eventos__titulo {
+	margin: 0 0 var(--wp--preset--spacing--40);
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--x-large);
+}
+.afa-core-eventos__lista {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: var(--wp--preset--spacing--30);
+}
+.afa-core-eventos__item {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 0 var(--wp--preset--spacing--30);
+	padding: var(--wp--preset--spacing--40);
+	background-color: var(--wp--preset--color--base);
+	border: 1px solid var(--wp--preset--color--outline);
+	border-left: 6px solid var(--afa-core-evento-color, var(--wp--preset--color--primary));
+	border-radius: 8px;
+}
+.afa-core-eventos__fecha {
+	grid-row: 1 / span 4;
+	margin: 0;
+	display: grid;
+	place-items: center;
+	align-self: start;
+	min-width: 3rem;
+	padding: var(--wp--preset--spacing--20);
+	border-radius: 8px;
+	background-color: var(--wp--preset--color--primary-soft);
+	color: var(--wp--preset--color--primary);
+	text-align: center;
+	line-height: 1.1;
+}
+.afa-core-eventos__dia {
+	display: block;
+	font-weight: 700;
+}
+.afa-core-eventos__mes {
+	display: block;
+	font-size: var(--wp--preset--font-size--x-small);
+	font-weight: 700;
+}
+.afa-core-eventos__nombre {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--medium);
+}
+.afa-core-eventos__nombre a {
+	color: inherit;
+	text-decoration: none;
+}
+.afa-core-eventos__nombre a:hover {
+	text-decoration: underline;
+}
+.afa-core-eventos__meta,
+.afa-core-eventos__resumen {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--small);
+	color: var(--wp--preset--color--contrast-muted);
+}
+.afa-core-eventos__mas {
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	color: var(--wp--preset--color--primary);
+}
+.afa-core-eventos__vacio {
+	margin: 0;
+	color: var(--wp--preset--color--contrast-muted);
+}
+.afa-calendario__destacado a {
+	color: inherit;
+}
+.afa-calendario__destacado a:focus-visible {
+	outline: 2px solid var(--wp--preset--color--base);
+	outline-offset: 2px;
+}
+.afa-core-eventos-pdf {
+	margin: 0;
+}
+.afa-core-eventos-pdf__enlace.wp-element-button {
+	display: block;
+	text-align: center;
+	background-color: var(--wp--preset--color--surface-high);
+	color: var(--wp--preset--color--contrast);
+	border: 1px solid var(--wp--preset--color--outline);
+}
+
+/* Etiqueta y detalles clave del evento. */
+.afa-core-evento-etiqueta {
+	display: inline-block;
+	padding: var(--wp--preset--spacing--20) var(--wp--preset--spacing--40);
+	border-radius: 9999px;
+	background-color: var(--wp--preset--color--primary-soft);
+	color: var(--wp--preset--color--primary);
+	font-size: var(--wp--preset--font-size--x-small);
+	font-weight: 700;
+	text-transform: uppercase;
+}
+.afa-core-evento-detalles {
+	padding: var(--wp--preset--spacing--50);
+	background-color: var(--wp--preset--color--surface-container);
+	border: 1px solid var(--wp--preset--color--outline);
+	border-radius: 12px;
+}
+.afa-core-evento-detalles__titulo {
+	margin: 0 0 var(--wp--preset--spacing--40);
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--x-large);
+}
+.afa-core-evento-detalles__lista {
+	margin: 0;
+	display: grid;
+	gap: var(--wp--preset--spacing--40);
+}
+.afa-core-evento-detalles__item dt {
+	font-size: var(--wp--preset--font-size--x-small);
+	font-weight: 600;
+	text-transform: uppercase;
+	color: var(--wp--preset--color--contrast-muted);
+}
+.afa-core-evento-detalles__item dd {
+	margin: 0;
+	font-weight: 700;
+}
+.afa-core-evento-detalles__nota {
+	display: block;
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 400;
+	color: var(--wp--preset--color--contrast-muted);
+}
+.afa-core-evento-detalles__mapa {
+	display: inline-block;
+	margin-left: var(--wp--preset--spacing--20);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	color: var(--wp--preset--color--primary);
+}
+
+/* The Events Calendar (plantillas propias): colores y tipografía del tema. */
+.tribe-common,
+.tribe-events {
+	--tec-color-accent-primary: var(--wp--preset--color--primary);
+	--tec-color-accent-primary-hover: var(--wp--preset--color--contrast);
+	--tec-color-link-accent: var(--wp--preset--color--primary);
+	--tec-font-family-base: var(--wp--preset--font-family--body);
+}
+.tribe-events-single {
+	max-width: 1120px;
+	margin-inline: auto;
+	padding: var(--wp--preset--spacing--50) var(--wp--preset--spacing--40);
+}
+.tribe-events-single .tribe-events-single-event-title {
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--huge);
+	color: var(--wp--preset--color--contrast);
+}
+.tribe-events-single .tribe-events-back a,
+.tribe-events-single a {
+	color: var(--wp--preset--color--primary);
+}
+.tribe-events-single .tribe-events-meta-group {
+	padding: var(--wp--preset--spacing--40);
+	background-color: var(--wp--preset--color--surface-container);
+	border: 1px solid var(--wp--preset--color--outline);
+	border-radius: 12px;
+}
+
+@media (max-width: 781px) {
+	.afa-calendario__cols {
+		flex-direction: column !important;
+	}
+	.afa-calendario__cols > .wp-block-column {
+		flex-basis: 100% !important;
+		width: 100%;
+	}
+	.afa-core-calendario__dia {
+		height: 4rem;
+		padding: 2px;
+	}
+	.afa-core-calendario__evento {
+		font-size: 0; /* en móvil solo la marca de color; el nombre sigue accesible */
+		min-height: 0.5rem;
+	}
+	.afa-core-calendario__evento::before {
+		content: "";
+	}
+}
+
+/*
  * Hazte Socio (006) — hero columns, grid de fichas, bloque cuota|form,
  * cards de ayuda e inputs genéricos del plugin de formularios.
  * theme.json no expresa: aspect-ratio de ilustración, stack de columns,

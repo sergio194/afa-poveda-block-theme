@@ -1,0 +1,25 @@
+<!-- wp:template-part {"slug":"header","area":"header","tagName":"div"} /-->
+
+<!-- wp:group {"tagName":"main","anchor":"contenido","className":"afa-calendario","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|80"},"blockGap":"var:preset|spacing|60"}},"layout":{"type":"constrained","wideSize":"1120px"}} -->
+<main id="contenido" class="wp-block-group afa-calendario" style="padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:group {"align":"wide","className":"afa-calendario__intro","style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide afa-calendario__intro"><!-- wp:post-title {"level":1,"fontSize":"huge","fontFamily":"heading"} /-->
+
+<!-- wp:paragraph {"textColor":"contrast-muted","fontSize":"large"} -->
+<p class="has-contrast-muted-color has-text-color has-large-font-size">Mantente al día con las actividades, reuniones y eventos de nuestra comunidad educativa.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:columns {"align":"wide","className":"afa-calendario__cols","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|50","left":"var:preset|spacing|50"}}}} -->
+<div class="wp-block-columns alignwide afa-calendario__cols"><!-- wp:column {"width":"65%","className":"afa-calendario__main"} -->
+<div class="wp-block-column afa-calendario__main" style="flex-basis:65%"><!-- wp:pattern {"slug":"afa-poveda/calendario-mes"} /--></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"width":"35%","className":"afa-calendario__aside","style":{"spacing":{"blockGap":"var:preset|spacing|40"}}} -->
+<div class="wp-block-column afa-calendario__aside" style="flex-basis:35%"><!-- wp:pattern {"slug":"afa-poveda/calendario-lateral"} /--></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+
+<!-- wp:post-content {"layout":{"type":"constrained"}} /--></main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","area":"footer","tagName":"div"} /-->
