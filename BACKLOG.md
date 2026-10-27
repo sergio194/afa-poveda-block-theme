@@ -17,6 +17,7 @@ Reparto (constitución III): el tema pone **presentación**; la lógica vive en 
 | 006 | Hazte socio (landing) | 27:3962, 27:3559 |
 | 007 | Accesibilidad WCAG 2.2 AA | transversal |
 | 009 | Extraescolares: archivo y ficha | `1:673`, `8:2305` · [spec](specs/009-extraescolares-archivo-ficha/spec.md) |
+| 010 | Contacto | `56:1185`, `56:1263` · [spec](specs/010-contacto/spec.md) |
 | 011 | Estilos de formularios | `56:1456`, `56:1616`, `56:1785` (+ móviles) · [spec](specs/011-estilos-formularios/spec.md) |
 | 012 | Plantillas CPT de Servicios | los de la 005 · [spec](specs/012-plantillas-cpt-servicios/spec.md) |
 
@@ -25,7 +26,6 @@ Reparto (constitución III): el tema pone **presentación**; la lógica vive en 
 | Spec | Nombre | Figma | Depende de | Notas |
 |---|---|---|---|---|
 | 008 | Calendario escolar y detalle de evento | `Calendario Escolar` 18:644, `Calendario mobile` 18:1889, `detalle evento` 19:2095, `detalle evento mobile` 19:2253 | plugin-009 | Estilizar las plantillas de **The Events Calendar** (decisión: se reutiliza). Vista mensual, lista y detalle (ej. "Carrera Solidaria"). La 004 lo excluyó expresamente. |
-| 010 | Contacto | `CONTACTO` 56:1185, `Html → Body` móvil 56:1263 | plugin-005 | Página y envoltura del formulario. |
 | 013 | Estilos del configurador de semana | `configurador de semana` 3:467, `Html → Body` 3:658 (actividades), `Configurador Móvil` 3:331 | plugin-011 | **Añadida tras revisar Figma**: no estaba en la lista inicial. Barra de resumen inferior en móvil. |
 
 ### Deuda y pendientes de la junta

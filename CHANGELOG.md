@@ -9,6 +9,7 @@ y el proyecto sigue [Versionado Semántico](https://semver.org/lang/es/).
 
 ### Añadido
 
+- Contacto (010): plantilla `page-contacto`, patterns `contacto-formulario` (bloque del plugin o texto provisional) y `contacto-info`; plantillas `Contacto` y `Formulario` seleccionables en el editor
 - Estilos de formularios (011): CSS de `afa-core-form*` (tracker, campos, errores, éxito, newsletter) y `.mailpoet_form`; plantilla `page-formulario`; pattern `newsletter-formulario`
 - Extraescolares (009): plantillas `archive-afa_extraescolar` y `single-afa_extraescolar`; patterns `extraescolares-dudas` y `extraescolar-socio`; estilos de los bloques `afa-core-extraescolar*` del plugin
 - Plantillas CPT de Servicios (012): `single-afa_servicio` (hero, 65/35, bloques del plugin), pattern `servicios-grid-dinamico` (Query Loop) y estilos de las clases `afa-core-servicio-*`

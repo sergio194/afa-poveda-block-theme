@@ -2631,6 +2631,99 @@ textarea.afa-core-form__control {
 }
 
 /*
+ * Contacto (010) — tarjetas, iconos de datos con máscara y píldoras de vocalías.
+ * theme.json no expresa máscaras de icono, subrayado de acento ni tarjetas con borde.
+ */
+.afa-contacto__titulo {
+	margin: 0 0 var(--wp--preset--spacing--50);
+}
+.afa-contacto__titulo::after {
+	content: "";
+	display: block;
+	width: 3rem;
+	height: 4px;
+	margin-top: var(--wp--preset--spacing--30);
+	border-radius: 2px;
+	background-color: var(--wp--preset--color--primary);
+}
+.afa-contacto__cols {
+	align-items: flex-start;
+}
+.afa-contacto__card {
+	padding: clamp(20px, 4vw, 32px);
+	background-color: var(--wp--preset--color--base);
+	border: 1px solid var(--wp--preset--color--outline);
+	border-radius: 12px;
+}
+.afa-contacto__card .afa-core-form {
+	border: 0;
+	box-shadow: none;
+	background-color: transparent;
+}
+.afa-contacto__card .afa-core-form__form {
+	padding: 0;
+}
+.afa-contacto__info {
+	background-color: var(--wp--preset--color--surface-container);
+}
+.afa-contacto__dato {
+	position: relative;
+	min-height: 2.5rem;
+	padding-left: 3.5rem;
+}
+.afa-contacto__dato > p {
+	margin: 0;
+}
+.afa-contacto__dato::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 2.5rem;
+	height: 2.5rem;
+	border-radius: 9999px;
+	background-color: var(--wp--preset--color--primary);
+}
+.afa-contacto__dato::after {
+	content: "";
+	position: absolute;
+	left: 0.6rem;
+	top: 0.6rem;
+	width: 1.3rem;
+	height: 1.3rem;
+	background-color: var(--wp--preset--color--base);
+	-webkit-mask: var(--afa-icon) center / contain no-repeat;
+	mask: var(--afa-icon) center / contain no-repeat;
+}
+.afa-contacto__dato--pin { --afa-icon: var(--afa-icon-pin); }
+.afa-contacto__dato--mail { --afa-icon: var(--afa-icon-mail); }
+.afa-contacto__dato--reloj { --afa-icon: url("assets/icons/icon-clock.svg"); }
+.afa-contacto__pills {
+	gap: var(--wp--preset--spacing--20);
+}
+.afa-contacto__pill {
+	margin: 0;
+	padding: var(--wp--preset--spacing--20) var(--wp--preset--spacing--40);
+	border-radius: 9999px;
+	background-color: var(--wp--preset--color--surface-high);
+	color: var(--wp--preset--color--contrast);
+	font-weight: 600;
+}
+.afa-contacto__info-col .wp-block-separator {
+	border-color: var(--wp--preset--color--outline);
+}
+
+@media (max-width: 781px) {
+	.afa-contacto__cols {
+		flex-direction: column !important;
+	}
+	.afa-contacto__cols > .wp-block-column {
+		flex-basis: 100% !important;
+		width: 100%;
+	}
+}
+
+/*
  * Hazte Socio (006) — hero columns, grid de fichas, bloque cuota|form,
  * cards de ayuda e inputs genéricos del plugin de formularios.
  * theme.json no expresa: aspect-ratio de ilustración, stack de columns,

@@ -239,6 +239,8 @@
 		{ "name": "page-afa", "title": "AFA / Sobre nosotros", "postTypes": [ "page" ] },
 		{ "name": "page-servicios", "title": "Servicios — Listado", "postTypes": [ "page" ] },
 		{ "name": "page-servicio-detalle", "title": "Servicio — Detalle", "postTypes": [ "page" ] },
-		{ "name": "page-hazte-socio", "title": "Hazte Socio", "postTypes": [ "page" ] }
+		{ "name": "page-hazte-socio", "title": "Hazte Socio", "postTypes": [ "page" ] },
+		{ "name": "page-formulario", "title": "Formulario (inscripción, alta…)", "postTypes": [ "page" ] },
+		{ "name": "page-contacto", "title": "Contacto", "postTypes": [ "page" ] }
 	]
 }
