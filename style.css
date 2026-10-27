@@ -2180,6 +2180,457 @@ body.page .afa-header .wp-block-navigation-item.current-menu-item a[href*="/serv
 }
 
 /*
+ * Formularios (011) — envoltura visual del motor de formularios del plugin (clases afa-core-form*,
+ * contrato §9) y del formulario nativo de MailPoet. theme.json no expresa tracker de pasos,
+ * tarjetas de opciones, estados de error ni panel de éxito. Único hex: error (sin preset).
+ */
+.afa-core-form {
+	--afa-form-error: #b3261e; /* contraste ≥ 4,5:1 sobre base y sobre el panel de error */
+	box-sizing: border-box;
+	max-width: 100%;
+	background-color: var(--wp--preset--color--base);
+	border: 1px solid var(--wp--preset--color--outline);
+	border-radius: 16px;
+	box-shadow: 0 4px 16px rgba(24, 28, 32, 0.08);
+	overflow: hidden;
+}
+.afa-core-form *,
+.afa-core-form *::before,
+.afa-core-form *::after {
+	box-sizing: border-box;
+}
+.afa-core-form__form {
+	padding: clamp(20px, 5vw, 40px);
+	display: grid;
+	gap: var(--wp--preset--spacing--50);
+}
+/* En el hueco del pattern Hazte socio la tarjeta ya existe: sin doble marco. */
+.afa-hazte-form .afa-core-form,
+.afa-newsletter-form .afa-core-form {
+	border: 0;
+	box-shadow: none;
+	background-color: transparent;
+}
+.afa-hazte-form .afa-core-form__form,
+.afa-newsletter-form .afa-core-form__form {
+	padding: 0;
+}
+
+/* Tracker de pasos: pestañas con subrayado en el paso actual. */
+.afa-core-form__pasos {
+	list-style: none;
+	margin: calc(-1 * clamp(20px, 5vw, 40px)) calc(-1 * clamp(20px, 5vw, 40px)) 0;
+	padding: 0;
+	display: flex;
+	overflow-x: auto;
+	background-color: var(--wp--preset--color--surface-container);
+	border-bottom: 1px solid var(--wp--preset--color--outline);
+	counter-reset: afa-paso;
+}
+.afa-core-form__paso-indicador {
+	flex: 1 1 0;
+	min-width: 7rem;
+	padding: var(--wp--preset--spacing--40) var(--wp--preset--spacing--30);
+	text-align: center;
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	color: var(--wp--preset--color--contrast-muted);
+	border-bottom: 3px solid transparent;
+	counter-increment: afa-paso;
+}
+.afa-core-form__paso-indicador::before {
+	content: counter(afa-paso) ". ";
+}
+.afa-core-form__paso-indicador.is-current {
+	color: var(--wp--preset--color--primary);
+	border-bottom-color: var(--wp--preset--color--primary);
+	background-color: var(--wp--preset--color--base);
+}
+.afa-core-form__paso-indicador.is-done,
+.afa-core-form__paso-indicador.is-complete {
+	color: var(--wp--preset--color--green);
+}
+.afa-core-form__progreso {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--small);
+	color: var(--wp--preset--color--contrast-muted);
+}
+.afa-core-form__progreso:empty {
+	display: none;
+}
+
+/* Pasos, títulos y grupos. */
+.afa-core-form__paso {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	min-width: 0;
+	display: grid;
+	gap: var(--wp--preset--spacing--50);
+}
+.afa-core-form__paso-titulo {
+	padding: 0 0 0 var(--wp--preset--spacing--30);
+	border-left: 4px solid var(--wp--preset--color--primary);
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--x-large);
+	font-weight: 600;
+	color: var(--wp--preset--color--contrast);
+	margin-bottom: var(--wp--preset--spacing--40);
+}
+.afa-core-form__grupo,
+.afa-core-form__fila {
+	margin: 0;
+	min-width: 0;
+	padding: var(--wp--preset--spacing--40);
+	display: grid;
+	gap: var(--wp--preset--spacing--40);
+	background-color: var(--wp--preset--color--surface-container);
+	border: 1px solid var(--wp--preset--color--outline);
+	border-radius: 12px;
+}
+.afa-core-form__grupo-titulo,
+.afa-core-form__fila-titulo {
+	padding: 0 var(--wp--preset--spacing--20);
+	font-weight: 600;
+	color: var(--wp--preset--color--primary);
+}
+.afa-core-form__repetible {
+	display: grid;
+	gap: var(--wp--preset--spacing--40);
+}
+.afa-core-form [hidden] {
+	display: none !important;
+}
+
+/* Campos y controles. */
+.afa-core-form__campo {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	min-width: 0;
+	display: grid;
+	gap: var(--wp--preset--spacing--20);
+}
+.afa-core-form__etiqueta {
+	padding: 0;
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	color: var(--wp--preset--color--contrast);
+}
+.afa-core-form__requerido {
+	color: var(--afa-form-error);
+}
+.afa-core-form__control {
+	width: 100%;
+	min-height: 2.75rem; /* objetivo táctil ≥ 44 px */
+	padding: var(--wp--preset--spacing--30) var(--wp--preset--spacing--40);
+	border: 1px solid var(--wp--preset--color--contrast-muted); /* borde de control ≥ 3:1 */
+	border-radius: 8px;
+	background-color: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--contrast);
+	font: inherit;
+}
+textarea.afa-core-form__control {
+	min-height: 8rem;
+	resize: vertical;
+}
+.afa-core-form__control:focus-visible,
+.afa-core-form input:focus-visible,
+.afa-core-form select:focus-visible,
+.afa-core-form textarea:focus-visible,
+.afa-core-form button:focus-visible,
+.afa-core-form a:focus-visible {
+	outline: 2px solid var(--wp--preset--color--primary);
+	outline-offset: 2px;
+}
+.afa-core-form__ayuda {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--small);
+	color: var(--wp--preset--color--contrast-muted);
+}
+
+/* Opciones: radios, casillas y tarjetas. */
+.afa-core-form__opciones {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--wp--preset--spacing--30);
+}
+.afa-core-form__opcion {
+	display: flex;
+	align-items: center;
+	gap: var(--wp--preset--spacing--30);
+	cursor: pointer;
+}
+.afa-core-form__opcion input {
+	width: 1.25rem;
+	height: 1.25rem;
+	accent-color: var(--wp--preset--color--primary);
+}
+.afa-core-form__campo--tarjetas .afa-core-form__opcion {
+	flex: 1 1 10rem;
+	justify-content: center;
+	min-height: 3.5rem;
+	padding: var(--wp--preset--spacing--30) var(--wp--preset--spacing--40);
+	border: 1px solid var(--wp--preset--color--contrast-muted);
+	border-radius: 12px;
+	background-color: var(--wp--preset--color--base);
+	font-weight: 600;
+	text-align: center;
+}
+.afa-core-form__campo--tarjetas .afa-core-form__opcion:has(input:checked) {
+	border: 2px solid var(--wp--preset--color--primary);
+	background-color: var(--wp--preset--color--primary-soft);
+	color: var(--wp--preset--color--primary);
+}
+.afa-core-form__campo--tarjetas .afa-core-form__opcion:has(input:focus-visible) {
+	outline: 2px solid var(--wp--preset--color--primary);
+	outline-offset: 2px;
+}
+.afa-core-form__campo--casilla {
+	display: flex;
+	align-items: flex-start;
+	gap: var(--wp--preset--spacing--30);
+}
+.afa-core-form__campo--casilla input[type="checkbox"] {
+	flex: none;
+	width: 1.25rem;
+	height: 1.25rem;
+	margin-top: 0.15rem;
+	accent-color: var(--wp--preset--color--primary);
+}
+.afa-core-form__campo--casilla .afa-core-form__etiqueta {
+	font-weight: 400;
+}
+.afa-core-form__campo--casilla a {
+	color: var(--wp--preset--color--primary);
+}
+.afa-core-form__consentimientos {
+	display: grid;
+	gap: var(--wp--preset--spacing--30);
+	padding-top: var(--wp--preset--spacing--40);
+	border-top: 1px solid var(--wp--preset--color--outline);
+}
+
+/* Navegación y envío. */
+.afa-core-form__navegacion,
+.afa-core-form__acciones,
+.afa-core-form__repetible-acciones {
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--wp--preset--spacing--30);
+}
+.afa-core-form__nota {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--small);
+	color: var(--wp--preset--color--contrast-muted);
+}
+.afa-core-form__enviar,
+.afa-core-form__siguiente {
+	min-height: 2.75rem;
+	padding: var(--wp--preset--spacing--30) var(--wp--preset--spacing--60);
+	border: 0;
+	border-radius: 8px;
+	background-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--base);
+	font: inherit;
+	font-weight: 700;
+	cursor: pointer;
+}
+.afa-core-form__anterior,
+.afa-core-form__anadir {
+	min-height: 2.75rem;
+	padding: var(--wp--preset--spacing--30) var(--wp--preset--spacing--50);
+	border: 1px solid var(--wp--preset--color--primary);
+	border-radius: 9999px;
+	background-color: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--primary);
+	font: inherit;
+	font-weight: 600;
+	cursor: pointer;
+}
+.afa-core-form__enviar:hover,
+.afa-core-form__siguiente:hover {
+	background-color: var(--wp--preset--color--contrast);
+}
+.afa-core-form .is-disabled,
+.afa-core-form button:disabled {
+	opacity: 1;
+	background-color: var(--wp--preset--color--surface-high);
+	color: var(--wp--preset--color--contrast-muted);
+	cursor: not-allowed;
+}
+.afa-core-form.is-loading {
+	cursor: progress;
+}
+
+/* Errores: texto + borde (no solo color). */
+.afa-core-form__resumen {
+	padding: var(--wp--preset--spacing--40);
+	border: 1px solid var(--afa-form-error);
+	border-left-width: 6px;
+	border-radius: 8px;
+	background-color: var(--wp--preset--color--base);
+	color: var(--afa-form-error);
+}
+.afa-core-form__resumen-titulo {
+	margin: 0;
+	font-weight: 700;
+}
+.afa-core-form__resumen-lista {
+	margin: var(--wp--preset--spacing--20) 0 0;
+	padding-left: 1.25rem;
+}
+.afa-core-form__resumen a {
+	color: inherit;
+	text-decoration: underline;
+}
+.afa-core-form__campo.is-error .afa-core-form__control {
+	border: 2px solid var(--afa-form-error);
+}
+.afa-core-form__error {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	color: var(--afa-form-error);
+}
+.afa-core-form__error::before {
+	content: "⚠ ";
+}
+
+/* Éxito. */
+.afa-core-form__exito {
+	padding: clamp(32px, 8vw, 72px) var(--wp--preset--spacing--50);
+	text-align: center;
+	display: grid;
+	justify-items: center;
+	gap: var(--wp--preset--spacing--40);
+}
+.afa-core-form__exito::before {
+	content: "✓";
+	display: grid;
+	place-items: center;
+	width: 4.5rem;
+	height: 4.5rem;
+	border-radius: 9999px;
+	background-color: var(--wp--preset--color--soft-green);
+	color: var(--wp--preset--color--green);
+	font-size: 2rem;
+	font-weight: 700;
+}
+.afa-core-form__exito-titulo {
+	margin: 0;
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--xx-large);
+}
+.afa-core-form__exito-texto {
+	margin: 0;
+	max-width: 36rem;
+	color: var(--wp--preset--color--contrast-muted);
+}
+.afa-core-form__exito-acciones {
+	margin: var(--wp--preset--spacing--30) 0 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: var(--wp--preset--spacing--40);
+}
+.afa-core-form__exito-accion {
+	display: inline-block;
+	padding: var(--wp--preset--spacing--30) var(--wp--preset--spacing--60);
+	border: 2px solid var(--wp--preset--color--primary);
+	border-radius: 9999px;
+	font-weight: 700;
+	text-decoration: none;
+	color: var(--wp--preset--color--primary);
+}
+.afa-core-form__exito-accion--principal {
+	background-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--base);
+}
+.afa-core-form__no-disponible {
+	padding: var(--wp--preset--spacing--50);
+	text-align: center;
+	color: var(--wp--preset--color--contrast-muted);
+}
+
+/* Newsletter: campo + botón en una fila en pantallas anchas. */
+.afa-core-form--newsletter .afa-core-form__form {
+	gap: var(--wp--preset--spacing--30);
+}
+@media (min-width: 640px) {
+	.afa-core-form--newsletter .afa-core-form__form {
+		grid-template-columns: 1fr auto;
+		align-items: end;
+	}
+	.afa-core-form--newsletter .afa-core-form__consentimientos,
+	.afa-core-form--newsletter .afa-core-form__nota,
+	.afa-core-form--newsletter .afa-core-form__resumen {
+		grid-column: 1 / -1;
+	}
+}
+
+/* Formulario nativo de MailPoet: mismo aspecto básico que los campos del motor. */
+.mailpoet_form input[type="text"],
+.mailpoet_form input[type="email"] {
+	width: 100%;
+	min-height: 2.75rem;
+	padding: var(--wp--preset--spacing--30) var(--wp--preset--spacing--40);
+	border: 1px solid var(--wp--preset--color--contrast-muted);
+	border-radius: 8px;
+	font: inherit;
+}
+.mailpoet_form .mailpoet_submit {
+	min-height: 2.75rem;
+	border: 0;
+	border-radius: 8px;
+	background-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--base);
+	font: inherit;
+	font-weight: 700;
+	cursor: pointer;
+}
+.mailpoet_form .mailpoet_validate_error {
+	color: #b3261e;
+	font-weight: 600;
+}
+.mailpoet_form .mailpoet_validate_success {
+	color: var(--wp--preset--color--green);
+	font-weight: 600;
+}
+
+/* Cabecera de página de formulario (plantilla page-formulario). */
+.afa-form-page__icono {
+	display: grid;
+	place-items: center;
+	width: 3rem;
+	height: 3rem;
+	margin: 0 auto;
+	border-radius: 9999px;
+	background-color: var(--wp--preset--color--primary-soft);
+	color: var(--wp--preset--color--primary);
+	font-size: 1.5rem;
+}
+.afa-form-page__cabecera .wp-block-post-title {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media (max-width: 781px) {
+	.afa-core-form__navegacion > *,
+	.afa-core-form__acciones > *:not(p),
+	.afa-core-form__enviar {
+		width: 100%;
+	}
+	.afa-core-form__exito-accion {
+		width: 100%;
+		text-align: center;
+	}
+}
+
+/*
  * Hazte Socio (006) — hero columns, grid de fichas, bloque cuota|form,
  * cards de ayuda e inputs genéricos del plugin de formularios.
  * theme.json no expresa: aspect-ratio de ilustración, stack de columns,
