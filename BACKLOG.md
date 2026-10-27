@@ -37,8 +37,7 @@ _Nada pendiente en esta tanda (ver «Peticiones» y «Deuda»)._
 
 ## Peticiones a afa-padre-poveda-core
 - **Plantilla de evento (spec 008)**: The Events Calendar impone su plantilla de evento en temas de bloques e ignora `single-tribe_events.html`. Para el hero con foto y la tarjeta «Detalles clave» de Figma 19:2095 haría falta que el plugin fuerce la plantilla de bloques del tema para `tribe_events` (o exponga un filtro/bloque que lo haga) y lo documente en el contrato.
-- **Configurador (spec 013)**: el Figma propone un panel lateral de actividades con arrastrar y soltar, filtros por edad/duración/día y pestañas por día en móvil; el plugin implementa selectores por celda. Si la junta quiere el patrón de Figma, es trabajo del plugin (JS y marcado).
-- **Filtro de curso del configurador (spec 013)**: al elegir un curso en el desplegable no se filtran las actividades de las casillas hasta pulsar «Calcular» (el filtro `afa_curso` solo se aplica en el servidor al enviar el formulario), así que se puede elegir una actividad que no es de ese curso. Propuesta: que el desplegable envíe el formulario al cambiar, o que el JS oculte/deshabilite las `<option>` de otros cursos (añadiendo un `data-cursos` a cada opción).
+- **Configurador (spec 013)**: pasado al backlog del plugin como specs 013 (filtro de curso, fallo) y 014 (arrastrar y soltar del Figma, con alternativa accesible).
 
 ## Fuera de alcance (decidido)
 - Pagos de cuota online: se mantiene lo de la 006 (cobro por email, lo gestiona la junta).
