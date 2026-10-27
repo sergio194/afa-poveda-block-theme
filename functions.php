@@ -388,11 +388,20 @@ function afa_poveda_read_more_accessible_name( $block_content, $block ) {
 		return $block_content;
 	}
 
-	$label = sprintf(
-		/* translators: %s: post title */
-		__( 'Leer más: %s', 'afa-poveda' ),
-		wp_strip_all_tags( $title )
-	);
+	// El nombre accesible debe contener el texto visible (WCAG 2.5.3): «Ver más: X», no «Leer más: X».
+	$visible = ! empty( $block['attrs']['content'] ) ? wp_strip_all_tags( $block['attrs']['content'] ) : '';
+	$label   = $visible
+		? sprintf(
+			/* translators: 1: visible link text, 2: post title */
+			__( '%1$s: %2$s', 'afa-poveda' ),
+			$visible,
+			wp_strip_all_tags( $title )
+		)
+		: sprintf(
+			/* translators: %s: post title */
+			__( 'Leer más: %s', 'afa-poveda' ),
+			wp_strip_all_tags( $title )
+		);
 
 	return preg_replace(
 		'/<a\b/i',
@@ -402,3 +411,25 @@ function afa_poveda_read_more_accessible_name( $block_content, $block ) {
 	);
 }
 add_filter( 'render_block', 'afa_poveda_read_more_accessible_name', 10, 2 );
+
+/**
+ * Listado de Servicios sin el plugin (spec 012).
+ *
+ * Si el tipo `afa_servicio` no existe (plugin desactivado), WP_Query cae al tipo `post` y el
+ * Query Loop pintaría noticias como si fueran servicios. Se sustituye por un aviso editorial.
+ *
+ * @param string|null $pre_render Contenido ya calculado.
+ * @param array       $block      Bloque parseado.
+ * @return string|null
+ */
+function afa_poveda_servicios_query_sin_plugin( $pre_render, $block ) {
+	if ( null !== $pre_render || empty( $block['blockName'] ) || 'core/query' !== $block['blockName'] ) {
+		return $pre_render;
+	}
+	$post_type = isset( $block['attrs']['query']['postType'] ) ? $block['attrs']['query']['postType'] : '';
+	if ( 'afa_servicio' !== $post_type || post_type_exists( 'afa_servicio' ) ) {
+		return $pre_render;
+	}
+	return '<p class="afa-servicios-vacio">' . esc_html__( 'Aún no hay servicios publicados.', 'afa-poveda' ) . '</p>';
+}
+add_filter( 'pre_render_block', 'afa_poveda_servicios_query_sin_plugin', 10, 2 );

@@ -1534,6 +1534,7 @@ body.single-post .afa-header .wp-block-navigation-item a[href*="/noticias"] {
  */
 body.page-template-page-servicios .afa-header .wp-block-navigation-item a[href*="/servicios"],
 body.page-template-page-servicio-detalle .afa-header .wp-block-navigation-item a[href*="/servicios"],
+body.single-afa_servicio .afa-header .wp-block-navigation-item a[href*="/servicios"],
 body.page .afa-header .wp-block-navigation-item.current-page-ancestor a[href*="/servicios"],
 body.page .afa-header .wp-block-navigation-item.current-menu-item a[href*="/servicios"] {
 	color: var(--wp--preset--color--primary);
@@ -1587,6 +1588,231 @@ body.page .afa-header .wp-block-navigation-item.current-menu-item a[href*="/serv
 	.afa-servicio-download {
 		flex-wrap: wrap !important;
 		gap: var(--wp--preset--spacing--30);
+	}
+}
+
+/*
+ * Servicios CPT (012) — estilo de los bloques del plugin (clases afa-core-servicio-*,
+ * contrato §7) y del hero/listado sobre el tipo afa_servicio. El plugin casi no aporta CSS;
+ * theme.json no expresa tarjetas internas, <details>, <dl> ni estados vacíos.
+ */
+.afa-servicio-hero--cpt {
+	background-color: var(--wp--preset--color--primary); /* fondo si el servicio no tiene imagen destacada */
+}
+.afa-servicio-hero__subtitle:empty {
+	display: none; /* subtítulo vinculado a meta: sin valor no ocupa espacio */
+}
+.afa-servicio-detalle--cpt .wp-block-post-title {
+	margin: 0;
+}
+
+/* Servicio sin precios ni documentos: la columna lateral vacía no reserva el 35 %. */
+.afa-servicio-layout__cols:not(:has(.afa-servicio-aside > *)) .afa-servicio-aside {
+	display: none;
+}
+.afa-servicio-layout__cols:not(:has(.afa-servicio-aside > *)) .afa-servicio-layout__main {
+	flex-basis: 100% !important;
+}
+
+.afa-core-servicio-etiqueta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--wp--preset--spacing--20);
+}
+.afa-core-servicio-etiqueta > span {
+	display: inline-block;
+	padding: var(--wp--preset--spacing--20) var(--wp--preset--spacing--40);
+	border-radius: 9999px;
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	background-color: var(--wp--preset--color--soft-green);
+	color: var(--wp--preset--color--green);
+}
+
+.afa-core-servicio-inscripcion {
+	background-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--base);
+	border-radius: 12px;
+	padding: var(--wp--preset--spacing--50);
+}
+.afa-core-servicio-inscripcion__titulo {
+	margin: 0 0 var(--wp--preset--spacing--40);
+	color: inherit;
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--x-large);
+}
+.afa-core-servicio-inscripcion__precios {
+	display: grid;
+	gap: var(--wp--preset--spacing--30);
+	margin: 0 0 var(--wp--preset--spacing--40);
+}
+.afa-core-servicio-inscripcion__precio-etiqueta {
+	font-size: var(--wp--preset--font-size--small);
+}
+.afa-core-servicio-inscripcion__precio-valor {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--large);
+	font-weight: 700;
+}
+.afa-core-servicio-inscripcion__descuento {
+	display: inline-block;
+	margin-inline-start: var(--wp--preset--spacing--20);
+	padding: 0 var(--wp--preset--spacing--30);
+	border-radius: 9999px;
+	background-color: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--primary);
+	font-size: var(--wp--preset--font-size--small);
+}
+.afa-core-servicio-inscripcion__horario,
+.afa-core-servicio-inscripcion__nota {
+	margin: 0 0 var(--wp--preset--spacing--30);
+}
+.afa-core-servicio-inscripcion__accion {
+	margin: var(--wp--preset--spacing--40) 0 0;
+}
+.afa-core-servicio-inscripcion__boton.wp-element-button {
+	box-sizing: border-box;
+	display: block;
+	width: 100%;
+	text-align: center;
+	background-color: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--primary);
+}
+.afa-core-servicio-inscripcion__boton.wp-element-button:hover,
+.afa-core-servicio-inscripcion__boton.wp-element-button:focus-visible {
+	background-color: var(--wp--preset--color--surface-container);
+}
+.afa-core-servicio-inscripcion a:focus-visible {
+	outline: 2px solid var(--wp--preset--color--base);
+	outline-offset: 2px;
+}
+
+.afa-core-servicio-faq__titulo,
+.afa-core-servicio-documentos__titulo,
+.afa-core-servicio-indicadores__titulo {
+	margin: 0 0 var(--wp--preset--spacing--40);
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--x-large);
+	color: var(--wp--preset--color--contrast);
+}
+.afa-core-servicio-faq__item {
+	border-bottom: 1px solid var(--wp--preset--color--outline);
+}
+.afa-core-servicio-faq__pregunta {
+	cursor: pointer;
+	list-style: none;
+	padding: var(--wp--preset--spacing--30) 0;
+	font-weight: 600;
+	color: var(--wp--preset--color--contrast);
+}
+.afa-core-servicio-faq__pregunta::-webkit-details-marker {
+	display: none;
+}
+.afa-core-servicio-faq__pregunta::after {
+	content: "▾";
+	float: right;
+	color: var(--wp--preset--color--primary);
+}
+.afa-core-servicio-faq__item[open] > .afa-core-servicio-faq__pregunta::after {
+	content: "▴";
+}
+.afa-core-servicio-faq__pregunta:focus-visible {
+	outline: 2px solid var(--wp--preset--color--primary);
+	outline-offset: 2px;
+}
+.afa-core-servicio-faq__respuesta {
+	padding-bottom: var(--wp--preset--spacing--30);
+	color: var(--wp--preset--color--contrast-muted);
+}
+
+.afa-core-servicio-documentos {
+	background-color: var(--wp--preset--color--surface-container);
+	border-radius: 12px;
+	padding: var(--wp--preset--spacing--50);
+}
+.afa-core-servicio-documentos__lista {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: var(--wp--preset--spacing--30);
+}
+.afa-core-servicio-documentos__item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: var(--wp--preset--spacing--20) var(--wp--preset--spacing--30);
+}
+.afa-core-servicio-documentos__nombre {
+	font-weight: 600;
+	color: var(--wp--preset--color--contrast);
+}
+.afa-core-servicio-documentos__meta {
+	font-size: var(--wp--preset--font-size--small);
+	color: var(--wp--preset--color--contrast-muted);
+}
+.afa-core-servicio-documentos__enlace {
+	margin-inline-start: auto;
+	color: var(--wp--preset--color--primary);
+	font-weight: 600;
+}
+
+.afa-core-servicio-indicadores__lista {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+	gap: var(--wp--preset--spacing--30);
+	margin: 0;
+}
+.afa-core-servicio-indicadores__item {
+	background-color: var(--wp--preset--color--surface-container);
+	border-radius: 12px;
+	padding: var(--wp--preset--spacing--40);
+	text-align: center;
+}
+.afa-core-servicio-indicadores__etiqueta {
+	font-size: var(--wp--preset--font-size--small);
+	color: var(--wp--preset--color--contrast-muted);
+}
+.afa-core-servicio-indicadores__valor {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--large);
+	font-weight: 700;
+	color: var(--wp--preset--color--primary);
+}
+
+/* Listado dinámico: la ficha reutiliza .afa-servicio-card (005); píldora de un solo color. */
+.afa-servicios-query .wp-block-post-template {
+	margin: 0;
+	padding: 0;
+}
+/* La variación afa-card añade relleno de 32 px; la ficha lleva imagen a sangre y relleno propio en el cuerpo. */
+.afa-servicios-query .afa-servicio-card {
+	padding: 0;
+}
+.afa-servicios-query .afa-servicio-card > * {
+	max-width: 100%;
+}
+.afa-servicio-card__tag--cpt .afa-core-servicio-etiqueta__categoria {
+	background-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--base);
+}
+.afa-servicio-card__media .wp-block-post-featured-image {
+	position: absolute;
+	inset: 0;
+	margin: 0;
+}
+.afa-servicio-card__media .wp-block-post-featured-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.afa-servicio-card__meta:has(.afa-servicio-card__freq:empty) {
+	display: none; /* sin frecuencia no se imprime ni el icono */
+}
+
+@media (max-width: 781px) {
+	.afa-core-servicio-documentos__enlace {
+		margin-inline-start: 0;
 	}
 }
 

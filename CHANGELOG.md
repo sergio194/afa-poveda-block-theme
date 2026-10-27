@@ -9,6 +9,7 @@ y el proyecto sigue [Versionado Semántico](https://semver.org/lang/es/).
 
 ### Añadido
 
+- Plantillas CPT de Servicios (012): `single-afa_servicio` (hero, 65/35, bloques del plugin), pattern `servicios-grid-dinamico` (Query Loop) y estilos de las clases `afa-core-servicio-*`
 - Accesibilidad AA (007): enlace «Saltar al contenido» en cabecera → `#contenido` en todas las plantillas públicas
 - Guía editorial breve de accesibilidad en `specs/007-accesibilidad-aa/contracts/guia-editorial-a11y.md`
 - Portada (`front-page.html`) según Figma HOME: hero, accesos rápidos, actualidad y avisos, últimas noticias y CTA de comunidad
@@ -35,6 +36,7 @@ y el proyecto sigue [Versionado Semántico](https://semver.org/lang/es/).
 
 ### Corregido
 
+- «Ver más» del Query Loop: el nombre accesible incluye el texto visible (WCAG 2.5.3)
 - Menú: Inicio ya no queda activo fuera de la portada; AFA/Servicios se marcan activos como ancestros en páginas hijas
 - Submenús de la cabecera: ya no empujan el layout ni quedan bajo el contenido (`overflow` / z-index)
 - Patterns Sobre nosotros: imágenes sin `width`/`height` HTML (validación WP 7.1) y `url` en atributos del bloque
