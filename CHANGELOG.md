@@ -9,6 +9,7 @@ y el proyecto sigue [Versionado Semántico](https://semver.org/lang/es/).
 
 ### Añadido
 
+- Configurador de semana (013): plantilla `page-configurador`, pattern `configurador-aviso` y estilos de `afa-core-configurador*` (tabla de franjas, resumen, errores y bloqueos)
 - Calendario escolar (008): plantilla `page-calendario`, patterns `calendario-mes`, `calendario-lateral` y `evento-contenido`; estilos de los bloques de eventos del plugin y de la ficha nativa de The Events Calendar
 - Contacto (010): plantilla `page-contacto`, patterns `contacto-formulario` (bloque del plugin o texto provisional) y `contacto-info`; plantillas `Contacto` y `Formulario` seleccionables en el editor
 - Estilos de formularios (011): CSS de `afa-core-form*` (tracker, campos, errores, éxito, newsletter) y `.mailpoet_form`; plantilla `page-formulario`; pattern `newsletter-formulario`

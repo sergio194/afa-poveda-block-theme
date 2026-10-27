@@ -3058,6 +3058,235 @@ textarea.afa-core-form__control {
 }
 
 /*
+ * Configurador de semana (013) — vestido del formulario del plugin (clases afa-core-configurador*,
+ * contrato §15): tabla de franjas con selectores, resumen oscuro y estados de error/bloqueo.
+ * theme.json no expresa tablas ni estados. Desviación de Figma: el plugin usa selectores por
+ * celda (accesibles) en lugar de arrastrar y soltar.
+ */
+.afa-configurador__intro h1,
+.afa-configurador .wp-block-post-title {
+	margin: 0;
+}
+.afa-core-configurador {
+	display: grid;
+	gap: var(--wp--preset--spacing--50);
+}
+.afa-core-configurador__filtro {
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--wp--preset--spacing--30);
+}
+.afa-core-configurador__filtro label {
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+}
+.afa-core-configurador select {
+	max-width: 100%;
+	min-height: 2.75rem; /* objetivo táctil ≥ 44 px */
+	padding: var(--wp--preset--spacing--20) var(--wp--preset--spacing--30);
+	border: 1px solid var(--wp--preset--color--contrast-muted); /* borde de control ≥ 3:1 */
+	border-radius: 8px;
+	background-color: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--contrast);
+	font: inherit;
+}
+.afa-core-configurador select:focus-visible,
+.afa-core-configurador button:focus-visible,
+.afa-core-configurador a:focus-visible {
+	outline: 2px solid var(--wp--preset--color--primary);
+	outline-offset: 2px;
+}
+.afa-core-configurador__semana {
+	width: 100%;
+	table-layout: fixed;
+	border-collapse: separate;
+	border-spacing: 0;
+	background-color: var(--wp--preset--color--base);
+	border: 1px solid var(--wp--preset--color--outline);
+	border-radius: 12px;
+	overflow: hidden;
+}
+.afa-core-configurador__semana thead th,
+.afa-core-configurador__semana thead td {
+	padding: var(--wp--preset--spacing--40) var(--wp--preset--spacing--30);
+	background-color: var(--wp--preset--color--surface-container);
+	border-bottom: 1px solid var(--wp--preset--color--outline);
+	font-weight: 700;
+	text-align: center;
+}
+.afa-core-configurador__semana tbody th {
+	width: 7rem;
+	padding: var(--wp--preset--spacing--30);
+	background-color: var(--wp--preset--color--surface-container);
+	border-bottom: 1px solid var(--wp--preset--color--outline);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	text-align: center;
+}
+.afa-core-configurador__semana tbody th span {
+	display: block;
+	font-weight: 400;
+	color: var(--wp--preset--color--contrast-muted);
+}
+.afa-core-configurador__celda {
+	height: 5rem;
+	padding: var(--wp--preset--spacing--20);
+	border-bottom: 1px solid var(--wp--preset--color--outline);
+	border-left: 1px solid var(--wp--preset--color--outline);
+	vertical-align: middle;
+}
+.afa-core-configurador__celda select {
+	width: 100%;
+	font-size: var(--wp--preset--font-size--small);
+}
+.afa-core-configurador__celda.is-error {
+	background-color: var(--wp--preset--color--base);
+	outline: 2px solid #b3261e; /* error: borde + texto, no solo color (sin preset) */
+	outline-offset: -2px;
+}
+.afa-core-configurador__celda.is-blocked {
+	background-color: var(--wp--preset--color--surface-high);
+	background-image: repeating-linear-gradient(135deg, transparent 0 6px, var(--wp--preset--color--outline) 6px 7px);
+}
+.afa-core-configurador__celda select:disabled {
+	background-color: var(--wp--preset--color--surface-high);
+	color: var(--wp--preset--color--contrast-muted);
+	cursor: not-allowed;
+}
+.afa-core-configurador__error {
+	margin: var(--wp--preset--spacing--20) 0 0;
+	font-size: var(--wp--preset--font-size--x-small);
+	font-weight: 600;
+	color: #b3261e; /* ≥ 4,5:1 sobre base */
+}
+.afa-core-configurador__error::before {
+	content: "⚠ ";
+}
+.afa-core-configurador__nota {
+	margin: 0;
+	padding: var(--wp--preset--spacing--40);
+	background-color: var(--wp--preset--color--surface-container);
+	border-radius: 12px;
+	color: var(--wp--preset--color--contrast-muted);
+}
+.afa-core-configurador__acciones {
+	margin: 0;
+}
+.afa-core-configurador__calcular {
+	min-height: 2.75rem;
+	padding: var(--wp--preset--spacing--30) var(--wp--preset--spacing--60);
+	border: 1px solid var(--wp--preset--color--primary);
+	border-radius: 9999px;
+	background-color: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--primary);
+	font: inherit;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+/* Resumen de selección: panel oscuro con cuota y acciones. */
+.afa-core-configurador__resumen {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: var(--wp--preset--spacing--30) var(--wp--preset--spacing--60);
+	padding: var(--wp--preset--spacing--60);
+	border-radius: 16px;
+	background-color: var(--wp--preset--color--contrast);
+	color: var(--wp--preset--color--base);
+}
+.afa-core-configurador__resumen-titulo {
+	grid-column: 1 / -1;
+	margin: 0;
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--xx-large);
+	color: var(--wp--preset--color--base);
+}
+.afa-core-configurador__lista {
+	grid-column: 1 / -1;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: grid;
+	gap: var(--wp--preset--spacing--20);
+}
+.afa-core-configurador__lista:empty {
+	display: none;
+}
+.afa-core-configurador__lista li span {
+	margin-left: var(--wp--preset--spacing--30);
+	font-weight: 700;
+}
+.afa-core-configurador__total {
+	margin: 0;
+	display: grid;
+}
+.afa-core-configurador__total span {
+	font-size: var(--wp--preset--font-size--x-small);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+.afa-core-configurador__importe {
+	font-size: var(--wp--preset--font-size--huge);
+	line-height: 1.1;
+}
+.afa-core-configurador__aviso {
+	grid-column: 1 / -1;
+	margin: 0;
+	font-size: var(--wp--preset--font-size--small);
+}
+.afa-core-configurador__botones {
+	grid-column: 2;
+	grid-row: 3 / span 2;
+	margin: 0;
+	display: grid;
+	gap: var(--wp--preset--spacing--30);
+	align-content: center;
+}
+.afa-core-configurador__continuar.wp-element-button {
+	display: block;
+	text-align: center;
+	background-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--base);
+}
+.afa-core-configurador__continuar.wp-element-button:focus-visible,
+.afa-core-configurador__imprimir:focus-visible {
+	outline-color: var(--wp--preset--color--base);
+}
+.afa-core-configurador__imprimir {
+	min-height: 2.75rem;
+	padding: var(--wp--preset--spacing--30) var(--wp--preset--spacing--50);
+	border: 1px solid var(--wp--preset--color--base);
+	border-radius: 9999px;
+	background-color: transparent;
+	color: var(--wp--preset--color--base);
+	font: inherit;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+@media (max-width: 781px) {
+	/* Tabla con scroll propio en móvil: la página no desborda y las celdas conservan su ancho útil. */
+	.afa-core-configurador__semana {
+		display: block;
+		overflow-x: auto;
+	}
+	.afa-core-configurador__semana table,
+	.afa-core-configurador__semana thead,
+	.afa-core-configurador__semana tbody {
+		min-width: 40rem;
+	}
+	.afa-core-configurador__resumen {
+		grid-template-columns: 1fr;
+	}
+	.afa-core-configurador__botones {
+		grid-column: 1;
+		grid-row: auto;
+	}
+}
+
+/*
  * Hazte Socio (006) — hero columns, grid de fichas, bloque cuota|form,
  * cards de ayuda e inputs genéricos del plugin de formularios.
  * theme.json no expresa: aspect-ratio de ilustración, stack de columns,
