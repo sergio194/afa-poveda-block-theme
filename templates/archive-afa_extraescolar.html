@@ -1,0 +1,57 @@
+<!-- wp:template-part {"slug":"header","area":"header","tagName":"div"} /-->
+
+<!-- wp:group {"tagName":"main","anchor":"contenido","className":"afa-extra afa-extra-archivo","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|80"},"blockGap":"var:preset|spacing|60"}},"layout":{"type":"constrained","wideSize":"1120px"}} -->
+<main id="contenido" class="wp-block-group afa-extra afa-extra-archivo" style="padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:group {"align":"wide","className":"afa-extra-archivo__intro","style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide afa-extra-archivo__intro"><!-- wp:heading {"level":1,"fontSize":"huge","fontFamily":"heading"} -->
+<h1 class="wp-block-heading has-heading-font-family has-huge-font-size">Actividades Extraescolares</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"textColor":"contrast-muted","fontSize":"large"} -->
+<p class="has-contrast-muted-color has-text-color has-large-font-size">Descubre la oferta formativa y de ocio del curso. Un espacio para aprender, jugar y crecer juntos después de clase.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"align":"wide","className":"afa-extra-archivo__filtro","layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide afa-extra-archivo__filtro"><!-- wp:afa-padre-poveda/extraescolares-filtro /--></div>
+<!-- /wp:group -->
+
+<!-- wp:query {"queryId":9,"query":{"perPage":12,"pages":0,"offset":0,"postType":"afa_extraescolar","order":"asc","orderBy":"title","inherit":true},"align":"wide","className":"afa-extra-query"} -->
+<div class="wp-block-query alignwide afa-extra-query"><!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
+<!-- wp:group {"className":"afa-extra-card","style":{"border":{"radius":"12px"},"spacing":{"blockGap":"0"}},"backgroundColor":"base","layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch"}} -->
+<div class="wp-block-group afa-extra-card has-base-background-color has-background" style="border-radius:12px"><!-- wp:group {"className":"afa-extra-card__media","layout":{"type":"default"}} -->
+<div class="wp-block-group afa-extra-card__media"><!-- wp:post-featured-image {"isLink":true} /-->
+
+<!-- wp:afa-padre-poveda/extraescolar-etiqueta {"className":"afa-extra-card__tag"} /--></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"afa-extra-card__body","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"var:preset|spacing|30"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch"}} -->
+<div class="wp-block-group afa-extra-card__body" style="padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:post-title {"level":2,"isLink":true,"fontSize":"x-large","fontFamily":"heading"} /-->
+
+<!-- wp:post-excerpt {"excerptLength":18,"textColor":"contrast-muted"} /-->
+
+<!-- wp:afa-padre-poveda/extraescolar-datos {"elementos":["cuando","cursos"]} /-->
+
+<!-- wp:afa-padre-poveda/extraescolar-precios {"variante":"tarjeta"} /--></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+<!-- /wp:post-template -->
+
+<!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"center"}} -->
+<!-- wp:query-pagination-previous /-->
+
+<!-- wp:query-pagination-numbers /-->
+
+<!-- wp:query-pagination-next /-->
+<!-- /wp:query-pagination -->
+
+<!-- wp:query-no-results -->
+<!-- wp:paragraph {"textColor":"contrast-muted","fontSize":"large"} -->
+<p class="has-contrast-muted-color has-text-color has-large-font-size">No hay actividades que coincidan con tu búsqueda. Prueba a quitar algún filtro.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:query-no-results --></div>
+<!-- /wp:query -->
+
+<!-- wp:pattern {"slug":"afa-poveda/extraescolares-dudas"} /--></main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","area":"footer","tagName":"div"} /-->

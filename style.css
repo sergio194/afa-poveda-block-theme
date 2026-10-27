@@ -1297,7 +1297,7 @@ body.category .afa-news-toolbar:not(:has(.afa-news-pill.is-active)) .afa-news-ca
  * pone current-menu-item en categoría / búsqueda / detalle.
  */
 body.blog .afa-header .wp-block-navigation-item a[href*="/noticias"],
-body.archive .afa-header .wp-block-navigation-item a[href*="/noticias"],
+body.archive:not(.post-type-archive) .afa-header .wp-block-navigation-item a[href*="/noticias"],
 body.search .afa-header .wp-block-navigation-item a[href*="/noticias"],
 body.single-post .afa-header .wp-block-navigation-item a[href*="/noticias"] {
 	color: var(--wp--preset--color--primary);
@@ -1817,6 +1817,369 @@ body.page .afa-header .wp-block-navigation-item.current-menu-item a[href*="/serv
 }
 
 /*
+ * Extraescolares (009) — archivo, ficha y bloques del plugin (clases afa-core-extraescolar*,
+ * contrato §8). theme.json no expresa filtros de formulario, <dl> de precios ni rejillas de
+ * tarjetas con imagen a sangre.
+ */
+.afa-extra {
+	min-width: 0;
+}
+.afa-extra-archivo__intro h1,
+.afa-extra-ficha .wp-block-post-title {
+	margin: 0;
+}
+
+/* Filtro (bloque del plugin): banda con campos en fila, apilados en móvil. */
+.afa-core-extraescolares-filtro {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: var(--wp--preset--spacing--40);
+	padding: var(--wp--preset--spacing--40);
+	background-color: var(--wp--preset--color--surface-container);
+	border-radius: 12px;
+}
+.afa-core-extraescolares-filtro__campo {
+	flex: 1 1 14rem;
+	margin: 0;
+	display: grid;
+	gap: var(--wp--preset--spacing--20);
+}
+.afa-core-extraescolares-filtro label {
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	color: var(--wp--preset--color--contrast);
+}
+.afa-core-extraescolares-filtro input,
+.afa-core-extraescolares-filtro select {
+	width: 100%;
+	box-sizing: border-box;
+	padding: var(--wp--preset--spacing--30);
+	border: 1px solid var(--wp--preset--color--contrast-muted); /* borde de control ≥ 3:1 */
+	border-radius: 8px;
+	background-color: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--contrast);
+	font: inherit;
+}
+.afa-core-extraescolares-filtro input:focus-visible,
+.afa-core-extraescolares-filtro select:focus-visible,
+.afa-core-extraescolares-filtro__limpiar:focus-visible {
+	outline: 2px solid var(--wp--preset--color--primary);
+	outline-offset: 2px;
+}
+.afa-core-extraescolares-filtro__acciones {
+	margin: 0;
+	display: flex;
+	align-items: center;
+	gap: var(--wp--preset--spacing--40);
+}
+.afa-core-extraescolares-filtro__limpiar {
+	color: var(--wp--preset--color--primary);
+	font-weight: 600;
+}
+
+/* Ficha de actividad en el listado. */
+.afa-extra-query .wp-block-post-template {
+	margin: 0;
+	padding: 0;
+}
+.afa-extra-card {
+	height: 100%;
+	overflow: hidden;
+	border: 1px solid var(--wp--preset--color--outline);
+}
+.afa-extra-card__media {
+	position: relative;
+	width: 100%;
+	min-height: 11rem; /* marcador visible aunque la actividad no tenga imagen */
+	aspect-ratio: 16 / 10;
+	background-image: linear-gradient(135deg, var(--wp--preset--color--primary-soft) 0%, var(--wp--preset--color--surface-high) 100%);
+}
+.afa-extra-card__media .wp-block-post-featured-image {
+	position: absolute;
+	inset: 0;
+	margin: 0;
+}
+.afa-extra-card__media .wp-block-post-featured-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.afa-extra-card__tag {
+	position: absolute;
+	top: var(--wp--preset--spacing--30);
+	left: var(--wp--preset--spacing--30);
+	z-index: 1;
+}
+.afa-extra-card__body {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+.afa-extra-card__body .wp-block-post-title {
+	margin: 0;
+}
+.afa-extra-card__body .wp-block-post-title a {
+	text-decoration: none;
+	color: inherit;
+}
+.afa-extra-card__body .wp-block-post-title a:hover {
+	text-decoration: underline;
+}
+.afa-extra-card__body .afa-core-extraescolar-precios {
+	margin-top: auto;
+}
+
+.afa-core-extraescolar-etiqueta__categoria {
+	display: inline-block;
+	padding: var(--wp--preset--spacing--20) var(--wp--preset--spacing--30);
+	border-radius: 9999px;
+	background-color: var(--wp--preset--color--primary-soft);
+	color: var(--wp--preset--color--primary);
+	font-size: var(--wp--preset--font-size--x-small);
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.afa-core-extraescolar-datos {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: var(--wp--preset--spacing--20);
+	font-size: var(--wp--preset--font-size--small);
+	color: var(--wp--preset--color--contrast-muted);
+}
+.afa-extra-datos--chips {
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: var(--wp--preset--spacing--30);
+}
+.afa-extra-datos--chips .afa-core-extraescolar-datos__item {
+	padding: var(--wp--preset--spacing--20) var(--wp--preset--spacing--40);
+	border-radius: 8px;
+	background-color: var(--wp--preset--color--surface-container);
+	color: var(--wp--preset--color--primary);
+	font-weight: 600;
+}
+
+/* Precios: variante tarjeta (listado) y completa (ficha). */
+.afa-core-extraescolar-precios__precios {
+	margin: 0;
+	display: grid;
+	gap: var(--wp--preset--spacing--20);
+}
+.afa-core-extraescolar-precios__precio-etiqueta {
+	font-size: var(--wp--preset--font-size--x-small);
+	font-weight: 600;
+	text-transform: uppercase;
+	color: var(--wp--preset--color--contrast-muted);
+}
+.afa-core-extraescolar-precios__precio-valor {
+	margin: 0;
+	font-weight: 700;
+}
+.afa-core-extraescolar-precios--tarjeta .afa-core-extraescolar-precios__precios {
+	grid-template-columns: 1fr 1fr;
+}
+.afa-core-extraescolar-precios--tarjeta .afa-core-extraescolar-precios__precio--socio .afa-core-extraescolar-precios__precio-valor {
+	color: var(--wp--preset--color--primary);
+	font-size: var(--wp--preset--font-size--large);
+}
+.afa-core-extraescolar-precios__accion {
+	margin: var(--wp--preset--spacing--40) 0 0;
+}
+.afa-core-extraescolar-precios__boton.wp-element-button {
+	box-sizing: border-box;
+	display: block;
+	width: 100%;
+	text-align: center;
+	background-color: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--primary);
+	border: 1px solid var(--wp--preset--color--primary);
+}
+.afa-core-extraescolar-precios__boton.wp-element-button:hover,
+.afa-core-extraescolar-precios__boton.wp-element-button:focus-visible {
+	background-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--base);
+}
+.afa-core-extraescolar-precios__cerrada {
+	margin: var(--wp--preset--spacing--40) 0 0;
+	font-weight: 600;
+	color: var(--wp--preset--color--contrast-muted);
+}
+.afa-core-extraescolar-precios--completa {
+	padding: var(--wp--preset--spacing--50);
+	background-color: var(--wp--preset--color--base);
+	border: 1px solid var(--wp--preset--color--outline);
+	border-radius: 12px;
+	box-shadow: 0 1px 3px rgba(24, 28, 32, 0.08);
+}
+.afa-core-extraescolar-precios--completa .afa-core-extraescolar-precios__titulo {
+	margin: 0 0 var(--wp--preset--spacing--40);
+	text-align: center;
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--large);
+}
+.afa-core-extraescolar-precios--completa .afa-core-extraescolar-precios__precio {
+	padding: var(--wp--preset--spacing--30) var(--wp--preset--spacing--40);
+	border-radius: 8px;
+	background-color: var(--wp--preset--color--surface-container);
+}
+.afa-core-extraescolar-precios--completa .afa-core-extraescolar-precios__precio--socio {
+	border: 1px solid var(--wp--preset--color--primary);
+	background-color: var(--wp--preset--color--primary-soft);
+}
+.afa-core-extraescolar-precios__nota,
+.afa-core-extraescolar-precios__ahorro {
+	margin: var(--wp--preset--spacing--30) 0 0;
+	font-size: var(--wp--preset--font-size--small);
+	color: var(--wp--preset--color--contrast-muted);
+	text-align: center;
+}
+
+/* Tarjetas de Horarios y Ubicación. */
+.afa-core-extraescolar-horarios,
+.afa-core-extraescolar-ubicacion {
+	height: 100%;
+	box-sizing: border-box;
+	padding: var(--wp--preset--spacing--50);
+	background-color: var(--wp--preset--color--surface-container);
+	border: 1px solid var(--wp--preset--color--outline);
+	border-radius: 12px;
+}
+.afa-core-extraescolar-horarios__titulo,
+.afa-core-extraescolar-ubicacion__titulo,
+.afa-core-extraescolar-requisitos__titulo {
+	margin: 0 0 var(--wp--preset--spacing--40);
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--x-large);
+}
+.afa-core-extraescolar-horarios__lista {
+	margin: 0;
+	display: grid;
+	gap: var(--wp--preset--spacing--30);
+}
+.afa-core-extraescolar-horarios__grupo {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: var(--wp--preset--spacing--20);
+	padding-bottom: var(--wp--preset--spacing--30);
+	border-bottom: 1px solid var(--wp--preset--color--outline);
+}
+.afa-core-extraescolar-horarios__horario {
+	margin: 0;
+	color: var(--wp--preset--color--primary);
+	font-weight: 600;
+}
+.afa-core-extraescolar-ubicacion__lugar {
+	margin: 0 0 var(--wp--preset--spacing--20);
+}
+.afa-core-extraescolar-ubicacion__nota {
+	margin: 0;
+	font-style: italic;
+	font-size: var(--wp--preset--font-size--small);
+	color: var(--wp--preset--color--contrast-muted);
+}
+
+/* Requisitos: tarjetas en rejilla con check decorativo. */
+.afa-core-extraescolar-requisitos__lista {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+	gap: var(--wp--preset--spacing--40);
+}
+.afa-core-extraescolar-requisitos__item {
+	padding: var(--wp--preset--spacing--40);
+	background-color: var(--wp--preset--color--base);
+	border-radius: 12px;
+	text-align: center;
+	box-shadow: 0 1px 3px rgba(24, 28, 32, 0.08);
+}
+.afa-core-extraescolar-requisitos__item::before {
+	content: "✓";
+	display: block;
+	margin-bottom: var(--wp--preset--spacing--20);
+	color: var(--wp--preset--color--green);
+	font-weight: 700;
+}
+
+/* Hero de la ficha. */
+.afa-extra-hero {
+	overflow: hidden;
+	border: 1px solid var(--wp--preset--color--outline);
+	align-items: stretch;
+}
+.afa-extra-hero__media {
+	min-height: 18rem;
+	background-image: linear-gradient(135deg, var(--wp--preset--color--primary-soft) 0%, var(--wp--preset--color--surface-high) 100%);
+}
+.afa-extra-hero__media .wp-block-post-featured-image {
+	height: 100%;
+	margin: 0;
+}
+.afa-extra-hero__media .wp-block-post-featured-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.afa-extra-ficha__volver a {
+	color: var(--wp--preset--color--primary);
+	text-decoration: none;
+}
+.afa-extra-ficha__volver a:hover {
+	text-decoration: underline;
+}
+.afa-extra-info {
+	align-items: stretch;
+}
+.afa-extra-ficha__sobre:not(:has(.wp-block-post-content > *)) {
+	display: none; /* actividad sin descripción: sin título huérfano */
+}
+.afa-extra-socio a {
+	color: var(--wp--preset--color--green);
+}
+
+/* Banner de dudas: botón de contorno sobre fondo primary. */
+.afa-extra-dudas__btn-outline .wp-block-button__link {
+	border: 1px solid var(--wp--preset--color--base);
+	background-color: transparent;
+}
+.afa-extra-dudas__btn-outline .wp-block-button__link:hover {
+	background-color: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--primary);
+}
+
+.afa-listado-vacio {
+	color: var(--wp--preset--color--contrast-muted);
+}
+
+@media (max-width: 781px) {
+	.afa-extra-card__body .afa-core-extraescolar-precios--tarjeta .afa-core-extraescolar-precios__precios {
+		grid-template-columns: 1fr 1fr;
+	}
+	.afa-extra-hero {
+		flex-direction: column-reverse !important; /* imagen sobre el texto en móvil */
+	}
+	.afa-extra-hero__media {
+		min-height: 12rem;
+	}
+	.afa-extra-layout,
+	.afa-extra-info {
+		flex-direction: column !important;
+	}
+	.afa-extra-layout > .wp-block-column {
+		flex-basis: 100% !important;
+	}
+	.afa-core-extraescolares-filtro__acciones {
+		width: 100%;
+	}
+}
+
+/*
  * Hazte Socio (006) — hero columns, grid de fichas, bloque cuota|form,
  * cards de ayuda e inputs genéricos del plugin de formularios.
  * theme.json no expresa: aspect-ratio de ilustración, stack de columns,
@@ -2005,4 +2368,13 @@ body.page-template-page-hazte-socio .afa-header .wp-block-button__link[href*="/h
 	.afa-hazte-hero .wp-block-button__link {
 		width: 100%;
 	}
+}
+
+/* Menú «Extraescolares» activo en archivo y ficha del CPT (el ítem es un enlace a la página/archivo). */
+body.post-type-archive-afa_extraescolar .afa-header .wp-block-navigation-item a[href*="extraescolares"],
+body.single-afa_extraescolar .afa-header .wp-block-navigation-item a[href*="extraescolares"] {
+	color: var(--wp--preset--color--primary);
+	font-weight: 600;
+	box-shadow: inset 0 -2px 0 currentColor;
+	padding-bottom: 6px;
 }
