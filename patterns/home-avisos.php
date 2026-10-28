@@ -4,7 +4,7 @@
  * Slug: afa-poveda/home-avisos
  * Categories: posts, afa-poveda
  * Keywords: avisos, destacados, actualidad
- * Description: Sticky en dos columnas (Figma): destacado con imagen a la izquierda; hasta dos avisos de texto a la derecha.
+ * Description: Sticky en dos columnas (Figma): destacado con imagen a la izquierda; hasta dos avisos de texto a la derecha. El enlace al archivo está en «Últimas noticias».
  *
  * @package afa-poveda
  */
@@ -19,11 +19,7 @@
 <!-- wp:paragraph {"textColor":"contrast-muted"} -->
 <p class="has-contrast-muted-color has-text-color"><?php esc_html_e( 'Mantente al día con lo que sucede en el colegio.', 'afa-poveda' ); ?></p>
 <!-- /wp:paragraph --></div>
-<!-- /wp:group -->
-
-<!-- wp:paragraph {"className":"afa-home-section-head__link","style":{"typography":{"fontWeight":"700","letterSpacing":"0.05em"}},"textColor":"primary","fontSize":"small"} -->
-<p class="afa-home-section-head__link has-primary-color has-text-color has-small-font-size" style="font-weight:700;letter-spacing:0.05em"><a href="/noticias/"><?php esc_html_e( 'Ver todo', 'afa-poveda' ); ?></a></p>
-<!-- /wp:paragraph --></div>
+<!-- /wp:group --></div>
 <!-- /wp:group -->
 
 <!-- wp:columns {"verticalAlignment":"stretch","className":"afa-home-avisos__cols","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|40"}}}} -->

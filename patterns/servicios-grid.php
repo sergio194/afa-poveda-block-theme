@@ -4,7 +4,7 @@
  * Slug: afa-poveda/servicios-grid
  * Categories: featured, afa-poveda
  * Keywords: servicios, fichas, comedor
- * Description: Seis fichas homogéneas del hub Servicios. Sustituye imágenes y enlaces desde el editor.
+ * Description: Seis fichas de ejemplo del hub Servicios. Sustituye textos y enlaces desde el editor (los «Ver más» sin enlace no se muestran como enlace). Para un listado automático usa «Servicios — Rejilla desde contenido».
  *
  * @package afa-poveda
  */
@@ -22,7 +22,7 @@ $cards = array(
 		'desc'  => __( 'Menús equilibrados, productos de proximidad y atención a alérgenos para el mediodía.', 'afa-poveda' ),
 		'meta'  => __( 'Diario', 'afa-poveda' ),
 		'icon'  => $icon_comedor,
-		'href'  => '/servicios/comedor-escolar/',
+		'href'  => '/servicios/comedor/',
 	),
 	array(
 		'tag'   => __( 'Aprendizaje', 'afa-poveda' ),
@@ -31,7 +31,7 @@ $cards = array(
 		'desc'  => __( 'Espacio de estudio, préstamo de libros y refuerzo escolar por las tardes.', 'afa-poveda' ),
 		'meta'  => __( 'Tarde', 'afa-poveda' ),
 		'icon'  => $icon_extra,
-		'href'  => '/servicios/biblioteca-y-apoyo/',
+		'href'  => '#',
 	),
 	array(
 		'tag'   => __( 'Conciliación', 'afa-poveda' ),
@@ -40,7 +40,7 @@ $cards = array(
 		'desc'  => __( 'Acogida temprana con juegos y acompañamiento antes del inicio de clases.', 'afa-poveda' ),
 		'meta'  => __( 'Mañana', 'afa-poveda' ),
 		'icon'  => $icon_cal,
-		'href'  => '/servicios/primeros-del-cole/',
+		'href'  => '#',
 	),
 	array(
 		'tag'   => __( 'Extraescolares', 'afa-poveda' ),
@@ -49,7 +49,7 @@ $cards = array(
 		'desc'  => __( 'Talleres creativos y musicales para potenciar la expresión artística.', 'afa-poveda' ),
 		'meta'  => __( 'Semanal', 'afa-poveda' ),
 		'icon'  => $icon_extra,
-		'href'  => '/servicios/musica-y-arte/',
+		'href'  => '#',
 	),
 	array(
 		'tag'   => __( 'Deporte', 'afa-poveda' ),
@@ -58,7 +58,7 @@ $cards = array(
 		'desc'  => __( 'Actividad física, valores de equipo y competición saludable en el colegio.', 'afa-poveda' ),
 		'meta'  => __( 'Competición', 'afa-poveda' ),
 		'icon'  => $icon_vol,
-		'href'  => '/servicios/deporte-escolar/',
+		'href'  => '#',
 	),
 	array(
 		'tag'   => __( 'Familia', 'afa-poveda' ),
@@ -67,7 +67,7 @@ $cards = array(
 		'desc'  => __( 'Charlas y encuentros para acompañar la crianza y la vida escolar.', 'afa-poveda' ),
 		'meta'  => __( 'Mensual', 'afa-poveda' ),
 		'icon'  => $icon_vol,
-		'href'  => '/servicios/escuela-de-familias/',
+		'href'  => '#',
 	),
 );
 

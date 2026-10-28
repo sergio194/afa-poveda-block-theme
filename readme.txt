@@ -11,6 +11,7 @@ Tema de bloques a medida para la AFA del CEIP Padre Poveda.
 2. Actívalo y ve a Apariencia > Editor.
 3. Sube el logo en la Cabecera (bloque Logo del sitio).
 4. Crea las páginas del menú: AFA, Extraescolares, Servicios, Contacto, Hazte socio, Newsletter, Aviso legal, Privacidad, Cookies.
+5. Asigna a cada página su plantilla del tema (Hazte Socio, Contacto, Calendario escolar, AFA, Servicios, Configurador): los botones del tema enlazan a la página que tenga esa plantilla, sea cual sea su slug.
 
 == Desarrollo (Spec Kit) ==
 .specify/ y specs/ contienen la constitución y las specs. No afectan al funcionamiento del tema; puedes excluirlas al subir a producción.

@@ -437,3 +437,190 @@ function afa_poveda_query_sin_plugin( $pre_render, $block ) {
 	return '<p class="afa-listado-vacio">' . esc_html( $avisos[ $post_type ] ) . '</p>';
 }
 add_filter( 'pre_render_block', 'afa_poveda_query_sin_plugin', 10, 2 );
+
+/**
+ * Destinos de los enlaces internos fijos del tema (spec 014).
+ *
+ * Patterns y plantillas enlazan a rutas canónicas («/hazte-socio/», «/contacto/»…). Al pintar,
+ * cada ruta se lleva a la página que la junta haya marcado con la plantilla del tema
+ * correspondiente, así el enlace funciona aunque el slug real sea otro (`hazte-socio-2`,
+ * `contacto-afa`) y se cambia desde el editor (Plantilla de la página) sin tocar código.
+ *
+ * Tipos de destino:
+ * - `template`: página publicada con esa plantilla (si hay varias, la que esté en la ruta
+ *   canónica; si no, la más reciente).
+ * - `post_type` + `slugs`: primera entrada publicada de ese tipo con uno de esos slugs.
+ * - `archive`: archivo del tipo de contenido.
+ * - `posts_page`: página de entradas (Ajustes → Lectura).
+ * - `privacy`: página de privacidad (Ajustes → Privacidad), si está publicada.
+ *
+ * @return array<string,array> Ruta canónica => destino.
+ */
+function afa_poveda_internal_link_targets() {
+	$targets = array(
+		'/hazte-socio/'       => array( 'template' => 'page-hazte-socio' ),
+		'/contacto/'          => array( 'template' => 'page-contacto' ),
+		'/calendario/'        => array( 'template' => 'page-calendario' ),
+		'/afa/'               => array( 'template' => 'page-afa' ),
+		'/servicios/'         => array( 'template' => 'page-servicios' ),
+		'/configurador/'      => array( 'template' => 'page-configurador' ),
+		'/servicios/comedor/' => array(
+			'post_type' => 'afa_servicio',
+			'slugs'     => array( 'comedor', 'comedor-escolar' ),
+		),
+		'/extraescolares/'    => array( 'archive' => 'afa_extraescolar' ),
+		'/noticias/'          => array( 'posts_page' => true ),
+		'/privacidad/'        => array( 'privacy' => true ),
+	);
+
+	/**
+	 * Permite añadir o cambiar destinos sin editar el tema.
+	 *
+	 * @param array $targets Ruta canónica => destino.
+	 */
+	return apply_filters( 'afa_poveda_internal_link_targets', $targets );
+}
+
+/**
+ * URL real de una ruta canónica del tema, o '' si no hay destino.
+ *
+ * @param string $path Ruta canónica con barras («/contacto/»).
+ * @return string
+ */
+function afa_poveda_resolve_internal_link( $path ) {
+	static $cache = array();
+	if ( isset( $cache[ $path ] ) ) {
+		return $cache[ $path ];
+	}
+
+	$targets = afa_poveda_internal_link_targets();
+	$target  = isset( $targets[ $path ] ) ? $targets[ $path ] : array();
+	$url     = '';
+
+	if ( ! empty( $target['template'] ) ) {
+		$pages = get_posts(
+			array(
+				'post_type'        => 'page',
+				'post_status'      => 'publish',
+				'posts_per_page'   => 10,
+				'orderby'          => 'date',
+				'order'            => 'DESC',
+				'meta_key'         => '_wp_page_template', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'       => $target['template'], // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+				'no_found_rows'    => true,
+				'suppress_filters' => false,
+			)
+		);
+		foreach ( $pages as $page ) {
+			if ( trim( $path, '/' ) === get_page_uri( $page ) ) {
+				$url = get_permalink( $page );
+				break;
+			}
+		}
+		if ( ! $url && $pages ) {
+			$url = get_permalink( $pages[0] );
+		}
+	} elseif ( ! empty( $target['post_type'] ) && post_type_exists( $target['post_type'] ) ) {
+		foreach ( (array) $target['slugs'] as $slug ) {
+			$found = get_page_by_path( $slug, OBJECT, $target['post_type'] );
+			if ( $found && 'publish' === $found->post_status ) {
+				$url = get_permalink( $found );
+				break;
+			}
+		}
+	} elseif ( ! empty( $target['archive'] ) && post_type_exists( $target['archive'] ) ) {
+		$url = (string) get_post_type_archive_link( $target['archive'] );
+	} elseif ( ! empty( $target['posts_page'] ) ) {
+		$posts_page = (int) get_option( 'page_for_posts' );
+		$url        = $posts_page ? get_permalink( $posts_page ) : '';
+	} elseif ( ! empty( $target['privacy'] ) ) {
+		$url = get_privacy_policy_url();
+	}
+
+	$cache[ $path ] = $url ? (string) $url : '';
+	return $cache[ $path ];
+}
+
+/**
+ * Reescribe al pintar los enlaces a rutas canónicas del tema (spec 014).
+ *
+ * Acepta la ruta relativa («/contacto/») o absoluta del propio sitio
+ * («http://dominio/contacto/», como guarda el menú). Si la ruta no tiene destino,
+ * se deja tal cual pero colgando de la URL del sitio (instalaciones en subcarpeta).
+ *
+ * @param string $block_content HTML del bloque.
+ * @param array  $block         Bloque parseado.
+ * @return string
+ */
+function afa_poveda_internal_links( $block_content, $block ) {
+	$types = array( 'core/button', 'core/paragraph', 'core/heading', 'core/list-item', 'core/navigation-link', 'core/navigation-submenu' );
+	if ( empty( $block['blockName'] ) || ! in_array( $block['blockName'], $types, true ) ) {
+		return $block_content;
+	}
+	if ( ! $block_content || false === strpos( $block_content, 'href=' ) ) {
+		return $block_content;
+	}
+
+	$targets   = afa_poveda_internal_link_targets();
+	$home_host = wp_parse_url( home_url(), PHP_URL_HOST );
+
+	return preg_replace_callback(
+		'/(\bhref=")([^"#?]*)(["#?])/i',
+		static function ( $m ) use ( $targets, $home_host ) {
+			$href = html_entity_decode( $m[2] );
+			$host = wp_parse_url( $href, PHP_URL_HOST );
+			if ( $host ? $host !== $home_host : 0 !== strpos( $href, '/' ) ) {
+				return $m[0];
+			}
+			$path = wp_parse_url( $href, PHP_URL_PATH );
+			if ( ! is_string( $path ) || '' === $path ) {
+				return $m[0];
+			}
+			$path = trailingslashit( $path );
+			if ( ! isset( $targets[ $path ] ) ) {
+				return $m[0];
+			}
+
+			$url = afa_poveda_resolve_internal_link( $path );
+			if ( ! $url ) {
+				$url = home_url( $path );
+			}
+			return $m[1] . esc_url( $url ) . $m[3];
+		},
+		$block_content
+	);
+}
+add_filter( 'render_block', 'afa_poveda_internal_links', 10, 2 );
+
+/**
+ * Enlaces sin destino (spec 014): `href="#"` es el marcador de los patterns
+ * («Descargar», documentos, redes). En el front no lleva a ningún sitio, así que:
+ * - en redes sociales se quita el icono (vuelve en cuanto se pone la URL real);
+ * - en párrafos y elementos de lista se deja el texto sin enlace;
+ * - en botones se quita el botón.
+ *
+ * Va con prioridad 20: «Compartir noticia» rellena antes sus enlaces (prioridad 10).
+ *
+ * @param string $block_content HTML del bloque.
+ * @param array  $block         Bloque parseado.
+ * @return string
+ */
+function afa_poveda_placeholder_links( $block_content, $block ) {
+	if ( empty( $block['blockName'] ) || ! $block_content || false === strpos( $block_content, 'href="#"' ) ) {
+		return $block_content;
+	}
+
+	switch ( $block['blockName'] ) {
+		case 'core/social-links':
+			$block_content = preg_replace( '#<li\b[^>]*>\s*<a\b[^>]*\bhref="\#"[^>]*>.*?</a>\s*</li>#is', '', $block_content );
+			return false === strpos( $block_content, '<li' ) ? '' : $block_content;
+		case 'core/paragraph':
+		case 'core/list-item':
+			return preg_replace( '#<a\b[^>]*\bhref="\#"[^>]*>(.*?)</a>#is', '<span class="afa-enlace-pendiente">$1</span>', $block_content );
+		case 'core/button':
+			return '';
+	}
+
+	return $block_content;
+}
+add_filter( 'render_block', 'afa_poveda_placeholder_links', 20, 2 );

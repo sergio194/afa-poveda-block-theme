@@ -6,7 +6,7 @@ Description: Tema de bloques a medida para la Asociación de Familias del CEIP P
 Requires at least: 7.1
 Tested up to: 7.2
 Requires PHP: 7.4
-Version: 0.2.11
+Version: 0.2.12
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: afa-poveda
@@ -3745,4 +3745,12 @@ body.single-afa_extraescolar .afa-header .wp-block-navigation-item a[href*="extr
 	font-weight: 600;
 	box-shadow: inset 0 -2px 0 currentColor;
 	padding-bottom: 6px;
+}
+
+/* Enlaces internos (014): texto de un enlace marcador («#») sin destino todavía.
+   El filtro de functions.php quita el <a>; aquí se le quita el color de enlace del párrafo
+   para que no parezca clicable. contrast-muted sobre base 9,32:1, surface-high 8,02:1. */
+.afa-enlace-pendiente {
+	color: var(--wp--preset--color--contrast-muted);
+	font-weight: 400;
 }

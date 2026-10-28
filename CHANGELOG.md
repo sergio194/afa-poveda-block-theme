@@ -7,6 +7,12 @@ y el proyecto sigue [Versionado Semántico](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+### Corregido
+- Enlaces internos (014, auditoría #1, #5, #16, #20): «Hazte socio», Contacto, Calendario, Voluntarios, Comedor, Servicios y Configurador van a la página que tenga asignada la plantilla del tema (o al servicio/archivo correspondiente), sin depender del slug. Enlaces `#` (redes sin URL, «Descargar», documentos) ya no se pintan como enlace. Quitado «Ver todo» duplicado de Avisos en la portada. Fichas de ejemplo de `servicios-grid` sin enlaces inventados.
+
+### Añadido
+- `docs/comprobar-enlaces.sh`: comprobador de enlaces internos rotos.
+
 ### Añadido
 - Configurador visual (spec 013, ampliación): estilos del panel de actividades del plugin v1.11.0 (tarjetas, filtros, días como botones y pestañas en móvil, colores por categoría y hueco de soltado) y del aviso de actividades quitadas por el filtro de curso. Botón «Configura tu semana» en el archivo de extraescolares.
 

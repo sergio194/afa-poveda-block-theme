@@ -22,6 +22,7 @@ Reparto (constitución III): el tema pone **presentación**; la lógica vive en 
 | 011 | Estilos de formularios | `56:1456`, `56:1616`, `56:1785` (+ móviles) · [spec](specs/011-estilos-formularios/spec.md) |
 | 012 | Plantillas CPT de Servicios | los de la 005 · [spec](specs/012-plantillas-cpt-servicios/spec.md) |
 | 013 | Estilos del configurador de semana | `3:467`, `3:658`, `3:331` · [spec](specs/013-configurador-semana/spec.md) |
+| 014 | Enlaces internos y destinos (auditoría #1, #5, #16, #20): destino por plantilla asignada, enlaces `#` ocultos, comprobador `docs/comprobar-enlaces.sh` | — · [spec](specs/014-enlaces-internos/spec.md) |
 
 ## Por hacer
 
@@ -29,11 +30,10 @@ Origen: [auditoría de usabilidad y seguridad del 28/10/2026](Auditoria_web_AFA_
 
 | Spec | Tema | Hallazgos | Qué incluye | Prioridad |
 |---|---|---|---|---|
-| 014 | Enlaces internos y destinos | #1, #5, #16, #20, parte de #17 | Revisar **todas** las URLs fijas de `parts/`, `patterns/` y `templates/` contra los slugs reales: `/hazte-socio/` (cabecera, `home-community-cta`, `extraescolar-socio`, `configurador-aviso`), `/servicios/comedor/`, `/calendario/`, `/afa/` (`home-quick-access`), `/contacto/` (6 patterns), `/actividades-extraescolares-2/` (`archive-afa_extraescolar`, slug sospechoso de duplicado). Decidir slugs canónicos con la junta y pedir 301 para los viejos. Iconos sociales con `"url":"#"` en `footer.php` y en «Compartir noticia» de `single.html`: quitar los que no tengan destino real o usar enlaces de compartir de verdad. «Ver todo» de `home-avisos` → `/category/avisos/` (o la que sea) en vez de `/noticias/`. Enlaces «Descargar» con `href="#"` en `servicio-menus-valores`, `servicio-documentacion`, `sobre-documentos`. Ver nota de la constitución IV abajo. Añadir a la guía de pruebas un paso de comprobación de enlaces rotos | **Crítica** (bloquea la captación de socios) |
 | 015 | Tarjetas robustas ante imagen rota y textos largos | #10, #11 | El CSS ya tiene `aspect-ratio`, `object-fit`, `min-width:0` y `line-clamp` en las tarjetas (`style.css` ~380–884), pero la auditoría ve tarjetas de 2.000 px y textos desbordados. **Primero reproducir** en Local con una imagen destacada cuyo archivo no existe: comprobar si el `<img>` roto ignora el `aspect-ratio` (el texto alt se pinta en línea), si hay plantillas personalizadas en la BD que pisan las del tema, o si el live link servía otra versión. Corregir: contenedor de la media con alto fijo por ratio y `overflow:hidden`, fondo de placeholder, alt sin subrayado, y que la etiqueta «Destacado» no se solape. Revisar a 390/900/1280 | Media-alta |
 | 016 | Menú móvil | #19 | El overlay de `core/navigation` sale desplegado del todo y alineado a la derecha (`justifyContent:right` en `parts/header.html`). Alinear a la izquierda en el overlay, submenús como acordeón y «Hazte socio» visible arriba del overlay. Contrastar con Figma `MENU` 1:1592 y anotar desviaciones en la spec | Baja |
 
-**Nota (constitución IV):** las URLs fijas en patterns que se insertan con `<!-- wp:pattern … /-->` no se pueden editar desde el Editor del sitio sin desvincular el pattern. La 014 debe valorar sacarlas a un menú de navegación o a bloques sincronizados para que la junta las cambie sin desarrollador.
+**Nota (constitución IV):** ~~las URLs fijas en patterns no se pueden editar sin desvincular el pattern~~ — resuelta en la 014: el destino se elige asignando la plantilla del tema a la página (ver [contrato](specs/014-enlaces-internos/contracts/destinos.md)).
 
 ### Deuda y pendientes de la junta
 - Specs 002, 003 y 006 siguen "pendiente validación visual / montaje editorial en Local".
@@ -52,9 +52,11 @@ Origen: [auditoría de usabilidad y seguridad del 28/10/2026](Auditoria_web_AFA_
 - **Caducidad de avisos (auditoría #12)**: fecha de expiración en los avisos para que dejen de salir en «Actualidad y Avisos» al caducar. El tema solo ajustaría la Query de `home-avisos` si el plugin expone un parámetro o una taxonomía/estado.
 
 ## Contenido y configuración (junta / administración del sitio)
-Hallazgos de la auditoría que no son código. Sin esto, la 014 no sirve de nada.
-- **Urgente** — crear la página «Hazte socio» con el pattern `afa-poveda/hazte-socio-page` en el slug que se decida en la 014 (#1).
+Hallazgos de la auditoría que no son código. La 014 ya lleva los botones a la página que tenga la plantilla; lo que falta aquí es contenido.
+- ~~**Urgente** — crear la página «Hazte socio»~~ — ya existe (`/hazte-socio-2/`, plantilla Hazte Socio) y desde la 014 todos los botones llegan a ella. Opcional: cambiar su slug a `/hazte-socio/` (#1, #18).
 - **Urgente** — publicar Aviso legal, Política de privacidad y Política de cookies (esta última declarando Clarity) y marcar la de privacidad en Ajustes → Privacidad (#2, #3, #4).
+- Página Servicios: sustituir la rejilla de ejemplo insertada (fichas que enlazan a `/servicios/musica-y-arte/`… → 404) por el pattern «Servicios — Rejilla desde contenido» (014).
+- Menú: el ítem «Contacto» apunta a la página duplicada `/ampa-3/contacto/` (ID 33); enlazar `contacto-afa` (014, #17).
 - Volver a subir los medios de `/uploads/2026/04` y `/05` (migración incompleta) (#10).
 - Despublicar o mover a borrador los avisos caducados (junio, Semana Santa 2026, ludoteca dic. 2025) y publicar los del curso 2026/27 (#12).
 - Consolidar las 2 páginas de contacto (`/contacto-afa/`, `/ampa-3/contacto/`) y las 2 de extraescolares, con 301; quitar «Trueque» del menú (#17).
