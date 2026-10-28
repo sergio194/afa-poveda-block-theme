@@ -18,7 +18,7 @@ Diseño de referencia: Figma `https://www.figma.com/design/lS6WwjiFrPKd60cQTfXrK
 ## Mapa
 - `theme.json` — paleta, tipografías, escala, espaciados, estilos globales y por bloque.
 - `styles/sections/` — estilos de bloque: `afa-card`, `afa-card-accent`, `afa-eyebrow`.
-- `parts/` — header, footer (usa pattern `afa-poveda/footer`), sidebar.
+- `parts/` — header, footer (usa pattern `afa-poveda/footer`), sidebar, menu-movil (overlay de la navegación en móvil).
 - `templates/` — index, home, single, page, page-with-sidebar, archive, search, 404.
 - `patterns/` — footer, newsletter, posts-list.
 

@@ -6,7 +6,7 @@ Description: Tema de bloques a medida para la Asociación de Familias del CEIP P
 Requires at least: 7.1
 Tested up to: 7.2
 Requires PHP: 7.4
-Version: 0.2.13
+Version: 0.2.14
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: afa-poveda
@@ -182,7 +182,7 @@ body:not(.home) .afa-header .menu-item-home > .wp-block-navigation-item__content
 	.afa-header .wp-block-navigation__responsive-container:not(.hidden-by-default):not(.is-menu-open) {
 		display: none;
 	}
-	.afa-header .wp-block-navigation { order: 2; }
+	.afa-header .wp-block-navigation.is-responsive { order: 2; }
 }
 /* Menú desplegado: enlaces más grandes y fáciles de tocar */
 .afa-header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item__content {
@@ -3836,4 +3836,137 @@ body.single-afa_extraescolar .afa-header .wp-block-navigation-item a[href*="extr
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 3;
 	overflow: hidden;
+}
+
+/* ---------- Menú móvil (016, auditoría #19, Figma MENU 1:1592) ----------
+   El overlay de core/navigation es la parte «Menú móvil» (parts/menu-movil.html).
+   theme.json no puede expresar el cajón lateral, el fondo atenuado ni los submenús
+   en acordeón. Sin JS propio: el botón de submenú de core ya alterna aria-expanded
+   (y en pantallas táctiles core ignora el «hover»). */
+
+/* Contenedor a pantalla completa: fondo atenuado detrás del cajón (no hay texto encima). */
+.afa-header .wp-block-navigation__responsive-container.is-menu-open.disable-default-overlay {
+	padding: 0;
+	background: rgba(24, 28, 32, 0.45);
+}
+.afa-header .is-menu-open.disable-default-overlay .wp-block-navigation__responsive-close,
+.afa-header .is-menu-open.disable-default-overlay .wp-block-navigation__responsive-dialog,
+.afa-header .is-menu-open.disable-default-overlay .wp-block-navigation__responsive-container-content {
+	max-width: none;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+.afa-header .is-menu-open.disable-default-overlay .wp-block-navigation__responsive-container-content {
+	align-items: flex-start; /* la cabecera alinea el menú a la derecha; el cajón va a la izquierda */
+	justify-content: flex-start !important;
+}
+/* Cajón de 320 px a la izquierda (Figma), con su propio scroll. */
+.afa-header .is-menu-open.disable-default-overlay .wp-block-navigation__overlay-container {
+	width: min(320px, 88vw);
+	height: 100%;
+	overflow-y: auto;
+	box-shadow: 0 0 24px rgba(24, 28, 32, 0.2);
+}
+.afa-menu-movil {
+	box-sizing: border-box;
+	min-height: 100%;
+}
+.afa-menu-movil__top {
+	width: 100%;
+	padding-bottom: var(--wp--preset--spacing--40);
+	border-bottom: 1px solid var(--wp--preset--color--outline);
+}
+.afa-menu-movil__top .wp-block-site-logo img {
+	width: 142px;
+	height: auto;
+}
+.afa-menu-movil .wp-block-navigation-overlay-close {
+	min-width: 44px;
+	min-height: 44px;
+}
+.afa-menu-movil__cta,
+.afa-menu-movil__search {
+	width: 100%;
+}
+
+/* Lista: alineada a la izquierda, a todo el ancho, objetivos táctiles ≥ 44 px. */
+.afa-menu-movil__nav,
+.afa-menu-movil__nav .wp-block-navigation__container {
+	width: 100%;
+	align-items: stretch !important;
+}
+.afa-menu-movil__nav .wp-block-navigation-item {
+	width: 100%;
+	flex-wrap: wrap;
+	align-items: center;
+}
+.afa-menu-movil__nav .wp-block-navigation-item__content {
+	flex: 1 1 0;
+	min-height: 44px;
+	display: flex;
+	align-items: center;
+	padding: 4px 8px !important;
+	border-radius: var(--wp--preset--border-radius--small);
+	font-size: var(--wp--preset--font-size--large);
+	text-decoration: none;
+}
+.afa-header .afa-menu-movil__nav .wp-block-navigation-item__content[aria-current="page"],
+.afa-header .afa-menu-movil__nav .current-menu-item > .wp-block-navigation-item__content {
+	color: var(--wp--preset--color--primary);
+	font-weight: 600;
+	background: var(--wp--preset--color--primary-soft);
+	box-shadow: none; /* sin el subrayado del menú de escritorio */
+}
+body:not(.home) .afa-header .afa-menu-movil__nav .menu-item-home > .wp-block-navigation-item__content {
+	color: inherit;
+	font-weight: inherit;
+	background: none;
+	box-shadow: none;
+}
+/* Las reglas de «activo por URL» de 004/009/012 subrayan el enlace (estilo de escritorio);
+   en el cajón el activo se marca con color y, si es el ítem actual, con fondo. */
+.afa-header .afa-menu-movil__nav .wp-block-navigation-item a {
+	box-shadow: none !important;
+}
+/* Botón de submenú a la derecha, táctil. */
+.afa-menu-movil__nav .wp-block-navigation-submenu__toggle {
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	margin: 0;
+	padding: 0;
+}
+.afa-menu-movil__nav .wp-block-navigation-submenu__toggle svg {
+	width: 14px;
+	height: 14px;
+	transition: transform 0.15s ease;
+}
+.afa-menu-movil__nav .wp-block-navigation-submenu__toggle[aria-expanded="true"] svg {
+	transform: rotate(180deg);
+}
+/* Acordeón: el submenú va en el flujo, cerrado salvo que su botón esté expandido
+   (aria-expanded lo gestiona core; ver afa_poveda_mobile_menu_accordion()). */
+.afa-menu-movil__nav .has-child > .wp-block-navigation__submenu-container {
+	position: static;
+	flex-basis: 100%;
+	width: 100% !important;
+	min-width: 0 !important;
+	margin: 0;
+	padding: 0 0 4px var(--wp--preset--spacing--40);
+	border: 0;
+	background: transparent !important;
+	display: none;
+}
+.afa-menu-movil__nav .has-child > .wp-block-navigation-submenu__toggle[aria-expanded="true"] ~ .wp-block-navigation__submenu-container {
+	display: flex;
+	visibility: visible;
+	opacity: 1;
+	height: auto;
+	overflow: visible;
+}
+.afa-menu-movil__nav .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
+	font-size: var(--wp--preset--font-size--medium);
 }

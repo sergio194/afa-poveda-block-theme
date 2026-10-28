@@ -624,3 +624,48 @@ function afa_poveda_placeholder_links( $block_content, $block ) {
 	return $block_content;
 }
 add_filter( 'render_block', 'afa_poveda_placeholder_links', 20, 2 );
+
+/**
+ * Menú móvil (spec 016): submenús en acordeón dentro del cajón.
+ *
+ * Dentro del overlay, core/navigation da por abiertos todos los submenús: su estado
+ * `isSubmenuOpen` es verdadero mientras el overlay (contexto padre) esté abierto. En la
+ * navegación del cajón (clase `afa-menu-movil__nav`) cada submenú recibe su propio
+ * `overlayOpenedBy` cerrado, así su botón abre y cierra solo ese submenú con la lógica
+ * de core (aria-expanded incluido). Se quitan los directivos de hover: en el cajón se
+ * abre con clic o teclado, no al pasar el ratón. Sin JS propio.
+ *
+ * @param string $block_content HTML del bloque.
+ * @param array  $block         Bloque parseado.
+ * @return string
+ */
+function afa_poveda_mobile_menu_accordion( $block_content, $block ) {
+	if ( empty( $block['blockName'] ) || 'core/navigation' !== $block['blockName'] ) {
+		return $block_content;
+	}
+	$class_name = isset( $block['attrs']['className'] ) ? $block['attrs']['className'] : '';
+	if ( false === strpos( $class_name, 'afa-menu-movil__nav' ) ) {
+		return $block_content;
+	}
+
+	$tags = new WP_HTML_Tag_Processor( $block_content );
+	while ( $tags->next_tag( array( 'tag_name' => 'li', 'class_name' => 'has-child' ) ) ) {
+		$context = json_decode( (string) $tags->get_attribute( 'data-wp-context' ), true );
+		if ( ! is_array( $context ) || ! isset( $context['submenuOpenedBy'] ) ) {
+			continue;
+		}
+		$context['overlayOpenedBy'] = array(
+			'click' => false,
+			'hover' => false,
+			'focus' => false,
+		);
+		$tags->set_attribute( 'data-wp-context', wp_json_encode( $context ) );
+		$tags->remove_attribute( 'data-wp-on--pointerenter' );
+		$tags->remove_attribute( 'data-wp-on--pointerleave' );
+		$tags->remove_attribute( 'data-wp-on--mouseenter' );
+		$tags->remove_attribute( 'data-wp-on--mouseleave' );
+	}
+
+	return $tags->get_updated_html();
+}
+add_filter( 'render_block', 'afa_poveda_mobile_menu_accordion', 10, 2 );

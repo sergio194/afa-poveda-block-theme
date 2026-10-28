@@ -24,14 +24,13 @@ Reparto (constitución III): el tema pone **presentación**; la lógica vive en 
 | 013 | Estilos del configurador de semana | `3:467`, `3:658`, `3:331` · [spec](specs/013-configurador-semana/spec.md) |
 | 014 | Enlaces internos y destinos (auditoría #1, #5, #16, #20): destino por plantilla asignada, enlaces `#` ocultos, comprobador `docs/comprobar-enlaces.sh` | — · [spec](specs/014-enlaces-internos/spec.md) |
 | 015 | Tarjetas robustas ante imagen rota y textos largos (auditoría #10, #11) | `1:259`, `1:1395`, `19:2503` · [spec](specs/015-tarjetas-robustas/spec.md) |
+| 016 | Menú móvil (auditoría #19): cajón izquierdo como parte «Menú móvil», «Hazte socio» arriba, submenús en acordeón | `1:1592` · [spec](specs/016-menu-movil/spec.md) |
 
 ## Por hacer
 
 Origen: [auditoría de usabilidad y seguridad del 28/10/2026](Auditoria_web_AFA_Padre_Poveda.pdf) (22 hallazgos, «#N» = número en la auditoría). Se hizo sobre el live link de Local, así que lo de servidor puede no coincidir con producción. Solo entra aquí lo que es del tema; el resto está repartido en las secciones de abajo.
 
-| Spec | Tema | Hallazgos | Qué incluye | Prioridad |
-|---|---|---|---|---|
-| 016 | Menú móvil | #19 | El overlay de `core/navigation` sale desplegado del todo y alineado a la derecha (`justifyContent:right` en `parts/header.html`). Alinear a la izquierda en el overlay, submenús como acordeón y «Hazte socio» visible arriba del overlay. Contrastar con Figma `MENU` 1:1592 y anotar desviaciones en la spec | Baja |
+Sin specs del tema pendientes: 014, 015 y 016 están hechas en la rama `backlog-auto-2026-10-28` (tabla «Hecho»). Lo que queda de la auditoría es contenido, plugin o servidor (abajo).
 
 **Nota (constitución IV):** ~~las URLs fijas en patterns no se pueden editar sin desvincular el pattern~~ — resuelta en la 014: el destino se elige asignando la plantilla del tema a la página (ver [contrato](specs/014-enlaces-internos/contracts/destinos.md)).
 
@@ -81,4 +80,6 @@ Hallazgos de la auditoría que no son código. La 014 ya lleva los botones a la 
 ## Orden recomendado
 Hecho en la rama `backlog-auto-2026-10-27`: 012 → 009 → 011 → 010 → 008 → 013.
 
-Siguiente tanda (auditoría 28/10/2026): primero las dos tareas urgentes de contenido (página Hazte socio y páginas legales) y la petición de consentimiento de cookies al plugin; en paralelo **014** → **015** → **016**.
+Hecho en la rama `backlog-auto-2026-10-28`: 014 → 015 → 016 (auditoría 28/10/2026).
+
+Siguiente: tareas urgentes de contenido (páginas legales; la página Hazte socio ya existe y los botones llegan a ella) y la petición de consentimiento de cookies al plugin.
