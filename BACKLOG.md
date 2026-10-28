@@ -23,6 +23,7 @@ Reparto (constitución III): el tema pone **presentación**; la lógica vive en 
 | 012 | Plantillas CPT de Servicios | los de la 005 · [spec](specs/012-plantillas-cpt-servicios/spec.md) |
 | 013 | Estilos del configurador de semana | `3:467`, `3:658`, `3:331` · [spec](specs/013-configurador-semana/spec.md) |
 | 014 | Enlaces internos y destinos (auditoría #1, #5, #16, #20): destino por plantilla asignada, enlaces `#` ocultos, comprobador `docs/comprobar-enlaces.sh` | — · [spec](specs/014-enlaces-internos/spec.md) |
+| 015 | Tarjetas robustas ante imagen rota y textos largos (auditoría #10, #11) | `1:259`, `1:1395`, `19:2503` · [spec](specs/015-tarjetas-robustas/spec.md) |
 
 ## Por hacer
 
@@ -30,7 +31,6 @@ Origen: [auditoría de usabilidad y seguridad del 28/10/2026](Auditoria_web_AFA_
 
 | Spec | Tema | Hallazgos | Qué incluye | Prioridad |
 |---|---|---|---|---|
-| 015 | Tarjetas robustas ante imagen rota y textos largos | #10, #11 | El CSS ya tiene `aspect-ratio`, `object-fit`, `min-width:0` y `line-clamp` en las tarjetas (`style.css` ~380–884), pero la auditoría ve tarjetas de 2.000 px y textos desbordados. **Primero reproducir** en Local con una imagen destacada cuyo archivo no existe: comprobar si el `<img>` roto ignora el `aspect-ratio` (el texto alt se pinta en línea), si hay plantillas personalizadas en la BD que pisan las del tema, o si el live link servía otra versión. Corregir: contenedor de la media con alto fijo por ratio y `overflow:hidden`, fondo de placeholder, alt sin subrayado, y que la etiqueta «Destacado» no se solape. Revisar a 390/900/1280 | Media-alta |
 | 016 | Menú móvil | #19 | El overlay de `core/navigation` sale desplegado del todo y alineado a la derecha (`justifyContent:right` en `parts/header.html`). Alinear a la izquierda en el overlay, submenús como acordeón y «Hazte socio» visible arriba del overlay. Contrastar con Figma `MENU` 1:1592 y anotar desviaciones en la spec | Baja |
 
 **Nota (constitución IV):** ~~las URLs fijas en patterns no se pueden editar sin desvincular el pattern~~ — resuelta en la 014: el destino se elige asignando la plantilla del tema a la página (ver [contrato](specs/014-enlaces-internos/contracts/destinos.md)).

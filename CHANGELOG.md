@@ -8,6 +8,7 @@ y el proyecto sigue [Versionado Semántico](https://semver.org/lang/es/).
 ## [Unreleased]
 
 ### Corregido
+- Tarjetas robustas (015, auditoría #10 y #11): una imagen destacada rota mantiene la proporción con fondo de marcador (sin alt pintado ni icono roto) en avisos, noticias, `posts-list` y ficha; títulos y extractos con palabras largas se parten; las tarjetas laterales de Avisos ya no mandan el texto fuera; extractos a 3 líneas sin media línea asomando.
 - Enlaces internos (014, auditoría #1, #5, #16, #20): «Hazte socio», Contacto, Calendario, Voluntarios, Comedor, Servicios y Configurador van a la página que tenga asignada la plantilla del tema (o al servicio/archivo correspondiente), sin depender del slug. Enlaces `#` (redes sin URL, «Descargar», documentos) ya no se pintan como enlace. Quitado «Ver todo» duplicado de Avisos en la portada. Fichas de ejemplo de `servicios-grid` sin enlaces inventados.
 
 ### Añadido

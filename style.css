@@ -6,7 +6,7 @@ Description: Tema de bloques a medida para la Asociación de Familias del CEIP P
 Requires at least: 7.1
 Tested up to: 7.2
 Requires PHP: 7.4
-Version: 0.2.12
+Version: 0.2.13
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: afa-poveda
@@ -3753,4 +3753,87 @@ body.single-afa_extraescolar .afa-header .wp-block-navigation-item a[href*="extr
 .afa-enlace-pendiente {
 	color: var(--wp--preset--color--contrast-muted);
 	font-weight: 400;
+}
+
+/* ---------- Tarjetas robustas (015, auditoría #10 y #11) ----------
+   theme.json no expresa reglas para imágenes rotas ni corte de palabras.
+   Una imagen destacada cuyo archivo falta deja de ser un elemento «reemplazado»:
+   pierde el aspect-ratio del <img>, pinta el alt en línea (subrayado por el enlace)
+   y puede estirarse a su atributo height (1.688 px en la auditoría). Por eso la
+   proporción y el recorte van en el contenedor, no en la imagen. */
+
+/* El alt de una imagen rota no se pinta (lo siguen leyendo los lectores de pantalla);
+   queda el fondo de marcador del contenedor. Con la imagen cargada no cambia nada. */
+.wp-block-post-featured-image img {
+	color: transparent;
+}
+.wp-block-post-featured-image a {
+	text-decoration: none;
+}
+/* El ::before de un <img> solo se pinta cuando la imagen no carga (Chrome, Firefox):
+   tapa el icono de «imagen rota» del navegador con el mismo fondo de marcador. */
+.wp-block-post-featured-image img {
+	position: relative;
+}
+.wp-block-post-featured-image img::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background-image: linear-gradient(135deg, var(--wp--preset--color--primary-soft) 0%, var(--wp--preset--color--surface-high) 100%);
+}
+
+/* Contenedor 16:9 con fondo de marcador: mide lo mismo cargue o no la imagen. */
+.afa-home-aviso-card__media,
+.afa-single-media,
+.afa-post-card .wp-block-post-featured-image {
+	aspect-ratio: 16 / 9;
+	overflow: hidden;
+	border-radius: var(--wp--preset--border-radius--medium);
+	background-image: linear-gradient(135deg, var(--wp--preset--color--primary-soft) 0%, var(--wp--preset--color--surface-high) 100%);
+}
+.afa-home-aviso-card__media a {
+	display: block;
+	height: 100%;
+}
+.afa-home-aviso-card__media img,
+.afa-single-media img,
+.afa-post-card .wp-block-post-featured-image img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border-radius: 0;
+}
+
+/* Textos largos (palabras o URLs sin espacios) no desbordan la tarjeta. */
+.wp-block-post-title,
+.wp-block-post-excerpt {
+	overflow-wrap: anywhere;
+}
+.afa-home-aviso-card,
+.afa-home-aviso-card > * {
+	min-width: 0;
+	max-width: 100%;
+}
+/* El layout flex de WordPress pone flex-wrap: wrap; en una tarjeta vertical con alto
+   repartido, lo que no cabía saltaba a una segunda columna fuera de la tarjeta (#11).
+   Sin wrap y sin min-height: 0, la tarjeta crece con su contenido. */
+.afa-home-aviso-card {
+	flex-wrap: nowrap !important;
+}
+.afa-home-avisos__side .wp-block-post {
+	min-height: auto;
+}
+/* El recorte va en el párrafo, no en el contenedor: el contenedor crece (flex: 1) para
+   empujar «Leer más» abajo y, si lleva el clamp, deja ver media línea de más. */
+.afa-news-card .wp-block-post-excerpt,
+.afa-home-news-card .wp-block-post-excerpt {
+	display: block;
+}
+.afa-news-card .wp-block-post-excerpt__excerpt,
+.afa-home-news-card .wp-block-post-excerpt__excerpt,
+.afa-home-aviso-card .wp-block-post-excerpt__excerpt {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
 }
